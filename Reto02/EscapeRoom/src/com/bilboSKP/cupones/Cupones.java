@@ -6,10 +6,15 @@ import com.bilboSKP.centroEscolar.centroEscolar;
 
 public class Cupones {
 
-	private LocalDate fechaActivacion = new LocalDate();
-	private LocalDate fechaCaducidad;
-	private String estado;
+	private LocalDate fechaActivacion = LocalDate.now();
+	private LocalDate fechaCaducidad = fechaActivacion.plusYears(1);
+	private String estado = "disponible";
 	private String centroID;
+	
+	public Cupones(centroEscolar centro) {
+		super();
+		this.centroID = centro.getCif();
+	}
 	
 	public LocalDate getFechaActivacion() {
 		return fechaActivacion;

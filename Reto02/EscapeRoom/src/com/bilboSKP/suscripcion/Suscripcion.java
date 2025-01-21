@@ -1,22 +1,24 @@
 package com.bilboSKP.suscripcion;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import com.bilboSKP.centroEscolar.centroEscolar;
+import com.bilboSKP.partida.pruebas.Prueba;
 
 public class Suscripcion {
 
 	private int iDSuscripcion;
 	private boolean estado = false;
-	private LocalDate fechaActivacion;
+	private LocalDate fechaActivacion = LocalDate.now();
 	private String centroID;
 	
-	public Suscripcion(int iDSuscripcion, boolean estado, LocalDate fechaActivacion) {
+	public Suscripcion(centroEscolar centro) {
 		super();
-		this.iDSuscripcion = iDSuscripcion;
-		this.estado = estado;
-		this.fechaActivacion = fechaActivacion;
+		this.centroID = centro.getCif();
 	}
+	
+	
 	public int getiDSuscripcion() {
 		return iDSuscripcion;
 	}
@@ -40,6 +42,9 @@ public class Suscripcion {
 	}
 	public void setCentroID(centroEscolar centroID) {
 		this.centroID = centroID.getCif();
+	}
+	public void setCentroID(String centroID) {
+		this.centroID = centroID;
 	}
 	
 }
