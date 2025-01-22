@@ -3,8 +3,8 @@ package com.bilboSKP.suscripcion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import com.bilboSKP.centroEscolar.centroEscolar;
-import com.bilboSKP.partida.pruebas.Prueba;
+import com.bilboSKP.centroEscolar.CentroEscolar;
+import com.bilboSKP.partida.Prueba;
 
 public class Suscripcion {
 
@@ -13,7 +13,7 @@ public class Suscripcion {
 	private LocalDate fechaActivacion = LocalDate.now();
 	private String centroID;
 	
-	public Suscripcion(centroEscolar centro) {
+	public Suscripcion(CentroEscolar centro) {
 		super();
 		this.centroID = centro.getCif();
 	}
@@ -40,7 +40,7 @@ public class Suscripcion {
 	public String getCentroID() {
 		return centroID;
 	}
-	public void setCentroID(centroEscolar centroID) {
+	public void setCentroID(CentroEscolar centroID) {
 		this.centroID = centroID.getCif();
 	}
 	public void setCentroID(String centroID) {

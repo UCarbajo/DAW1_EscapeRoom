@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-import com.bilboSKP.centroEscolar.centroEscolar;
-import com.bilboSKP.partida.pruebas.Prueba;
+import com.bilboSKP.centroEscolar.CentroEscolar;
 
 public class Partida {
 
@@ -16,10 +15,11 @@ public class Partida {
 	private int monedas = 5;
 	private int codAcceso = rand.nextInt(500);
 	private Date fechaActivacion;
+	private boolean fechaDesactivacion = fechaActivacion.after(fechaActivacion);
 	private String centroID;
 	private ArrayList<Prueba> listaPruebas = getPruebas();
 	
-	public Partida(Date fechaActivacion, centroEscolar centro) {
+	public Partida(Date fechaActivacion, CentroEscolar centro) {
 		super();
 		this.fechaActivacion = fechaActivacion;
 		this.centroID = centro.getCif();
