@@ -9,9 +9,15 @@ public class Ranking {
 	private int puntuacion;
 	private CentroEscolar centro;
 	private Clase clase;
+	private String nombreClase;
 	
 	
-	
+	public Ranking(int puntuacion, String nombreClase) {
+		super();
+		this.puntuacion = puntuacion;
+		this.nombreClase = nombreClase;
+	}
+
 	public int getiDRanking() {
 		return iDRanking;
 	}
@@ -24,18 +30,29 @@ public class Ranking {
 	public void setPuntuacion(int puntuacion) {
 		this.puntuacion = puntuacion;
 	}
+	public String getNombreClase() {
+		return nombreClase;
+	}
+	public void setNombreClase(String nombreClase) {
+		this.nombreClase = nombreClase;
+	}
+
 	public CentroEscolar getCentro() {
 		return centro;
 	}
+
 	public void setCentro(CentroEscolar centro) {
 		this.centro = centro;
 	}
+
 	public Clase getClase() {
 		return clase;
 	}
+
 	public void setClase(Clase clase) {
 		this.clase = clase;
 	}
+
 	
 	
 }

@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.bilboSKP.centroEscolar.CentroEscolar;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -16,7 +19,7 @@ public class ComprarCupones extends JFrame {
 	private JPanel contentPane;
 	private JTextField NumeroCupones;
 
-	public ComprarCupones() {
+	public ComprarCupones(CentroEscolar centro) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
