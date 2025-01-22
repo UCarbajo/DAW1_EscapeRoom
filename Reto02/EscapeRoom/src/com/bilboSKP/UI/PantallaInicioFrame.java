@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PantallaInicioFrame extends JFrame {
 
@@ -21,16 +25,39 @@ public class PantallaInicioFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel JLabelImagen = new JLabel("");
-		JLabelImagen.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabelImagen.setIcon(new ImageIcon("D:\\Proyecto2\\DALL\u00B7E 2025-01-21 12.59.33 - A creative and dramatic design for a start screen of an escape room themed around bullying and witnessing. The central focus is a wooden door with a d.jpg"));
-		JLabelImagen.setEnabled(false);
-		contentPane.add(JLabelImagen, BorderLayout.CENTER);
+		JButton IniciarSesión = new JButton("IniciarSesi\u00F3n");
+		IniciarSesión.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
-		originalIcon = new ImageIcon ("D:\\Proyecto2\\DALL\u00B7E 2025-01-21 12.59.33 - A creative and dramatic design for a start screen of an escape room themed around bullying and witnessing. The central focus is a wooden door with a d.jpg");
-
+		JButton Registrarse = new JButton("Registrarse");
+		
+		JButton Jugar = new JButton("Jugar");
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(168)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(IniciarSesión)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(Jugar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(Registrarse, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap(163, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(37)
+					.addComponent(IniciarSesión)
+					.addGap(34)
+					.addComponent(Registrarse)
+					.addGap(31)
+					.addComponent(Jugar)
+					.addContainerGap(80, Short.MAX_VALUE))
+		);
+		contentPane.setLayout(gl_contentPane);
 	}
-
 }
