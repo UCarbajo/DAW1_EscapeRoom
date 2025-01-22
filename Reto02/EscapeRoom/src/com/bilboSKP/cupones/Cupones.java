@@ -2,7 +2,7 @@ package com.bilboSKP.cupones;
 
 import java.time.LocalDate;
 
-import com.bilboSKP.centroEscolar.centroEscolar;
+import com.bilboSKP.centroEscolar.CentroEscolar;
 
 public class Cupones {
 
@@ -11,7 +11,7 @@ public class Cupones {
 	private String estado = "disponible";
 	private String centroID;
 	
-	public Cupones(centroEscolar centro) {
+	public Cupones(CentroEscolar centro) {
 		super();
 		this.centroID = centro.getCif();
 	}
@@ -37,7 +37,7 @@ public class Cupones {
 	public String getCentroID() {
 		return centroID;
 	}
-	public void setCentroID(centroEscolar centroID) {
+	public void setCentroID(CentroEscolar centroID) {
 		this.centroID = centroID.getCif();
 	}
 	
