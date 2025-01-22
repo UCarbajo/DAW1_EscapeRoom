@@ -1,10 +1,7 @@
 package com.bilboSKP.suscripcion;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 import com.bilboSKP.centroEscolar.centroEscolar;
-import com.bilboSKP.partida.pruebas.Prueba;
 
 public class Suscripcion {
 

@@ -83,6 +83,14 @@ public class Partida {
 		this.centroID = centroID;
 	}
 
+	public ArrayList<Prueba> getListaPruebas() {
+		return listaPruebas;
+	}
+
+	public void setListaPruebas(ArrayList<Prueba> listaPruebas) {
+		this.listaPruebas = listaPruebas;
+	}
+
 	
 	
 	
