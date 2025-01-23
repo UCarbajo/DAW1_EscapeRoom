@@ -11,7 +11,7 @@ import com.bilboSKP.ranking.Ranking;
 public class EscapeRoomBD extends AccesoBD {
 
 	public EscapeRoomBD() {
-		super(DRIVER_MYSQL, "EscapeRoom", "root", "1234");
+		super(DRIVER_MYSQL, "EscapeRoom", "root", "");
 		// TODO Auto-generated constructor stub
 	}
 

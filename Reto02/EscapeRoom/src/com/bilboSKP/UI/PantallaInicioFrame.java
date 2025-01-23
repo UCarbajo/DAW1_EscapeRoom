@@ -2,6 +2,7 @@ package com.bilboSKP.UI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,43 +22,34 @@ public class PantallaInicioFrame extends JFrame {
 
 	public PantallaInicioFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JButton IniciarSesión = new JButton("IniciarSesi\u00F3n");
-		IniciarSesión.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		ImageIcon icon = new ImageIcon("imagenes/ImagenINICIO.jpeg"); 
+        Image img = icon.getImage();
+        
+        Image scaledImg = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
+        
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
 		
-		JButton Registrarse = new JButton("Registrarse");
+		JButton btnIniciarSesión = new JButton("IniciarSesi\u00F3n");
+		btnIniciarSesión.setBounds(895, 134, 335, 56);
 		
-		JButton Jugar = new JButton("Jugar");
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(168)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(IniciarSesión)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(Jugar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(Registrarse, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addContainerGap(163, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(37)
-					.addComponent(IniciarSesión)
-					.addGap(34)
-					.addComponent(Registrarse)
-					.addGap(31)
-					.addComponent(Jugar)
-					.addContainerGap(80, Short.MAX_VALUE))
-		);
-		contentPane.setLayout(gl_contentPane);
+		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse.setBounds(895, 217, 335, 56);
+		
+		JButton btnJugar = new JButton("Jugar");
+		btnJugar.setBounds(892, 466, 335, 100);
+		
+		contentPane.setLayout(null);
+		contentPane.add(btnIniciarSesión);
+		contentPane.add(btnJugar);
+		contentPane.add(btnRegistrarse);
+		JLabel lblImagenFondo = new JLabel(scaledIcon);
+		lblImagenFondo.setBounds(0, 0, 1264, 681);
+		contentPane.add(lblImagenFondo);
+		
 	}
 }
