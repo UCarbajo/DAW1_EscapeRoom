@@ -1,5 +1,6 @@
 package com.bilboSKP.cupones;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import com.bilboSKP.centroEscolar.CentroEscolar;
@@ -15,15 +16,20 @@ public class Cupones {
 		super();
 		this.centroID = centro.getCif();
 	}
-	
 	public LocalDate getFechaActivacion() {
 		return fechaActivacion;
+	}
+	public Date getFechaActivacionToDate() {
+		return Date.valueOf(fechaActivacion);
 	}
 	public void setFechaActivacion(LocalDate fechaActivacion) {
 		this.fechaActivacion = fechaActivacion;
 	}
 	public LocalDate getFechaCaducidad() {
 		return fechaCaducidad;
+	}
+	public Date getFechaCaducidadToDate() {
+		return Date.valueOf(fechaCaducidad);
 	}
 	public void setFechaCaducidad(LocalDate fechaCaducidad) {
 		this.fechaCaducidad = fechaCaducidad;
