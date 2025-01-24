@@ -18,7 +18,6 @@ import java.awt.event.ActionEvent;
 public class PantallaInicioFrame extends JFrame {
 
 	private JPanel contentPane;
-	private ImageIcon originalIcon;
 
 	public PantallaInicioFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

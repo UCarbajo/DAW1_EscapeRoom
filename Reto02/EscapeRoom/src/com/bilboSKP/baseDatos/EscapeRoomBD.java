@@ -68,7 +68,7 @@ public class EscapeRoomBD extends AccesoBD {
 				ps.setDate(1, cupon.getFechaActivacionToDate());
 				ps.setString(2, cupon.getEstado());
 				ps.setDate(3, cupon.getFechaCaducidadToDate());
-				ps.setString(4, cupon.getCentroID());
+				ps.setString(4, cupon.getCentro().getCif());
 				ps.execute();
 			}
 			

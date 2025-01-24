@@ -10,11 +10,11 @@ public class Cupones {
 	private LocalDate fechaActivacion = LocalDate.now();
 	private LocalDate fechaCaducidad = fechaActivacion.plusYears(1);
 	private String estado = "disponible";
-	private String centroID;
+	private CentroEscolar centro;
 	
 	public Cupones(CentroEscolar centro) {
 		super();
-		this.centroID = centro.getCif();
+		this.centro = centro;
 	}
 	public LocalDate getFechaActivacion() {
 		return fechaActivacion;
@@ -40,12 +40,11 @@ public class Cupones {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public String getCentroID() {
-		return centroID;
+	public CentroEscolar getCentro() {
+		return centro;
 	}
-	public void setCentroID(CentroEscolar centroID) {
-		this.centroID = centroID.getCif();
+	public void setCentro(CentroEscolar centro) {
+		this.centro = centro;
 	}
-	
 	
 }
