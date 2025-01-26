@@ -7,12 +7,13 @@ import com.bilboSKP.centroEscolar.CentroEscolar;
 
 import com.bilboSKP.partida.UI.BPasilloFrame;
 import com.bilboSKP.partida.UI.BSalaDeImpresoraFrame;
+import com.bilboSKP.partida.UI.BSegundaPruebaFrame;
 
 public class App {
 
 	public static void main(String[] args) {
 
-		IntroducirCodigoFrame ventana = new IntroducirCodigoFrame();
+		BSegundaPruebaFrame ventana = new BSegundaPruebaFrame();
 		ventana.setVisible(true);
 
 	}
