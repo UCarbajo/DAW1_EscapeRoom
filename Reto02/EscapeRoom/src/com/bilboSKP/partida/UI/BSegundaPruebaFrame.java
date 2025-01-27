@@ -33,10 +33,12 @@ public class BSegundaPruebaFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		ArrayList<JLabel> listaPosicionesCorrectas = new ArrayList<JLabel>();
+		ArrayList<JLabel> listaTrozosPapel = new ArrayList<JLabel>();
+
 		// Creamos las posiciones donde deben ser colocados los trozos de papel.
 		int[][] posicionesCorrectas = { { 387, 25 }, { 387, 235 }, { 387, 445 }, { 614, 25 }, { 614, 235 },
 				{ 614, 445 } };
-		ArrayList<JLabel> listaPosicionesCorrectas = new ArrayList<>();
 
 		// Definir las posiciones iniciales de los JLabel
 		int[][] posiciones = { { 21, 10 }, { 21, 245 }, { 21, 473 }, { 1106, 10 }, { 1106, 245 }, { 1106, 473 } };
@@ -44,6 +46,9 @@ public class BSegundaPruebaFrame extends JFrame {
 		// Crear los JLabel con la funcionalidad de arrastre
 		for (int i = 0; i < posiciones.length; i++) {
 			JLabel trozoPapel = crearLabel(posiciones[i][0], posiciones[i][1]);
+			listaTrozosPapel.add(trozoPapel);
+			int posicionX = posiciones[i][0];
+			int posicionY = posiciones[i][1];
 			contentPane.add(trozoPapel);
 
 			trozoPapel.addMouseListener(new MouseAdapter() {
@@ -58,6 +63,7 @@ public class BSegundaPruebaFrame extends JFrame {
 							return; // Salir del bucle, ya que hemos encontrado la zona
 						}
 					}
+					trozoPapel.setLocation(posicionX, posicionY);
 				}
 			});
 			trozoPapel.addMouseMotionListener(new MouseAdapter() {
@@ -81,7 +87,7 @@ public class BSegundaPruebaFrame extends JFrame {
 		}
 		// Creamos las zonas correctas
 		for (int i = 0; i < posicionesCorrectas.length; i++) {
-			JLabel posicionCorrecta = crearPosicionCorrecta(posicionesCorrectas[i][0], posicionesCorrectas[i][1]);
+			JLabel posicionCorrecta = crearPosicionCorrecta(posicionesCorrectas[i][0],posicionesCorrectas[i][1]);
 			listaPosicionesCorrectas.add(posicionCorrecta);
 			contentPane.add(posicionCorrecta);
 		}
@@ -93,28 +99,34 @@ public class BSegundaPruebaFrame extends JFrame {
 
 		JButton btnNewButton = new JButton("Comprobar");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean todoCorrecto = true;
+		    public void actionPerformed(ActionEvent e) {
+		        boolean todoCorrecto = true;
+		        
+		        if (!(
+		                (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(0).getBounds())
+		                && listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(1).getBounds())
+		                && listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(2).getBounds())
+		                && listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(3).getBounds())
+		                && listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(4).getBounds())
+		                && listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(5).getBounds())) 
+		                ||
+		                (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(3).getBounds())
+		                && listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(4).getBounds())
+		                && listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(5).getBounds())
+		                && listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(0).getBounds())
+		                && listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(1).getBounds())
+		                && listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(2).getBounds()))
+		        )) {
+		            todoCorrecto = false;
+		        }
 
-				// Iterar por las posiciones correctas
-				for (int i = 0; i < listaPosicionesCorrectas.size(); i++) {
-					JLabel zonaCorrecta = listaPosicionesCorrectas.get(i);
-					JLabel trozoPapel = (JLabel) contentPane.getComponent(i); // Asumiendo que están en orden
-
-					// Verificar si el trozo está en la posición de la zona correcta
-					if (!zonaCorrecta.getBounds().contains(trozoPapel.getBounds())) {
-						todoCorrecto = false;
-						break;
-					}
-				}
-
-				// Mostrar resultado
-				if (todoCorrecto) {
-					System.out.println("¡Todo correcto!");
-				} else {
-					System.out.println("Algunos trozos no están en el lugar correcto.");
-				}
-			}
+		        // Mostrar resultado
+		        if (todoCorrecto) {
+		            System.out.println("¡Todo correcto!");
+		        } else {
+		            System.out.println("Algunos trozos no están en el lugar correcto.");
+		        }
+		    }
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNewButton.setBounds(922, 556, 220, 57);
@@ -130,7 +142,7 @@ public class BSegundaPruebaFrame extends JFrame {
 	private JLabel crearLabel(int x, int y) {
 		ImageIcon icon = new ImageIcon(obtenerPosicionImagen(num));
 		Image img = icon.getImage();
-		Image scaledImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		Image scaledImg = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImg);
 
 		JLabel etiqueta = new JLabel("Trozo");
@@ -147,8 +159,9 @@ public class BSegundaPruebaFrame extends JFrame {
 
 	// METODO Obtener una imagen
 	private String obtenerPosicionImagen(int num) {
-		String[] posicion = { "imagenes/FlechaArriba.png", "imagenes/FlechaIzquierda.png", "imagenes/FlechaAbajo.png",
-				"imagenes/FlechaDerecha.png", "imagenes/imagenINICIO.jpeg", "imagenes/PasilloA.jpeg" };
+		String[] posicion = { "imagenes/SegundaPrueba/Numero3.png", "imagenes/SegundaPrueba/Numero8.png",
+				"imagenes/SegundaPrueba/Numero9.png", "imagenes/SegundaPrueba/Numero12.png",
+				"imagenes/SegundaPrueba/Numero15.png", "imagenes/SegundaPrueba/Numero17.png" };
 		return posicion[num];
 	}
 
@@ -157,8 +170,9 @@ public class BSegundaPruebaFrame extends JFrame {
 		int tamanoCorrectaX = 200;
 		int tamanoCorrectaY = 200;
 		JLabel lblPosicionCorrecta = new JLabel("");
-		lblPosicionCorrecta.setBackground(Color.GREEN);
-		lblPosicionCorrecta.setOpaque(true);
+		lblPosicionCorrecta.setBackground(Color.white);
+		lblPosicionCorrecta.setOpaque(false);
+		lblPosicionCorrecta.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		lblPosicionCorrecta.setBounds(posicionesCorrectasX, posicionesCorrectasY, tamanoCorrectaX, tamanoCorrectaY);
 		return lblPosicionCorrecta;
 	}
