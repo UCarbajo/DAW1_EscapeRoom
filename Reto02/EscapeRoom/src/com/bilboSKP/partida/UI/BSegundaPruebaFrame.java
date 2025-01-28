@@ -37,18 +37,23 @@ public class BSegundaPruebaFrame extends JFrame {
 		ArrayList<JLabel> listaTrozosPapel = new ArrayList<JLabel>();
 
 		// Creamos las posiciones donde deben ser colocados los trozos de papel.
-		int[][] posicionesCorrectas = { { 387, 25 }, { 387, 235 }, { 387, 445 }, { 614, 25 }, { 614, 235 },
-				{ 614, 445 } };
+		int[][] posicionesCorrectas = {
+	            {387, 25}, {387, 235}, {387, 445},
+	            {614, 25}, {614, 235}, {614, 445}
+	        };
 
 		// Definir las posiciones iniciales de los JLabel
-		int[][] posiciones = { { 21, 10 }, { 21, 245 }, { 21, 473 }, { 1106, 10 }, { 1106, 245 }, { 1106, 473 } };
+		int[][] posicionesIniciales = {
+	            {150, 50}, {900, 463}, {150, 463},
+	            {900, 50}, {150, 255}, {900, 255}
+	        };
 
 		// Crear los JLabel con la funcionalidad de arrastre
-		for (int i = 0; i < posiciones.length; i++) {
-			JLabel trozoPapel = crearLabel(posiciones[i][0], posiciones[i][1]);
+		for (int i = 0; i < posicionesIniciales.length; i++) {
+			JLabel trozoPapel = crearLabel(posicionesIniciales[i][0], posicionesIniciales[i][1]);
 			listaTrozosPapel.add(trozoPapel);
-			int posicionX = posiciones[i][0];
-			int posicionY = posiciones[i][1];
+			int posicionX = posicionesIniciales[i][0];
+			int posicionY = posicionesIniciales[i][1];
 			contentPane.add(trozoPapel);
 
 			trozoPapel.addMouseListener(new MouseAdapter() {
@@ -97,39 +102,24 @@ public class BSegundaPruebaFrame extends JFrame {
 		Image imgEscalado = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
 		ImageIcon iconoEscalado = new ImageIcon(imgEscalado);
 
-		JButton btnNewButton = new JButton("Comprobar");
+		JButton btnNewButton = new JButton("LISTO");
 		btnNewButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        boolean todoCorrecto = true;
 		        
-		        if (!(
-		                (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(0).getBounds())
-		                && listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(1).getBounds())
-		                && listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(2).getBounds())
-		                && listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(3).getBounds())
-		                && listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(4).getBounds())
-		                && listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(5).getBounds())) 
-		                ||
-		                (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(3).getBounds())
-		                && listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(4).getBounds())
-		                && listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(5).getBounds())
-		                && listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(0).getBounds())
-		                && listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(1).getBounds())
-		                && listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(2).getBounds()))
-		        )) {
+		        if (!comprobarResultado(listaPosicionesCorrectas, listaTrozosPapel)) {
 		            todoCorrecto = false;
 		        }
-
-		        // Mostrar resultado
 		        if (todoCorrecto) {
 		            System.out.println("¡Todo correcto!");
 		        } else {
 		            System.out.println("Algunos trozos no están en el lugar correcto.");
 		        }
 		    }
+
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(922, 556, 220, 57);
+		btnNewButton.setBounds(1100, 500, 100, 100);
 		contentPane.add(btnNewButton);
 
 		JLabel lblImagenFondo = new JLabel("");
@@ -175,5 +165,22 @@ public class BSegundaPruebaFrame extends JFrame {
 		lblPosicionCorrecta.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		lblPosicionCorrecta.setBounds(posicionesCorrectasX, posicionesCorrectasY, tamanoCorrectaX, tamanoCorrectaY);
 		return lblPosicionCorrecta;
+	}
+	
+	private boolean comprobarResultado(ArrayList<JLabel> listaPosicionesCorrectas,
+			ArrayList<JLabel> listaTrozosPapel) {
+		return (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(3).getBounds())
+		&& listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(4).getBounds())
+		&& listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(0).getBounds())
+		&& listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(1).getBounds())
+		&& listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(5).getBounds())
+		&& listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(2).getBounds())) 
+		||
+		  (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(1).getBounds())
+		&& listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(5).getBounds())
+		&& listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(2).getBounds())
+		&& listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(3).getBounds())
+		&& listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(4).getBounds())
+		&& listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(0).getBounds()));
 	}
 }

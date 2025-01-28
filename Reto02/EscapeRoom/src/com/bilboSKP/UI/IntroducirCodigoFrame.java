@@ -35,9 +35,7 @@ public class IntroducirCodigoFrame extends JFrame {
 
 		ImageIcon icon = new ImageIcon("imagenes/ImagenPizzarra.png");
 		Image img = icon.getImage();
-
 		Image scaledImg = img.getScaledInstance(1400, 720, Image.SCALE_SMOOTH);
-
 		ImageIcon scaledIcon = new ImageIcon(scaledImg);
 
 		try {
