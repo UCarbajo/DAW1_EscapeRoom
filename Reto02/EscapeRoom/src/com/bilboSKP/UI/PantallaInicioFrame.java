@@ -38,11 +38,23 @@ public class PantallaInicioFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textCodigo;
+	private JLabel lblIntroduceCodigo;
 	private ResourceBundle idioma;
+	private JButton btnEmpezar;
+	private JTextPane textTutorial;
+	private JLabel lblSeleccionarIdioma;
+	private JLabel lblBanderaEspana;
+	private JLabel lblEspanol;
+	private JLabel lblBanderaInglesa;
+	private JLabel lblIngles;
+	private JButton btnJugar;
+	private JButton btnTutorial;
+	private JButton btnAjustes;
+	private JLabel lblImagenNino;
 	
 	public PantallaInicioFrame() {
 		
-		cambiarIdioma("en");
+		cambiarIdioma("es");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 20, 1280, 720);
@@ -50,13 +62,15 @@ public class PantallaInicioFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		ImageIcon imagenNino = tamanoImagen("imagenes/ninoAcosado.png", 405, 325);
+		
+		lblImagenNino = new JLabel();
+		lblImagenNino.setBounds(720, 170, 405, 325);
+		lblImagenNino.setIcon(imagenNino);
+		contentPane.add(lblImagenNino);
+		
 		contentPane.addMouseListener(null);
 
-		ImageIcon icon = new ImageIcon("imagenes/ImagenPortada.png");
-		Image img = icon.getImage();
-		Image scaledImg = img.getScaledInstance(1264, 681, Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImg);
-		
 		try {
 			// Cargar la fuente desde el archivo
 			Font fuenteQuickPencilGrande = crearFontQuickPencil(80f);
@@ -65,7 +79,7 @@ public class PantallaInicioFrame extends JFrame {
 			Font fuenteQuickPencilPequena = crearFontQuickPencil(25f);
 					
 			
-			JButton btnJugar = new JButton("JUGAR");
+			btnJugar = new JButton(idioma.getString("label.jugar"));
 			btnJugar.setBounds(163, 159, 335, 100);
 			btnJugar.setForeground(Color.black);
 			btnJugar.setFont(fuenteQuickPencilGrande);
@@ -75,7 +89,7 @@ public class PantallaInicioFrame extends JFrame {
 			btnJugar.addMouseListener(cambiarColorBoton(btnJugar));
 			contentPane.add(btnJugar);
 			
-			JButton btnTutorial = new JButton("TUTORIAL");
+			btnTutorial = new JButton(idioma.getString("label.tutorial"));
 			btnTutorial.setBounds(163, 286, 335, 100);
 			btnTutorial.setForeground(Color.black);
 			btnTutorial.setFont(fuenteQuickPencilGrande);
@@ -85,7 +99,7 @@ public class PantallaInicioFrame extends JFrame {
 			btnTutorial.addMouseListener(cambiarColorBoton(btnTutorial));
 			contentPane.add(btnTutorial);
 			
-			JButton btnAjustes = new JButton("AJUSTES");
+			btnAjustes = new JButton(idioma.getString("label.ajustes"));
 			btnAjustes.setBounds(163, 432, 335, 100);
 			btnAjustes.setForeground(Color.black);
 			btnAjustes.setFont(fuenteQuickPencilGrande);
@@ -96,7 +110,7 @@ public class PantallaInicioFrame extends JFrame {
 			contentPane.add(btnAjustes);
 
 			//Lo que se muestra al pulsar JUGAR
-			JLabel lblIntroduceCodigo = new JLabel("Introduce el código");
+			lblIntroduceCodigo = new JLabel(idioma.getString("label.introducir_codigo"));
 			lblIntroduceCodigo.setForeground(Color.black);
 			lblIntroduceCodigo.setHorizontalAlignment(SwingConstants.CENTER);
 			lblIntroduceCodigo.setBounds(701, 159, 480, 100);
@@ -113,7 +127,7 @@ public class PantallaInicioFrame extends JFrame {
 			textCodigo.setVisible(false);
 			contentPane.add(textCodigo);
 			
-			JButton btnEmpezar = new JButton("EMPEZAR");
+			btnEmpezar = new JButton(idioma.getString("label.empezar"));
 			btnEmpezar.setBounds(802, 471, 259, 61);
 			btnEmpezar.setForeground(Color.black);
 			btnEmpezar.setFont(fuenteQuickPencilMedianaGrande);
@@ -126,38 +140,75 @@ public class PantallaInicioFrame extends JFrame {
 			
 			//Lo que se muestra al pulsar el boton Tutorial
 			//TODO Preguntar como cambiar el texto del tutorial
-			JTextPane textTutorial = new JTextPane();
+			
+			textTutorial = new JTextPane();
 			textTutorial.setBounds(701, 118, 480, 467);
 			textTutorial.setFont(fuenteQuickPencilPequena);
 			textTutorial.setEditable(false);
-			textTutorial.setText("1 - Para poder empezar a jugar, pulsa el botón jugar e introduce el código.\n" 
-								+"2 - Cuando empieze la partida, tendras 60 minutos para completar el escape room.\n"
-								+"3 - Deberas buscar y encontrar las diferentes pruebas interactuando con diferentes elementos.\n"
-								+"4 - Cada prueba tendra 3 pistas que podras comprar con las monedas que encontraras por el mapa \n"
-								+"5 - El juego terminara cuando completes la ultima prueba.");
+			textTutorial.setText(idioma.getString("label.instrucciones_tutorial"));
 			textTutorial.setVisible(false);
 			contentPane.add(textTutorial);
 			
 			//Lo que sale al pulsar el boton ajustes.
+			lblSeleccionarIdioma = new JLabel(idioma.getString("label.seleccionar_idioma"));
+			lblSeleccionarIdioma.setHorizontalAlignment(SwingConstants.CENTER);
+			lblSeleccionarIdioma.setFont(fuenteQuickPencilMediana);
+			lblSeleccionarIdioma.setBounds(701, 118, 480, 42);
+			lblSeleccionarIdioma.setVisible(false);
+			contentPane.add(lblSeleccionarIdioma);
 			
+			ImageIcon banderaEspana = tamanoImagen("imagenes/banderaEspana.png", 180, 130);
+			
+			lblBanderaEspana = new JLabel();
+			lblBanderaEspana.setBounds(744, 270, 180, 130);
+			lblBanderaEspana.setIcon(banderaEspana);
+			lblBanderaEspana.setVisible(false);
+			contentPane.add(lblBanderaEspana);
+			
+			lblEspanol = new JLabel(idioma.getString("label.espanol"));
+			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEspanol.setBounds(754, 410, 170, 51);
+			lblEspanol.setForeground(Color.black);
+			lblEspanol.setFont(fuenteQuickPencilMediana);
+			lblEspanol.setVisible(false);
+			cambiarFormaIdioma(lblBanderaEspana, lblEspanol, "es");
+			contentPane.add(lblEspanol);
+			
+			ImageIcon banderaInglesa = tamanoImagen("imagenes/banderaInglesa.png", 180, 130);
+			
+			lblBanderaInglesa = new JLabel();
+			lblBanderaInglesa.setBounds(954, 270, 180, 130);
+			lblBanderaInglesa.setIcon(banderaInglesa);
+			lblBanderaInglesa.setVisible(false);
+			contentPane.add(lblBanderaInglesa);
+			
+			lblIngles = new JLabel(idioma.getString("label.ingles"));
+			lblIngles.setHorizontalAlignment(SwingConstants.CENTER);
+			lblIngles.setBounds(954, 410, 180, 51);
+			lblIngles.setForeground(Color.black);
+			lblIngles.setFont(fuenteQuickPencilMediana);
+			lblIngles.setVisible(false);
+			cambiarFormaIdioma(lblBanderaInglesa, lblIngles, "en");
+			contentPane.add(lblIngles);
+			
+			/*lblBanderaInglesa.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
+			lblBanderaEspana.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));*/
 			
 			btnJugar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					lblIntroduceCodigo.setVisible(true);
-					textCodigo.setVisible(true);
-					btnEmpezar.setVisible(true);
-					
-					textTutorial.setVisible(false);
+					actualizarVisibilidad(true, false, false);
 				}
 			});
 			
 			btnTutorial.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					lblIntroduceCodigo.setVisible(false);
-					textCodigo.setVisible(false);
-					btnEmpezar.setVisible(false);
-					
-					textTutorial.setVisible(true);
+					actualizarVisibilidad(false, true, false);
+				}
+			});
+			
+			btnAjustes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					actualizarVisibilidad(false, false, true);
 				}
 			});
 			
@@ -167,22 +218,62 @@ public class PantallaInicioFrame extends JFrame {
 		}
 		
 		contentPane.setLayout(null);
+		ImageIcon scaledIcon = tamanoImagen("imagenes/ImagenPortada.png", 1264, 681);
+		
 		JLabel lblImagenFondo = new JLabel(scaledIcon);
 		lblImagenFondo.setBounds(0, 0, 1264, 681);
 		contentPane.add(lblImagenFondo);
 		
 	}
 
-	private Font crearFontQuickPencil(float tamañoTexto) throws FontFormatException, IOException {
+	private ImageIcon tamanoImagen(String rutaImagen, int tamanoX, int tamanoY) {
+		ImageIcon icon = new ImageIcon(rutaImagen);
+		Image img = icon.getImage();
+		Image scaledImg = img.getScaledInstance(tamanoX, tamanoY, Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(scaledImg);
+		return scaledIcon;
+	}
+
+	private Font crearFontQuickPencil(float tamanoTexto) throws FontFormatException, IOException {
 		Font fuenteQuickPencil = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/DoodlePen_Limited.ttf"));
-		fuenteQuickPencil = fuenteQuickPencil.deriveFont(tamañoTexto);
+		fuenteQuickPencil = fuenteQuickPencil.deriveFont(tamanoTexto);
 		return fuenteQuickPencil;
 	}
 
 	private void cambiarIdioma(String tipoIdioma) {
         // Cargar el archivo de propiedades en base al idioma
-        Locale locale = new Locale(tipoIdioma);  // idioma es una cadena como "es" o "en"
+		// idioma es una cadena como "es" o "en"
+        Locale locale = new Locale(tipoIdioma);  
         idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
+    }
+	
+	//TODO PREGUNTAR SI HAY OTRA MANERA
+	// Actualiza los textos de los botones y las etiquetas
+	private void actualizarTextos() {
+	    btnJugar.setText(idioma.getString("label.jugar"));
+	    btnTutorial.setText(idioma.getString("label.tutorial"));
+	    btnAjustes.setText(idioma.getString("label.ajustes"));
+	    
+	    lblIntroduceCodigo.setText(idioma.getString("label.introducir_codigo"));
+	    btnEmpezar.setText(idioma.getString("label.empezar"));
+	    textTutorial.setText(idioma.getString("label.instrucciones_tutorial"));
+	    lblSeleccionarIdioma.setText(idioma.getString("label.seleccionar_idioma"));
+	    lblEspanol.setText(idioma.getString("label.espanol"));
+	    lblIngles.setText(idioma.getString("label.ingles"));
+	    
+	}
+	
+	private void actualizarVisibilidad(boolean jugarVisible, boolean tutorialVisible, boolean ajustesVisible) {
+        lblIntroduceCodigo.setVisible(jugarVisible);
+        textCodigo.setVisible(jugarVisible);
+        btnEmpezar.setVisible(jugarVisible);
+        textTutorial.setVisible(tutorialVisible);
+        lblSeleccionarIdioma.setVisible(ajustesVisible);
+        lblBanderaEspana.setVisible(ajustesVisible);
+        lblEspanol.setVisible(ajustesVisible);
+        lblBanderaInglesa.setVisible(ajustesVisible);
+        lblIngles.setVisible(ajustesVisible);
+        lblImagenNino.setVisible(false);
     }
 	
 	private MouseListener cambiarColorBoton(JButton boton) {
@@ -190,6 +281,7 @@ public class PantallaInicioFrame extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				boton.setForeground(Color.red);
+				
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
@@ -197,5 +289,29 @@ public class PantallaInicioFrame extends JFrame {
 			}
 		};
 		return mouseListener;
+	}
+	
+	private void cambiarFormaIdioma(JLabel lblBandera, JLabel lblIdioma, String idioma) {
+		MouseListener mouseListener = new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblIdioma.setForeground(Color.red);
+				lblBandera.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblIdioma.setForeground(Color.black);
+				lblBandera.setBorder(null);
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				cambiarIdioma(idioma);
+				actualizarTextos();
+				contentPane.revalidate();
+				contentPane.repaint();
+			}
+		};
+		lblBandera.addMouseListener(mouseListener);
+		lblIdioma.addMouseListener(mouseListener);
 	}
 }
