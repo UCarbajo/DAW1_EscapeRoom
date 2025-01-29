@@ -1,3 +1,8 @@
+Tengo una clase en el modelo del proyecto que se llama PanelImagen y luego en la clase de las ventanas hago 2 JPanel donde el segundo es un PanelImagen con la imagen en el constructor.
+
+
+
+
 setTitle("Aula: La revelación");
         
         
