@@ -1,0 +1,27 @@
+Tengo una clase en el modelo del proyecto que se llama PanelImagen y luego en la clase de las ventanas hago 2 JPanel donde el segundo es un PanelImagen con la imagen en el constructor.
+
+
+
+
+setTitle("Aula: La revelación");
+        
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(170,80,905,626);
+		contentP = new JPanel();
+		contentP.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentP);
+		contentP.setLayout(null);
+		
+		contentPane = new PanelImagen("/img/final.jpeg");
+		contentPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				numeroClicks=numeroClicks+1;
+			}
+		});
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBounds(0,0,900,600);
+		contentPane.setVisible(true);
+		contentPane.setLayout(null);
+		contentP.add(contentPane);
