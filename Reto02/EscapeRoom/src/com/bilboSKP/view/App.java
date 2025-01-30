@@ -13,8 +13,9 @@ public class App {
 
 	public static void main(String[] args) {
 
-		PantallaInicioFrame ventana = new PantallaInicioFrame();
+		EntradaJuego ventana = new EntradaJuego();
 		ventana.setVisible(true);
+		
 	}
 
 }
