@@ -3,7 +3,6 @@ package com.bilboSKP.UI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,12 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import com.bilboSKP.partida.UI.EntradaJuego;
 
@@ -53,6 +48,7 @@ public class PantallaInicioFrame extends JFrame {
 	private JButton btnTutorial;
 	private JButton btnAjustes;
 	private JLabel lblImagenNino;
+	private Locale locale;
 	
 	public PantallaInicioFrame() {
 		
@@ -142,7 +138,7 @@ public class PantallaInicioFrame extends JFrame {
 			btnEmpezar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//TODO CONECTAR BD Y COMPROBAR SI EL CODIGO EXISTE;
-					EntradaJuego ventana = new EntradaJuego();
+					EntradaJuego ventana = new EntradaJuego(locale);
 					ventana.setVisible(true);
 					dispose();
 				}
@@ -158,46 +154,51 @@ public class PantallaInicioFrame extends JFrame {
 			lblTxtTutorialUno.setWrapStyleWord(true);
 			lblTxtTutorialUno.setEditable(false);
 			lblTxtTutorialUno.setVisible(false);
+			lblTxtTutorialUno.setOpaque(false);
 			contentPane.add(lblTxtTutorialUno);
 			
 			lblTxtTutorialDos = new JTextArea();			
-			lblTxtTutorialDos.setBounds(701, 220, 480, 60);
+			lblTxtTutorialDos.setBounds(701, 220, 480, 80);
 			lblTxtTutorialDos.setFont(fuenteQuickPencilPequena);
 			lblTxtTutorialDos.setText(idioma.getString("label.instruccionesTutorial_2"));
 			lblTxtTutorialDos.setLineWrap(true);
 			lblTxtTutorialDos.setWrapStyleWord(true);
 			lblTxtTutorialDos.setEditable(false);
 			lblTxtTutorialDos.setVisible(false);
+			lblTxtTutorialDos.setOpaque(false);
 			contentPane.add(lblTxtTutorialDos);
 			
 			lblTxtTutorialTres = new JTextArea();			
-			lblTxtTutorialTres.setBounds(701, 280, 480, 80);
+			lblTxtTutorialTres.setBounds(701, 300, 480, 80);
 			lblTxtTutorialTres.setFont(fuenteQuickPencilPequena);
 			lblTxtTutorialTres.setText(idioma.getString("label.instruccionesTutorial_3"));
 			lblTxtTutorialTres.setLineWrap(true);
 			lblTxtTutorialTres.setWrapStyleWord(true);
 			lblTxtTutorialTres.setEditable(false);
 			lblTxtTutorialTres.setVisible(false);
+			lblTxtTutorialTres.setOpaque(false);
 			contentPane.add(lblTxtTutorialTres);
 			
 			lblTxtTutorialCuatro = new JTextArea();			
-			lblTxtTutorialCuatro.setBounds(701, 370, 480, 80);
+			lblTxtTutorialCuatro.setBounds(701, 380, 480, 80);
 			lblTxtTutorialCuatro.setFont(fuenteQuickPencilPequena);
 			lblTxtTutorialCuatro.setText(idioma.getString("label.instruccionesTutorial_4"));
 			lblTxtTutorialCuatro.setLineWrap(true);
 			lblTxtTutorialCuatro.setWrapStyleWord(true);
 			lblTxtTutorialCuatro.setEditable(false);
 			lblTxtTutorialCuatro.setVisible(false);
+			lblTxtTutorialCuatro.setOpaque(false);
 			contentPane.add(lblTxtTutorialCuatro);
 			
 			lblTxtTutorialCinco = new JTextArea();			
-			lblTxtTutorialCinco.setBounds(701, 452, 480, 80);
+			lblTxtTutorialCinco.setBounds(701, 460, 480, 80);
 			lblTxtTutorialCinco.setFont(fuenteQuickPencilPequena);
 			lblTxtTutorialCinco.setText(idioma.getString("label.instruccionesTutorial_5"));
 			lblTxtTutorialCinco.setLineWrap(true);
 			lblTxtTutorialCinco.setWrapStyleWord(true);
 			lblTxtTutorialCinco.setEditable(false);
 			lblTxtTutorialCinco.setVisible(false);
+			lblTxtTutorialCinco.setOpaque(false);
 			contentPane.add(lblTxtTutorialCinco);
 			
 			//Lo que sale al pulsar el boton ajustes.
@@ -291,7 +292,7 @@ public class PantallaInicioFrame extends JFrame {
 	private void cambiarIdioma(String tipoIdioma) {
         // Cargar el archivo de propiedades en base al idioma
 		// idioma es una cadena como "es" o "en"
-        Locale locale = new Locale(tipoIdioma);  
+        locale = new Locale(tipoIdioma);  
         idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
     }
 	
