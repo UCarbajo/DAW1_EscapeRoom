@@ -5,11 +5,6 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -21,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 public class EntradaJuego extends JFrame {
@@ -61,7 +55,7 @@ public class EntradaJuego extends JFrame {
 			lblIntroduccion.setBorder(new EmptyBorder(350, 350, 350, 350));
 			lblIntroduccion.setForeground(Color.BLACK);
 			lblIntroduccion.setFont(fontPersonal);
-			lblIntroduccion.setBackground(new Color(255, 255, 255, 200)); // Blanco con transparencia
+			lblIntroduccion.setBackground(new Color(255, 255, 255, 200));
 			lblIntroduccion.setOpaque(false);
 			lblIntroduccion.setHorizontalAlignment(SwingConstants.CENTER);
 			lblIntroduccion.setVerticalAlignment(SwingConstants.CENTER);
@@ -70,11 +64,11 @@ public class EntradaJuego extends JFrame {
 			txtpnenEstaEscuela = new JTextPane();
 			txtpnenEstaEscuela.setEditable(false);
 			txtpnenEstaEscuela.setBounds(0, 0, 1264, 681);
-			txtpnenEstaEscuela.setBackground(new Color(255, 255, 255, 180)); // Blanco con opacidad (RGBA)
+			txtpnenEstaEscuela.setBackground(new Color(255, 255, 255, 180));
 			txtpnenEstaEscuela.setOpaque(true);
 			contentPane.add(txtpnenEstaEscuela);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("No ha cargado el font correctamente");
 			e.printStackTrace();
 		}
 
@@ -97,7 +91,7 @@ public class EntradaJuego extends JFrame {
         idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
     }
 	
-//TODO ESTA PARTE PERMITE CREAR UNA ANIMACION AL PULSAR EL RATON
+//TODO ESTA PARTE PERMITE GENERA UNA ANIMACION SOBRE EL PUNTERO DEL RATON AL PULSARLO
 //	   NO FUNCIONA SI EL RATON ESTA EN MOVIMIENTO
 	
 //	public MouseListener animacionPulsarRaton() {
