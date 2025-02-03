@@ -43,7 +43,7 @@ public class APrimeraPueba extends JFrame {
         JButton btnPizarra = new JButton("");
         btnPizarra.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		 APizarra ventana = new APizarra();
+        		 SopaDeLetras ventana = new SopaDeLetras();
         	        ventana.setVisible(true);
         	        dispose();        		
         	}
@@ -58,6 +58,7 @@ public class APrimeraPueba extends JFrame {
         lblNewLabel.setIcon(iconoEscalado);
         lblNewLabel.setBounds(0, 0, 1264, 681);
         contentPane.add(lblNewLabel);
+        
        
         
         
