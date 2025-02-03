@@ -1,6 +1,6 @@
 package com.bilboSKP.view;
 
-import com.bilboSKP.UI.PantallaInicioFrame;
+import com.bilboSKP.partida.UI.BSalaDeImpresoraFrame;
 import com.bilboSKP.partida.UI.BSegundaPruebaFrame;
 
 public class App {

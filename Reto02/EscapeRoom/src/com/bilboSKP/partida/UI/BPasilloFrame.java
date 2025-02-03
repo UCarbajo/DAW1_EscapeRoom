@@ -11,13 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
 public class BPasilloFrame extends JFrame {
 
 	private JPanel contentPane;
 
-	public BPasilloFrame() {
+	public BPasilloFrame(Locale local) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
@@ -33,7 +34,7 @@ public class BPasilloFrame extends JFrame {
 		JButton btnFlechaIzquierda = new JButton("");
 		btnFlechaIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BSalaDeImpresoraFrame ventana = new BSalaDeImpresoraFrame();
+				BSalaDeImpresoraFrame ventana = new BSalaDeImpresoraFrame(local);
 				ventana.setVisible(true);
 				dispose();
 			}
