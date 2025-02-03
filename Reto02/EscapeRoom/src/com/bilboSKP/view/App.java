@@ -7,7 +7,7 @@ public class App {
 
 	public static void main(String[] args) {
 
-		BSegundaPruebaFrame ventana = new BSegundaPruebaFrame();
+		PantallaInicioFrame ventana = new PantallaInicioFrame();
 		ventana.setVisible(true);
 		
 	}
