@@ -13,9 +13,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +24,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class BSegundaPruebaFrame extends JFrame {
@@ -33,9 +33,15 @@ public class BSegundaPruebaFrame extends JFrame {
 	private JLabel lblEnunciado;
 	private JLabel lblFondoEnunciado;
 	private JButton btnContinuar;
+	private JButton btnEnunciado;
+	private JButton btnPistas;
 	private final int[][] coordenadasIniciales = { { 30, 35 }, { 230, 435 }, { 30, 435 }, { 230, 35 }, { 30, 235 },{ 230, 235 } };
 	private final int[][] coordenadasCorrectas = { { 500, 25 }, { 500, 225 }, { 500, 425 }, { 700, 25 }, { 700, 225 },{ 700, 425 } };
 	private Font fontPersonal;
+	private ImageIcon scaledImg;
+	private JButton btnPrimeraPista;
+	private JButton btnSegundaPista;
+	private JButton btnTerceraPista;
 	
 	public BSegundaPruebaFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,12 +87,6 @@ public class BSegundaPruebaFrame extends JFrame {
 			}
 		});
 		
-		JButton btnPistas= new JButton("LISTO");
-		btnPistas.setOpaque(false);
-		btnPistas.setEnabled(false);
-		btnPistas.setBounds(1061, 390, 149, 100);
-		contentPane.add(btnPistas);
-		
 		btnContinuar.setBounds((enunciadoPane.getWidth() - 320) / 2, 572, 320, 60);
 		btnContinuar.setFont(fontPersonal);
 		btnContinuar.setForeground(Color.black);
@@ -104,16 +104,53 @@ public class BSegundaPruebaFrame extends JFrame {
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
 		lblEnunciado.setFont(fontPersonal);
-		lblEnunciado.setText("<html><center><p>PRUEBA 02</p><br><p>Te encuentras varios trozos de papel rotos en el suelo, intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, te das cuenta de que cada trozo tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo tienen que estar ordenados.</p></center></html>");
+		lblEnunciado.setText("<html><center><p>PRUEBA 02</p><br><p>Mientras examinas el lugar, notas varios trozos de papel rotos esparcidos por el suelo. Intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, descubres que cada fragmento tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo deben estar ordenados.</p></center></html>");
 		lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
 		lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
 		enunciadoPane.add(lblEnunciado);
 		
+		btnPrimeraPista = new JButton("DESBLOQUEAR PRIMERA PISTA");
+		btnPrimeraPista.setBounds(265, 180, 740, 100);
+		btnPrimeraPista.setVisible(false);
+		enunciadoPane.add(btnPrimeraPista);
+		
+		btnSegundaPista = new JButton("DESBLOQUEAR SEGUNDA PISTA");
+		btnSegundaPista.setBounds(265, 290, 740, 100);
+		btnSegundaPista.setVisible(false);
+		enunciadoPane.add(btnSegundaPista);
+		
+		btnTerceraPista = new JButton("DESBLOQUEAR TERCERA PISTA");
+		btnTerceraPista.setBounds(265, 400, 740, 100);
+		btnTerceraPista.setVisible(false);
+		enunciadoPane.add(btnTerceraPista);
+		
 		lblFondoEnunciado = new JLabel();
 		lblFondoEnunciado.setBounds(10,10, 1246, 663);
 		lblFondoEnunciado.setIcon(fondoEnunciado);
 		enunciadoPane.add(lblFondoEnunciado);
+		
+		btnEnunciado = new JButton("ENUNCIADO");
+		btnEnunciado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enunciadoPane.setVisible(true);
+				visibilidadEnunciadoPane(true, false);
+			}
+		});
+		btnEnunciado.setOpaque(false);
+		btnEnunciado.setBounds(1027, 50, 182, 50);
+		contentPane.add(btnEnunciado);
+		
+		btnPistas = new JButton("PISTAS");
+		btnPistas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enunciadoPane.setVisible(true);
+				visibilidadEnunciadoPane(false, true);
+			}
+		});
+		btnPistas.setOpaque(false);
+		btnPistas.setBounds(1027, 120, 182, 50);
+		contentPane.add(btnPistas);
 		
 		
 		// Crear los JLabel con la funcionalidad de arrastre
@@ -140,12 +177,11 @@ public class BSegundaPruebaFrame extends JFrame {
 
 		});
 		btnListo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnListo.setBounds(1061, 531, 149, 100);
+		btnListo.setBounds(1028, 531, 182, 100);
 		btnListo.setOpaque(false);
-		btnListo.setEnabled(false);
-		
+		btnListo.setEnabled(false);		
 		contentPane.add(btnListo);
-
+		
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				enunciadoPane.setVisible(false);
@@ -158,16 +194,17 @@ public class BSegundaPruebaFrame extends JFrame {
 		lblImagenFondo.setBounds(0, 0, 1280, 720);
 		lblImagenFondo.setIcon(fondoPantalla);
 		contentPane.add(lblImagenFondo);
+
 	}
 
-	private ImageIcon crearScaledImage(String string, int x, int y) {
-		ImageIcon icono = new ImageIcon(string);
+	private ImageIcon crearScaledImage(String rutaImagen, int x, int y) {
+		ImageIcon icono = new ImageIcon(rutaImagen);
 		Image img = icono.getImage();
 		Image img2 = img.getScaledInstance(x, y, Image.SCALE_SMOOTH);
 		ImageIcon scaledImg = new ImageIcon(img2);
 		return scaledImg;
 	}
-
+	
 	private void desactivarMouseListener(ArrayList<JLabel> listaTrozosPapel) {
 		for(JLabel trozoPapel: listaTrozosPapel) {
 			for(MouseListener mouseListener:trozoPapel.getMouseListeners()) {
@@ -245,6 +282,15 @@ public class BSegundaPruebaFrame extends JFrame {
 		return moverRaton;
 	}
 
+	private void visibilidadEnunciadoPane(boolean visibilidadEnunciado, boolean visibilidadPista) {
+		lblEnunciado.setVisible(visibilidadEnunciado);
+		btnContinuar.setVisible(visibilidadEnunciado);
+		
+		btnPrimeraPista.setVisible(visibilidadPista);
+		btnSegundaPista.setVisible(visibilidadPista);
+		btnTerceraPista.setVisible(visibilidadPista);
+	}
+	
 	// METODO Creacion label
 	private JLabel crearLabel(int x, int y, int i) {
 		ImageIcon icon = new ImageIcon(obtenerPosicionImagen(i));

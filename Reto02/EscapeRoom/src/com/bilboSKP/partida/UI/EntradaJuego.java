@@ -41,13 +41,7 @@ public class EntradaJuego extends JFrame {
 		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-<<<<<<< HEAD
 
-		// TODO ESTA PARTE NO ESTA OPERATIVA
-		contentPane.addMouseListener(animacionPulsarRaton());
-
-=======
->>>>>>> 72562778afc3f0f3489ea88e9e0fa44c525e68ec
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -100,53 +94,4 @@ public class EntradaJuego extends JFrame {
         locale = local;  
         idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
     }
-<<<<<<< HEAD
-	
-//TODO ESTA PARTE PERMITE GENERA UNA ANIMACION SOBRE EL PUNTERO DEL RATON AL PULSARLO
-//	   NO FUNCIONA SI EL RATON ESTA EN MOVIMIENTO
-	
-	public MouseListener animacionPulsarRaton() {
-		return new MouseAdapter() {
-			private JLabel lblMouseAnimacion = null; // El JLabel para la animación
-			private Timer currentTimer; // Para guardar el Timer actual
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// Si ya hay una animación en pantalla, la eliminamos antes de crear una nueva
-				if (lblMouseAnimacion != null && lblMouseAnimacion.getParent() != null) {
-					contentPane.remove(lblMouseAnimacion);
-					contentPane.revalidate();
-					contentPane.repaint();
-				}
-
-				// Creamos una nueva animación
-				ImageIcon animacion = new ImageIcon("imagenes/mouseClickAnimation.gif");
-				lblMouseAnimacion = new JLabel(animacion);
-				int width = animacion.getIconWidth();
-				int height = animacion.getIconHeight();
-				lblMouseAnimacion.setBounds(e.getX() - width / 2, e.getY() - height / 2, width, height);
-
-				contentPane.add(lblMouseAnimacion);
-				contentPane.revalidate();
-				contentPane.repaint();
-
-				// Iniciamos un nuevo Timer para eliminar la animación después de 400ms
-				if (currentTimer != null && currentTimer.isRunning()) {
-					currentTimer.stop(); // Detenemos el Timer anterior si está corriendo
-				}
-
-				currentTimer = new Timer(400, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						contentPane.remove(lblMouseAnimacion);
-						contentPane.revalidate();
-						contentPane.repaint();
-					}
-				});
-				currentTimer.start(); // Iniciamos el nuevo Timer
-			}
-		};
-	}
-=======
->>>>>>> 72562778afc3f0f3489ea88e9e0fa44c525e68ec
 }
