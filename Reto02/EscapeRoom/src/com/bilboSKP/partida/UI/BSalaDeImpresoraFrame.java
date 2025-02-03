@@ -1,23 +1,23 @@
 package com.bilboSKP.partida.UI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class BSalaDeImpresoraFrame extends JFrame {
 
 	private JPanel contentPane;
-	
-	public BSalaDeImpresoraFrame() {
+	public BSalaDeImpresoraFrame(Locale local) {
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
@@ -48,7 +48,7 @@ public class BSalaDeImpresoraFrame extends JFrame {
 		JButton btnFlechaAbajo = new JButton("");
 		btnFlechaAbajo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BPasilloFrame ventana = new BPasilloFrame();
+				BPasilloFrame ventana = new BPasilloFrame(local);
 				ventana.setVisible(true);
 				dispose();
 			}
