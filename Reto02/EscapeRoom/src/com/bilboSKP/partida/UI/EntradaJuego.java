@@ -41,10 +41,13 @@ public class EntradaJuego extends JFrame {
 		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+<<<<<<< HEAD
 
 		// TODO ESTA PARTE NO ESTA OPERATIVA
 		contentPane.addMouseListener(animacionPulsarRaton());
 
+=======
+>>>>>>> 72562778afc3f0f3489ea88e9e0fa44c525e68ec
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -90,12 +93,14 @@ public class EntradaJuego extends JFrame {
 		lblEntradaCole.setOpaque(true);
 		lblEntradaCole.setForeground(Color.black);
 		contentPane.add(lblEntradaCole);
+		
 	}
 	
 	private void cambiarIdioma(Locale local) {
         locale = local;  
         idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
     }
+<<<<<<< HEAD
 	
 //TODO ESTA PARTE PERMITE GENERA UNA ANIMACION SOBRE EL PUNTERO DEL RATON AL PULSARLO
 //	   NO FUNCIONA SI EL RATON ESTA EN MOVIMIENTO
@@ -142,4 +147,6 @@ public class EntradaJuego extends JFrame {
 			}
 		};
 	}
+=======
+>>>>>>> 72562778afc3f0f3489ea88e9e0fa44c525e68ec
 }
