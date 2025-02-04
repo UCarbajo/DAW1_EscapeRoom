@@ -6,151 +6,249 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SopaDeLetras extends JFrame {
 
-    private JPanel contentPane;
-    private JTextArea palabraSeleccionada;
-    private Set<String> palabrasCorrectas = Set.of("PALABRAS", "DUELEN", "MÁS", "CREES"); // Palabras correctas
-    private ArrayList<JButton> botonesSeleccionados = new ArrayList<>();
-    private String[][] sopa = {
-            {"P", "X", "X", "X", "B", "X", "M", "D"},
-            {"D", "A", "E", "X", "E", "N", "Á", "U"},
-            {"M", "C", "L", "X", "X", "X", "S", "E"},
-            {"C", "R", "E", "A", "S", "X", "X", "L"},
-            {"X", "R", "X", "E", "B", "X", "X", "E"},
-            {"C", "X", "X", "X", "S", "R", "X", "N"},
-            {"X", "X", "E", "X", "S", "X", "A", "X"},
-            {"C", "R", "E", "E", "S", "X", "X", "S"}
-    };
-    private JLabel[] fraseHuecos;
+	private JPanel contentPane;
+	private JTextArea palabraSeleccionada;
+	private Map<String, Integer> palabrasCorrectas = new HashMap<>();
+	private ArrayList<JButton> botonesSeleccionados = new ArrayList<>();
+	private ArrayList<Point> posicionesSeleccionadas = new ArrayList<>();
+	private String[][] sopa = {
+        	{"P", "A", "L", "A", "B", "R", "A", "S"},
+        	{"D", "A", "D", "X", "E", "N", "Á", "U"},
+        	{"M", "C", "U", "X", "X", "Á", "M", "E"},
+        	{"C", "R", "E", "A", "S", "Á", "X", "L"},
+        	{"X", "R", "L", "E", "S", "X", "X", "E"},
+        	{"C", "X", "E", "X", "S", "R", "X", "N"},
+        	{"X", "X", "N", "X", "S", "X", "A", "X"},
+        	{"C", "R", "E", "E", "S", "X", "X", "S"}
+	};
+	private JLabel[] fraseHuecos;
+	private JButton[][] botones;
+	private Map<String, ArrayList<Point>> palabrasYPosiciones = new HashMap<>();
 
-    public SopaDeLetras() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1280, 720);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+	public SopaDeLetras() {
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	setBounds(100, 100, 1280, 720);
+    	contentPane = new JPanel();
+    	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    	setContentPane(contentPane);
+    	contentPane.setLayout(null);
 
-        // Imagen de fondo
-        JLabel lblFondo = new JLabel();
-        lblFondo.setIcon(new ImageIcon("imagenes/PzrrA.jpeg"));
-        lblFondo.setBounds(0, 0, 1280, 720);
-        contentPane.add(lblFondo);
+    	JLabel lblFondo = new JLabel();
+    	lblFondo.setIcon(new ImageIcon("imagenes/PzrrA.jpeg"));
+    	lblFondo.setBounds(0, 0, 1280, 720);
+    	contentPane.add(lblFondo);
 
-        // Panel izquierdo para la frase con huecos
-        JPanel panelFrase = new JPanel();
-        panelFrase.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        panelFrase.setBounds(300, 150, 600, 50);
-        lblFondo.add(panelFrase);
+    	// Panel de la frase con huecos
+    	JPanel panelFrase = new JPanel();
+    	panelFrase.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+    	panelFrase.setBounds(300, 150, 600, 50);
+    	lblFondo.add(panelFrase);
 
-        String[] frasePartes = {"Las", "_____", "_____", "_____", "de lo que", "_____"}; // Ajusta la frase aquí si es necesario
-        fraseHuecos = new JLabel[frasePartes.length];
+    	String[] frasePartes = {"Las", "_____", "_____", "_____", "de lo que", "_____"};
+    	fraseHuecos = new JLabel[frasePartes.length];
 
-        for (int i = 0; i < frasePartes.length; i++) {
-            JLabel lblParte = new JLabel(frasePartes[i]);
-            lblParte.setFont(new Font("Arial", Font.BOLD, 18));
-            if (frasePartes[i].equals("_____")) {
-                lblParte.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                lblParte.setPreferredSize(new Dimension(100, 30));
-                lblParte.setHorizontalAlignment(SwingConstants.CENTER);
-                fraseHuecos[i] = lblParte;
-            }
-            panelFrase.add(lblParte);
-        }
+    	palabrasCorrectas.put("PALABRAS", 1);
+    	palabrasCorrectas.put("DUELEN", 2);
+    	palabrasCorrectas.put("MÁS", 3);   
+    	palabrasCorrectas.put("CREES", 5);
 
-        // Panel central para la sopa de letras
-        JPanel panelCentral = new JPanel();
-        panelCentral.setLayout(new GridLayout(sopa.length, sopa[0].length));
-        panelCentral.setBounds(410, 225, 400, 200);
-        lblFondo.add(panelCentral);
+    	for (int i = 0; i < frasePartes.length; i++) {
+        	JLabel lblParte = new JLabel(frasePartes[i]);
+        	lblParte.setFont(new Font("Arial", Font.BOLD, 18));
+        	if (frasePartes[i].equals("_____")) {
+            	lblParte.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            	lblParte.setPreferredSize(new Dimension(100, 30));
+            	lblParte.setHorizontalAlignment(SwingConstants.CENTER);
+            	fraseHuecos[i] = lblParte;
+        	}
+        	panelFrase.add(lblParte);
+    	}
 
-        for (int i = 0; i < sopa.length; i++) {
-            for (int j = 0; j < sopa[i].length; j++) {
-                JButton boton = new JButton(sopa[i][j]);
-                boton.setFont(new Font("Arial", Font.BOLD, 16));
-                panelCentral.add(boton);
+    	// Panel central con la sopa de letras
+    	JPanel panelCentral = new JPanel();
+    	panelCentral.setLayout(new GridLayout(sopa.length, sopa[0].length));
+    	panelCentral.setBounds(410, 225, 400, 200);
+    	lblFondo.add(panelCentral);
 
-                boton.addActionListener(e -> {
-                    if (!botonesSeleccionados.contains(boton)) {
-                        botonesSeleccionados.add(boton);
-                        boton.setBackground(Color.YELLOW);
-                        actualizarPalabraSeleccionada();
-                    } else {
-                        botonesSeleccionados.remove(boton);
-                        boton.setBackground(null);
-                        actualizarPalabraSeleccionada();
-                    }
-                });
-            }
-        }
+    	botones = new JButton[sopa.length][sopa[0].length];
 
-        // Panel inferior con la palabra seleccionada y el botón "Comprobar"
-        JPanel panelInferior = new JPanel();
-        panelInferior.setLayout(new BorderLayout(10, 10));
-        panelInferior.setBounds(410, 450, 400, 50);
-        lblFondo.add(panelInferior);
+    	for (int i = 0; i < sopa.length; i++) {
+        	for (int j = 0; j < sopa[i].length; j++) {
+            	JButton boton = new JButton(sopa[i][j]);
+            	boton.setFont(new Font("Arial", Font.BOLD, 16));
+            	panelCentral.add(boton);
+            	botones[i][j] = boton;
 
-        palabraSeleccionada = new JTextArea(1, 20);
-        palabraSeleccionada.setFont(new Font("Arial", Font.PLAIN, 18));
-        palabraSeleccionada.setEditable(false);
-        panelInferior.add(palabraSeleccionada, BorderLayout.CENTER);
+            	final int row = i;
+            	final int col = j;
 
-        JButton btnComprobar = new JButton("Comprobar");
-        btnComprobar.setFont(new Font("Arial", Font.BOLD, 16));
-        panelInferior.add(btnComprobar, BorderLayout.EAST);
+            	boton.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                    	if (!botonesSeleccionados.contains(boton)) {
+                        	botonesSeleccionados.add(boton);
+                        	boton.setBackground(Color.YELLOW);
+                        	posicionesSeleccionadas.add(new Point(row, col));
+                        	actualizarPalabraSeleccionada();
+                    	} else {
+                        	botonesSeleccionados.remove(boton);
+                        	boton.setBackground(null);
+                        	removerPosicionSeleccionada(row, col);
+                        	actualizarPalabraSeleccionada();
+                    	}
+                	}
+            	});
+        	}
+    	}
 
-        btnComprobar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                verificarPalabra();
-            }
-        });
-    }
+    	// Panel inferior con el área de palabra seleccionada y el botón comprobar
+    	JPanel panelInferior = new JPanel();
+    	panelInferior.setLayout(new BorderLayout(10, 10));
+    	panelInferior.setBounds(410, 450, 400, 50);
+    	lblFondo.add(panelInferior);
 
-    private void actualizarPalabraSeleccionada() {
-        StringBuilder sb = new StringBuilder();
-        for (JButton boton : botonesSeleccionados) {
-            sb.append(boton.getText());
-        }
-        palabraSeleccionada.setText(sb.toString());
-    }
+    	palabraSeleccionada = new JTextArea(1, 20);
+    	palabraSeleccionada.setFont(new Font("Arial", Font.PLAIN, 18));
+    	palabraSeleccionada.setEditable(false);
+    	panelInferior.add(palabraSeleccionada, BorderLayout.CENTER);
 
-    private void verificarPalabra() {
-        String palabra = palabraSeleccionada.getText().toUpperCase();
-        if (palabrasCorrectas.contains(palabra)) {
-            // Rellenar la frase con la palabra encontrada
-            for (int i = 0; i < fraseHuecos.length; i++) {
-                JLabel hueco = fraseHuecos[i];
-                if (hueco != null && hueco.getText().equals("_____")) {
-                    hueco.setText(palabra);
-                    hueco.setForeground(Color.GREEN);
-                    break;
-                }
-            }
-            // Resetear selección
-            botonesSeleccionados.forEach(boton -> boton.setBackground(null));
-            botonesSeleccionados.clear();
-            palabraSeleccionada.setText("");
-        } else {
-            JOptionPane.showMessageDialog(this, "Palabra incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
-            // Resetear selección
-            botonesSeleccionados.forEach(boton -> boton.setBackground(null));
-            botonesSeleccionados.clear();
-            palabraSeleccionada.setText("");
-        }
-    }
+    	JButton btnComprobar = new JButton("Comprobar");
+    	btnComprobar.setFont(new Font("Arial", Font.BOLD, 16));
+    	panelInferior.add(btnComprobar, BorderLayout.EAST);
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                SopaDeLetras frame = new SopaDeLetras();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
+    	btnComprobar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+            	verificarPalabra();
+        	}
+    	});
+
+    	inicializarPalabras();
+	}
+
+	// Métodos auxiliares
+
+	private void actualizarPalabraSeleccionada() {
+    	StringBuilder sb = new StringBuilder();
+    	for (JButton boton : botonesSeleccionados) {
+        	sb.append(boton.getText());
+    	}
+    	palabraSeleccionada.setText(sb.toString());
+	}
+
+	private void removerPosicionSeleccionada(int row, int col) {
+    	posicionesSeleccionadas.removeIf(p -> p.x == row && p.y == col);
+	}
+
+	private void verificarPalabra() {
+    	String palabra = palabraSeleccionada.getText().toUpperCase();
+
+    	if (palabrasYPosiciones.containsKey(palabra)) {
+        	ArrayList<Point> posicionesPalabra = palabrasYPosiciones.get(palabra);
+        	if (compararPosiciones(posicionesPalabra, posicionesSeleccionadas)) {
+            	colocarPalabraEnFrase(palabra);
+            	// Restablecer la selección
+            	for (JButton boton : botonesSeleccionados) {
+                	boton.setEnabled(false);
+                	boton.setBackground(Color.GREEN);
+            	}
+            	botonesSeleccionados.clear();
+            	posicionesSeleccionadas.clear();
+            	palabraSeleccionada.setText("");
+        	} else {
+            	JOptionPane.showMessageDialog(this, "Las letras seleccionadas no corresponden a la ubicación correcta de la palabra.", "Posiciones incorrectas", JOptionPane.ERROR_MESSAGE);
+            	restablecerSeleccion();
+        	}
+    	} else {
+        	JOptionPane.showMessageDialog(this, "Palabra incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+        	restablecerSeleccion();
+    	}
+	}
+
+	private boolean compararPosiciones(ArrayList<Point> posicionesPalabra, ArrayList<Point> posicionesUsuario) {
+    	if (posicionesPalabra.size() != posicionesUsuario.size()) {
+        	return false;
+    	}
+
+    	// Comparator para ordenar las posiciones
+    	Comparator<Point> comparator = new Comparator<Point>() {
+        	public int compare(Point p1, Point p2) {
+            	if (p1.x != p2.x) {
+                	return Integer.compare(p1.x, p2.x);
+            	} else {
+                	return Integer.compare(p1.y, p2.y);
+            	}
+        	}
+    	};
+
+    	Collections.sort(posicionesPalabra, comparator);
+    	Collections.sort(posicionesUsuario, comparator);
+
+    	for (int i = 0; i < posicionesPalabra.size(); i++) {
+        	Point p1 = posicionesPalabra.get(i);
+        	Point p2 = posicionesUsuario.get(i);
+        	if (!p1.equals(p2)) {
+            	return false;
+        	}
+    	}
+    	return true;
+	}
+
+	private void colocarPalabraEnFrase(String palabra) {
+    	int index = palabrasCorrectas.get(palabra);
+    	JLabel hueco = fraseHuecos[index];
+
+    	if (hueco != null && hueco.getText().equals("_____")) {
+        	hueco.setText(palabra);
+        	hueco.setForeground(Color.GREEN);
+    	}
+	}
+
+	private void restablecerSeleccion() {
+    	for (JButton boton : botonesSeleccionados) {
+        	boton.setBackground(null);
+    	}
+    	botonesSeleccionados.clear();
+    	posicionesSeleccionadas.clear();
+    	palabraSeleccionada.setText("");
+	}
+
+	private void inicializarPalabras() {
+    	// Palabra "PALABRAS", horizontal en la fila 0, columnas 0 a 7
+    	ArrayList<Point> posicionesPalabras = new ArrayList<>();
+    	for (int col = 0; col <= 7; col++) {
+        	posicionesPalabras.add(new Point(0, col));
+    	}
+    	palabrasYPosiciones.put("PALABRAS", posicionesPalabras);
+
+    	// Palabra "DUELEN", vertical en la columna 2, filas 1 a 6
+    	ArrayList<Point> posicionesDuelen = new ArrayList<>();
+    	posicionesDuelen.add(new Point(1, 2)); // 'D'
+    	posicionesDuelen.add(new Point(2, 2)); // 'U'
+    	posicionesDuelen.add(new Point(3, 2)); // 'E'
+    	posicionesDuelen.add(new Point(4, 2)); // 'L'
+    	posicionesDuelen.add(new Point(5, 2)); // 'E'
+    	posicionesDuelen.add(new Point(6, 2)); // 'N'
+    	palabrasYPosiciones.put("DUELEN", posicionesDuelen);
+
+    	// Palabra "MÁS", diagonal de (2,6) a (4,4)
+    	ArrayList<Point> posicionesMas = new ArrayList<>();
+    	posicionesMas.add(new Point(2, 6)); // 'M'
+    	posicionesMas.add(new Point(3, 5)); // 'Á'
+    	posicionesMas.add(new Point(4, 4)); // 'S'
+    	palabrasYPosiciones.put("MÁS", posicionesMas);
+
+    	// Palabra "CREES", horizontal en la fila 7, columnas 0 a 4
+    	ArrayList<Point> posicionesCrees = new ArrayList<>();
+    	for (int col = 0; col <= 4; col++) {
+        	posicionesCrees.add(new Point(7, col));
+    	}
+    	palabrasYPosiciones.put("CREES", posicionesCrees);
+	}
 }
+
