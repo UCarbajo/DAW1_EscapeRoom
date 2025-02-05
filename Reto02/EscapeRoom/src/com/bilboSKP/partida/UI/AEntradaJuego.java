@@ -21,7 +21,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class EntradaJuego extends JFrame {
+public class AEntradaJuego extends JFrame {
 
 	private JPanel contentPane;
 	private JTextPane txtpnenEstaEscuela;
@@ -31,7 +31,7 @@ public class EntradaJuego extends JFrame {
 	private JButton btnFlechaArriba;
 	private Font fontPersonal;
 
-	public EntradaJuego(Locale local) {
+	public AEntradaJuego(Locale local) {
 		
 		cambiarIdioma(local);
 		

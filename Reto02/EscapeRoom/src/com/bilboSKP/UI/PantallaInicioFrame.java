@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.bilboSKP.partida.UI.EntradaJuego;
+import com.bilboSKP.partida.UI.AEntradaJuego;
 
 public class PantallaInicioFrame extends JFrame {
 
@@ -138,7 +138,7 @@ public class PantallaInicioFrame extends JFrame {
 			btnEmpezar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//TODO CONECTAR BD Y COMPROBAR SI EL CODIGO EXISTE;
-					EntradaJuego ventana = new EntradaJuego(locale);
+					AEntradaJuego ventana = new AEntradaJuego(locale);
 					ventana.setVisible(true);
 					dispose();
 				}
