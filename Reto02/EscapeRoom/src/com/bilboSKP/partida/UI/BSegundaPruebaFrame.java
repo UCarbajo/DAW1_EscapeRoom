@@ -50,6 +50,8 @@ public class BSegundaPruebaFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		ZDiarioFrame ventanaDiario = new ZDiarioFrame();
 
 		ArrayList<JLabel> listaPosicionesCorrectas = new ArrayList<JLabel>();
 		ArrayList<JLabel> listaTrozosPapel = new ArrayList<JLabel>();
@@ -120,6 +122,11 @@ public class BSegundaPruebaFrame extends JFrame {
 		enunciadoPane.add(lblFondoEnunciado);
 		
 		btnDiario = new JButton("DIARIO");
+		btnDiario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ventanaDiario.setVisible(true);
+			}
+		});
 		btnDiario.setOpaque(false);
 		btnDiario.setBounds(1027, 50, 182, 50);
 		contentPane.add(btnDiario);
