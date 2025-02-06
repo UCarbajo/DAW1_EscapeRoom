@@ -20,22 +20,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class BSegundaPruebaFrame extends JFrame {
 
+	private final int tamanoFrameX = 1280;
+	private final int tamanoFrameY = 720;
 	private JPanel contentPane;
 	private JPanel enunciadoPane;
 	private JLabel lblEnunciado;
 	private JLabel lblFondoEnunciado;
 	private JButton btnEnunciado;
 	private JButton btnPistas;
-	private final int[][] coordenadasIniciales = { { 30, 35 }, { 230, 435 }, { 30, 435 }, { 230, 35 }, { 30, 235 },
-			{ 230, 235 } };
-	private final int[][] coordenadasCorrectas = { { 500, 25 }, { 500, 225 }, { 500, 425 }, { 700, 25 }, { 700, 225 },
-			{ 700, 425 } };
+	private final int[][] coordenadasIniciales = { { 30, 50 }, { 230, 450 }, { 30, 450 }, { 230, 50 }, { 30, 250 },
+			{ 230, 250 } };
+	private final int[][] coordenadasCorrectas = { { 500, 50 }, { 500, 250 }, { 500, 450 }, { 700, 50 }, { 700, 250 },
+			{ 700, 450 } };
 	private Font fontPersonal;
 	private JButton btnPrimeraPista;
 	private JButton btnSegundaPista;
@@ -44,8 +49,10 @@ public class BSegundaPruebaFrame extends JFrame {
 	private JButton btnDiario;
 
 	public BSegundaPruebaFrame() {
+		
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 20, 1280, 720);
+		setBounds(50, 20, tamanoFrameX, tamanoFrameY);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,17 +75,17 @@ public class BSegundaPruebaFrame extends JFrame {
 		}
 
 		// TODO REVISAR ESTA PARTE DEL CODIGO.
-		ImageIcon fondoEnunciado = crearScaledImage("imagenes/fondoEnunciado.png", 1266, 683);
+		ImageIcon fondoEnunciado = crearScaledImage("imagenes/fondoEnunciado.png", tamanoFrameX, tamanoFrameY);
 
 		enunciadoPane = new JPanel();
-		enunciadoPane.setBounds(0, 0, 1266, 683);
+		enunciadoPane.setBounds(0, 0, tamanoFrameX, tamanoFrameY);
 		enunciadoPane.setOpaque(false);
 		enunciadoPane.setBorder(BorderFactory.createLineBorder(Color.black, 10));
 		enunciadoPane.setLayout(null);
 		contentPane.add(enunciadoPane);
 
 		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(10, 10, 1246, 663);
+		lblEnunciado.setBounds(10, 10, tamanoFrameX, tamanoFrameY);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
 		lblEnunciado.setFont(fontPersonal);
@@ -117,7 +124,7 @@ public class BSegundaPruebaFrame extends JFrame {
 		enunciadoPane.add(btnCerrar);
 
 		lblFondoEnunciado = new JLabel();
-		lblFondoEnunciado.setBounds(10, 10, 1246, 663);
+		lblFondoEnunciado.setBounds(10, 10, 1260, 699);
 		lblFondoEnunciado.setIcon(fondoEnunciado);
 		enunciadoPane.add(lblFondoEnunciado);
 		
@@ -164,13 +171,48 @@ public class BSegundaPruebaFrame extends JFrame {
 		btnListo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean todoCorrecto = true;
+				
+				JLabel menuCorrectoPane = new JLabel();
+			
+				int tamanoMenuCorrectoX = 400;
+				int tamanoMenuCorrectoY = 200;
+				menuCorrectoPane.setBounds((contentPane.getWidth()-tamanoMenuCorrectoX)/2, (contentPane.getHeight()-tamanoMenuCorrectoY)/2, tamanoMenuCorrectoX, tamanoMenuCorrectoY);
+				menuCorrectoPane.setBackground(Color.white);
+				menuCorrectoPane.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+				menuCorrectoPane.setOpaque(true);
+				menuCorrectoPane.setVisible(true);
+				
+				JLabel textoMenu = new JLabel("PRUEBA PRUEBA PRUEBA PRUEBA");
+				int tamanoTextMenuX = 10;
+				int tamanoTextoMenuY = 10;
+				textoMenu.setBounds((50), 30, 300, 100);
+				menuCorrectoPane.add(textoMenu);
+				menuCorrectoPane.repaint();
+				menuCorrectoPane.revalidate();
+				
+				JButton btnContinuar = new JButton("Continuar");
+				int tamanoContinuarX = 150;
+				int tamanoContinuarY = 50;
+				btnContinuar.setBounds((menuCorrectoPane.getWidth() - tamanoContinuarX)/2, (tamanoMenuCorrectoY/2), tamanoContinuarX, tamanoContinuarY);
+				menuCorrectoPane.add(btnContinuar);
+				
+				contentPane.add(menuCorrectoPane, -1);
+				menuCorrectoPane.repaint();
+				menuCorrectoPane.revalidate();
+				
+				
 				if (!comprobarResultado(listaPosicionesCorrectas, listaTrozosPapel)) {
 					todoCorrecto = false;
 				}
 				if (todoCorrecto) {
 					System.out.println("¡Todo correcto!");
+				    
 				} else {
 					System.out.println("Algunos trozos no están en el lugar correcto.");
+					for(int i = 0; i < listaTrozosPapel.size(); i++) {
+						JLabel label = listaTrozosPapel.get(i);
+						label.setLocation(coordenadasIniciales[i][0],coordenadasIniciales[i][1]);
+					}
 				}
 			}
 

@@ -16,12 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class ZDiarioFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblImagenFondo;
+	private JButton btnCerrar;
 	private Font fontNumeros;
 	private Font fontTexto;
 	private final int tamanoNumeroAnchoLargo = 200;
@@ -37,6 +40,7 @@ public class ZDiarioFrame extends JFrame {
 	private int paginaCuarderno = 0;
 
 	public ZDiarioFrame() {
+		
 
 		try {
 			fontNumeros = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Marker_SD_Italic.ttf"));
@@ -52,8 +56,8 @@ public class ZDiarioFrame extends JFrame {
 			System.out.println("Error, font no cargado.");
 			e1.printStackTrace();
 		}
-
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setUndecorated(true);
 		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,11 +67,11 @@ public class ZDiarioFrame extends JFrame {
 		crearNumeros();
 
 		JButton btnPaginaAnterior = new JButton("P\u00E1gina Anterior");
-		btnPaginaAnterior.setBounds(1044, 603, 138, 44);
+		btnPaginaAnterior.setBounds(1044, 626, 138, 44);
 		contentPane.add(btnPaginaAnterior);
 
 		JButton btnPaginaSiguiente = new JButton("P\u00E1gina Anterior");
-		btnPaginaSiguiente.setBounds(60, 603, 138, 44);
+		btnPaginaSiguiente.setBounds(60, 626, 138, 44);
 		contentPane.add(btnPaginaSiguiente);
 
 		lbltextoPrimeraPagina = new JLabel();
@@ -80,15 +84,15 @@ public class ZDiarioFrame extends JFrame {
 		lbltextoPrimeraPagina.setFont(fontTexto);
 		lbltextoPrimeraPagina.setVisible(false);
 		contentPane.add(lbltextoPrimeraPagina);
-		
+
 		lbltextoSegundaPagina = new JLabel();
 		lbltextoSegundaPagina.setVerticalAlignment(SwingConstants.TOP);
 		lbltextoSegundaPagina.setHorizontalAlignment(SwingConstants.CENTER);
 		lbltextoSegundaPagina.setBounds(688, 63, 494, 477);
-		lbltextoSegundaPagina.setText("<html><p>Entrada del Diario:</p><br>" +
-			    "<p>Hoy me di cuenta de que han roto mis p\u00E1ginas. Mis pensamientos est\u00E1n dispersos. No puedo dejar que sigan haciéndolo.</p><br>" +
-			    "<p>He creado un <strong>c\u00F3digo secreto:</strong> \"Cuando los pares miran al cielo y los impares al suelo, la uni\u00F3n se encontrar\u00E1 en el centro.\"</p><br>" +
-			    "<p>Así, aunque intenten callarme, mis palabras seguir\u00E1n protegidas, esperando ser descubiertas por quien busque.</p><html>");
+		lbltextoSegundaPagina.setText("<html><p>Entrada del Diario:</p><br>"
+				+ "<p>Hoy me di cuenta de que han roto mis p\u00E1ginas. Mis pensamientos est\u00E1n dispersos. No puedo dejar que sigan haciéndolo.</p><br>"
+				+ "<p>He creado un <strong>c\u00F3digo secreto:</strong> \"Cuando los pares miran al cielo y los impares al suelo, la uni\u00F3n se encontrar\u00E1 en el centro.\"</p><br>"
+				+ "<p>Así, aunque intenten callarme, mis palabras seguir\u00E1n protegidas, esperando ser descubiertas por quien busque.</p><html>");
 		lbltextoSegundaPagina.setFont(fontTexto);
 		lbltextoSegundaPagina.setVisible(false);
 		contentPane.add(lbltextoSegundaPagina);
@@ -103,7 +107,7 @@ public class ZDiarioFrame extends JFrame {
 		lbltextoTerceraPagina.setFont(fontTexto);
 		lbltextoTerceraPagina.setVisible(false);
 		contentPane.add(lbltextoTerceraPagina);
-		
+
 		btnPaginaAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (paginaCuarderno < 2) {
@@ -122,10 +126,37 @@ public class ZDiarioFrame extends JFrame {
 			}
 		});
 
-		ImageIcon imgFondo = crearScaledImage("imagenes/diario.png", 1264, 681);
+		ImageIcon imgCerrar = crearScaledImage("imagenes/simboloCerrar.png", 50, 50);
+		ImageIcon imgCerrarRojo = crearScaledImage("imagenes/simboloCerrarRojo.png", 50, 50);
+
+		btnCerrar = new JButton();
+		btnCerrar.setIcon(imgCerrar);
+		btnCerrar.setBackground(null);
+		btnCerrar.setBorderPainted(false);
+		btnCerrar.setContentAreaFilled(false);
+		btnCerrar.setBounds(1119, 30, 50, 50);
+		btnCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCerrar.setIcon(imgCerrarRojo);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCerrar.setIcon(imgCerrar);
+			}
+		});
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		contentPane.add(btnCerrar);
+
+		ImageIcon imgFondo = crearScaledImage("imagenes/diario.png", 1280, 720);
 
 		lblImagenFondo = new JLabel();
-		lblImagenFondo.setBounds(0, 0, 1264, 681);
+		lblImagenFondo.setBounds(0, 0, 1280, 720);
 		lblImagenFondo.setIcon(imgFondo);
 		contentPane.add(lblImagenFondo);
 
