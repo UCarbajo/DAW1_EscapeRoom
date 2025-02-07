@@ -41,12 +41,14 @@ public class BSegundaPruebaFrame extends JFrame {
 			{ 230, 250 } };
 	private final int[][] coordenadasCorrectas = { { 500, 50 }, { 500, 250 }, { 500, 450 }, { 700, 50 }, { 700, 250 },
 			{ 700, 450 } };
-	private Font fontPersonal;
+	private Font fontNumeros;
+	private Font fontTexto;
 	private JButton btnPrimeraPista;
 	private JButton btnSegundaPista;
 	private JButton btnTerceraPista;
 	private JButton btnCerrar;
 	private JButton btnDiario;
+	private JLabel lblErrorMsg;
 
 	public BSegundaPruebaFrame() {
 		
@@ -64,11 +66,14 @@ public class BSegundaPruebaFrame extends JFrame {
 		ArrayList<JLabel> listaTrozosPapel = new ArrayList<JLabel>();
 
 		try {
-			fontPersonal = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Marker_SD.ttf"));
-			fontPersonal = fontPersonal.deriveFont(50f);
+			fontNumeros = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Marker_SD.ttf"));
+			fontNumeros = fontNumeros.deriveFont(50f);
+			fontTexto = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/AppleGaramond.ttf"));
+			fontTexto = fontTexto.deriveFont(25f);
+			
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(fontPersonal);
-
+			ge.registerFont(fontNumeros);
+			ge.registerFont(fontTexto);
 		} catch (FontFormatException | IOException e1) {
 			System.out.println("Error, font no cargado.");
 			e1.printStackTrace();
@@ -88,7 +93,7 @@ public class BSegundaPruebaFrame extends JFrame {
 		lblEnunciado.setBounds(10, 10, tamanoFrameX, tamanoFrameY);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
-		lblEnunciado.setFont(fontPersonal);
+		lblEnunciado.setFont(fontNumeros);
 		lblEnunciado.setText(
 				"<html><center><p>PRUEBA 02</p><br><p>Mientras examinas el lugar, notas varios trozos de papel rotos esparcidos por el suelo. Intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, descubres que cada fragmento tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo deben estar ordenados.</p></center></html>");
 		lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
@@ -128,6 +133,12 @@ public class BSegundaPruebaFrame extends JFrame {
 		lblFondoEnunciado.setIcon(fondoEnunciado);
 		enunciadoPane.add(lblFondoEnunciado);
 		
+		lblErrorMsg = new JLabel("<html><cente>Algunos trozos no están en el lugar correcto.</cente></html>");
+		lblErrorMsg.setForeground(Color.red);
+		lblErrorMsg.setBounds(1030, 478, 173, 39);
+		lblErrorMsg.setVisible(false);
+		contentPane.add(lblErrorMsg);
+		
 		btnDiario = new JButton("DIARIO");
 		btnDiario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -141,7 +152,6 @@ public class BSegundaPruebaFrame extends JFrame {
 		btnEnunciado = new JButton("ENUNCIADO");
 		btnEnunciado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				enunciadoPane.setVisible(true);
 				visibilidadEnunciadoPane(true, false);
 			}
 		});
@@ -152,7 +162,6 @@ public class BSegundaPruebaFrame extends JFrame {
 		btnPistas = new JButton("PISTAS");
 		btnPistas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				enunciadoPane.setVisible(true);
 				visibilidadEnunciadoPane(false, true);
 			}
 		});
@@ -172,43 +181,41 @@ public class BSegundaPruebaFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean todoCorrecto = true;
 				
-				JLabel menuCorrectoPane = new JLabel();
-			
-				int tamanoMenuCorrectoX = 400;
-				int tamanoMenuCorrectoY = 200;
-				menuCorrectoPane.setBounds((contentPane.getWidth()-tamanoMenuCorrectoX)/2, (contentPane.getHeight()-tamanoMenuCorrectoY)/2, tamanoMenuCorrectoX, tamanoMenuCorrectoY);
-				menuCorrectoPane.setBackground(Color.white);
-				menuCorrectoPane.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-				menuCorrectoPane.setOpaque(true);
-				menuCorrectoPane.setVisible(true);
-				
-				JLabel textoMenu = new JLabel("PRUEBA PRUEBA PRUEBA PRUEBA");
-				int tamanoTextMenuX = 10;
-				int tamanoTextoMenuY = 10;
-				textoMenu.setBounds((50), 30, 300, 100);
-				menuCorrectoPane.add(textoMenu);
-				menuCorrectoPane.repaint();
-				menuCorrectoPane.revalidate();
-				
-				JButton btnContinuar = new JButton("Continuar");
-				int tamanoContinuarX = 150;
-				int tamanoContinuarY = 50;
-				btnContinuar.setBounds((menuCorrectoPane.getWidth() - tamanoContinuarX)/2, (tamanoMenuCorrectoY/2), tamanoContinuarX, tamanoContinuarY);
-				menuCorrectoPane.add(btnContinuar);
-				
-				contentPane.add(menuCorrectoPane, -1);
-				menuCorrectoPane.repaint();
-				menuCorrectoPane.revalidate();
-				
-				
 				if (!comprobarResultado(listaPosicionesCorrectas, listaTrozosPapel)) {
 					todoCorrecto = false;
 				}
 				if (todoCorrecto) {
 					System.out.println("¡Todo correcto!");
-				    
+					JLabel menuCorrectoPane = new JLabel();
+					
+					int tamanoMenuCorrectoX = 400;
+					int tamanoMenuCorrectoY = 200;
+					menuCorrectoPane.setBounds((contentPane.getWidth()-tamanoMenuCorrectoX)/2, (contentPane.getHeight()-tamanoMenuCorrectoY)/2, tamanoMenuCorrectoX, tamanoMenuCorrectoY);
+					menuCorrectoPane.setBackground(Color.white);
+					menuCorrectoPane.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+					menuCorrectoPane.setOpaque(true);
+					menuCorrectoPane.setVisible(true);
+					
+					JLabel textoMenu = new JLabel("<html><center>Al juntar los trozos de papel has descubierto una pagina del diario</center></html>");
+					int tamanoTextMenuX = 300;
+					int tamanoTextoMenuY = 100;
+					textoMenu.setBounds(50, 10, tamanoTextMenuX, tamanoTextoMenuY);
+					textoMenu.setFont(fontTexto);
+					menuCorrectoPane.add(textoMenu);
+					menuCorrectoPane.repaint();
+					menuCorrectoPane.revalidate();
+					
+					JButton btnContinuar = new JButton("<html>Continuar<html>");
+					int tamanoContinuarX = 150;
+					int tamanoContinuarY = 50;
+					btnContinuar.setBounds((menuCorrectoPane.getWidth() - tamanoContinuarX)/2, (tamanoMenuCorrectoY/2), tamanoContinuarX, tamanoContinuarY);
+					menuCorrectoPane.add(btnContinuar);
+					
+					contentPane.add(menuCorrectoPane, -1);
+					menuCorrectoPane.repaint();
+					menuCorrectoPane.revalidate();
 				} else {
-					System.out.println("Algunos trozos no están en el lugar correcto.");
+					lblErrorMsg.setVisible(true);
 					for(int i = 0; i < listaTrozosPapel.size(); i++) {
 						JLabel label = listaTrozosPapel.get(i);
 						label.setLocation(coordenadasIniciales[i][0],coordenadasIniciales[i][1]);
@@ -286,6 +293,7 @@ public class BSegundaPruebaFrame extends JFrame {
 						return; // Salir del bucle, ya que hemos encontrado la zona
 					}
 				}
+				//Reiniciamos la posicion del trozo de papel al lugar de origen
 				trozoPapel.setLocation(coordenadasIniciales[i][0], coordenadasIniciales[i][1]);
 			}
 		};
@@ -296,6 +304,7 @@ public class BSegundaPruebaFrame extends JFrame {
 		MouseMotionListener moverRaton = new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent raton) {
+				lblErrorMsg.setVisible(false); 
 				// Actualizar la posición mientras se arrastra
 				trozoPapel.setLocation(
 						Math.max(0,
@@ -314,8 +323,8 @@ public class BSegundaPruebaFrame extends JFrame {
 	}
 
 	private void visibilidadEnunciadoPane(boolean visibilidadEnunciado, boolean visibilidadPista) {
+		enunciadoPane.setVisible(true);
 		lblEnunciado.setVisible(visibilidadEnunciado);
-
 		btnPrimeraPista.setVisible(visibilidadPista);
 		btnSegundaPista.setVisible(visibilidadPista);
 		btnTerceraPista.setVisible(visibilidadPista);

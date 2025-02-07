@@ -1,8 +1,9 @@
-package com.bilboSKP.UI;
+package com.bilboSKP.partida.UI;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,20 +27,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.bilboSKP.partida.UI.AEntradaJuego;
-
-public class PantallaInicioFrame extends JFrame {
+public class AAPantallaInicioFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textCodigo;
 	private JLabel lblIntroduceCodigo;
 	private ResourceBundle idioma;
 	private JButton btnEmpezar;
-	private JTextArea lblTxtTutorialUno;
-	private JTextArea lblTxtTutorialDos;
-	private JTextArea lblTxtTutorialTres;
-	private JTextArea lblTxtTutorialCuatro;
-	private JTextArea lblTxtTutorialCinco;
 	private JLabel lblSeleccionarIdioma;
 	private JLabel lblBanderaEspana;
 	private JLabel lblEspanol;
@@ -48,9 +43,10 @@ public class PantallaInicioFrame extends JFrame {
 	private JButton btnTutorial;
 	private JButton btnAjustes;
 	private JLabel lblImagenNino;
+	private JLabel lblTutorial;
 	private Locale locale;
 	
-	public PantallaInicioFrame() {
+	public AAPantallaInicioFrame() {
 		
 		cambiarIdioma("es");
 		
@@ -74,7 +70,14 @@ public class PantallaInicioFrame extends JFrame {
 			Font fuenteQuickPencilGrande = crearFontQuickPencil(80f);
 			Font fuenteQuickPencilMedianaGrande = crearFontQuickPencil(60f);
 			Font fuenteQuickPencilMediana = crearFontQuickPencil(40f);
+			Font fuenteQuickPencilMedianaPequena = crearFontQuickPencil(27f);
 			Font fuenteQuickPencilPequena = crearFontQuickPencil(25f);
+			
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(fuenteQuickPencilGrande);
+			ge.registerFont(fuenteQuickPencilMedianaGrande);
+			ge.registerFont(fuenteQuickPencilMediana);
+			ge.registerFont(fuenteQuickPencilPequena);
 			
 			btnJugar = new JButton(idioma.getString("label.jugar"));
 			btnJugar.setBounds(163, 159, 335, 100);
@@ -145,61 +148,11 @@ public class PantallaInicioFrame extends JFrame {
 			});
 			
 			//Lo que se muestra al pulsar el boton Tutorial
-			
-			lblTxtTutorialUno = new JTextArea();			
-			lblTxtTutorialUno.setBounds(701, 140, 480, 80);
-			lblTxtTutorialUno.setFont(fuenteQuickPencilPequena);
-			lblTxtTutorialUno.setText(idioma.getString("label.instruccionesTutorial_1"));
-			lblTxtTutorialUno.setLineWrap(true);
-			lblTxtTutorialUno.setWrapStyleWord(true);
-			lblTxtTutorialUno.setEditable(false);
-			lblTxtTutorialUno.setVisible(false);
-			lblTxtTutorialUno.setOpaque(false);
-			contentPane.add(lblTxtTutorialUno);
-			
-			lblTxtTutorialDos = new JTextArea();			
-			lblTxtTutorialDos.setBounds(701, 220, 480, 80);
-			lblTxtTutorialDos.setFont(fuenteQuickPencilPequena);
-			lblTxtTutorialDos.setText(idioma.getString("label.instruccionesTutorial_2"));
-			lblTxtTutorialDos.setLineWrap(true);
-			lblTxtTutorialDos.setWrapStyleWord(true);
-			lblTxtTutorialDos.setEditable(false);
-			lblTxtTutorialDos.setVisible(false);
-			lblTxtTutorialDos.setOpaque(false);
-			contentPane.add(lblTxtTutorialDos);
-			
-			lblTxtTutorialTres = new JTextArea();			
-			lblTxtTutorialTres.setBounds(701, 300, 480, 80);
-			lblTxtTutorialTres.setFont(fuenteQuickPencilPequena);
-			lblTxtTutorialTres.setText(idioma.getString("label.instruccionesTutorial_3"));
-			lblTxtTutorialTres.setLineWrap(true);
-			lblTxtTutorialTres.setWrapStyleWord(true);
-			lblTxtTutorialTres.setEditable(false);
-			lblTxtTutorialTres.setVisible(false);
-			lblTxtTutorialTres.setOpaque(false);
-			contentPane.add(lblTxtTutorialTres);
-			
-			lblTxtTutorialCuatro = new JTextArea();			
-			lblTxtTutorialCuatro.setBounds(701, 380, 480, 80);
-			lblTxtTutorialCuatro.setFont(fuenteQuickPencilPequena);
-			lblTxtTutorialCuatro.setText(idioma.getString("label.instruccionesTutorial_4"));
-			lblTxtTutorialCuatro.setLineWrap(true);
-			lblTxtTutorialCuatro.setWrapStyleWord(true);
-			lblTxtTutorialCuatro.setEditable(false);
-			lblTxtTutorialCuatro.setVisible(false);
-			lblTxtTutorialCuatro.setOpaque(false);
-			contentPane.add(lblTxtTutorialCuatro);
-			
-			lblTxtTutorialCinco = new JTextArea();			
-			lblTxtTutorialCinco.setBounds(701, 460, 480, 80);
-			lblTxtTutorialCinco.setFont(fuenteQuickPencilPequena);
-			lblTxtTutorialCinco.setText(idioma.getString("label.instruccionesTutorial_5"));
-			lblTxtTutorialCinco.setLineWrap(true);
-			lblTxtTutorialCinco.setWrapStyleWord(true);
-			lblTxtTutorialCinco.setEditable(false);
-			lblTxtTutorialCinco.setVisible(false);
-			lblTxtTutorialCinco.setOpaque(false);
-			contentPane.add(lblTxtTutorialCinco);
+			lblTutorial = new JLabel(idioma.getString("label.instruccionesTutorial"));
+			lblTutorial.setBounds(679, 138, 480, 404);
+			lblTutorial.setFont(fuenteQuickPencilMedianaPequena);
+			lblTutorial.setVisible(false);
+			contentPane.add(lblTutorial);
 			
 			//Lo que sale al pulsar el boton ajustes.
 			lblSeleccionarIdioma = new JLabel(idioma.getString("label.seleccionar_idioma"));
@@ -284,7 +237,7 @@ public class PantallaInicioFrame extends JFrame {
 	}
 
 	private Font crearFontQuickPencil(float tamanoTexto) throws FontFormatException, IOException {
-		Font fuenteQuickPencil = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/DoodlePen_Limited.ttf"));
+		Font fuenteQuickPencil = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/BebasNeue-Regular.ttf"));
 		fuenteQuickPencil = fuenteQuickPencil.deriveFont(tamanoTexto);
 		return fuenteQuickPencil;
 	}
@@ -305,11 +258,7 @@ public class PantallaInicioFrame extends JFrame {
 	    
 	    lblIntroduceCodigo.setText(idioma.getString("label.introducir_codigo"));
 	    btnEmpezar.setText(idioma.getString("label.empezar"));
-	    lblTxtTutorialUno.setText(idioma.getString("label.instruccionesTutorial_1"));
-	    lblTxtTutorialDos.setText(idioma.getString("label.instruccionesTutorial_2"));
-	    lblTxtTutorialTres.setText(idioma.getString("label.instruccionesTutorial_3"));
-	    lblTxtTutorialCuatro.setText(idioma.getString("label.instruccionesTutorial_4"));
-	    lblTxtTutorialCinco.setText(idioma.getString("label.instruccionesTutorial_5"));
+	    lblTutorial.setText(idioma.getString("label.instruccionesTutorial"));
 	    
 	    lblSeleccionarIdioma.setText(idioma.getString("label.seleccionar_idioma"));
 	    lblEspanol.setText(idioma.getString("label.espanol"));
@@ -321,11 +270,7 @@ public class PantallaInicioFrame extends JFrame {
         lblIntroduceCodigo.setVisible(jugarVisible);
         textCodigo.setVisible(jugarVisible);
         btnEmpezar.setVisible(jugarVisible);
-        lblTxtTutorialUno.setVisible(tutorialVisible);
-        lblTxtTutorialDos.setVisible(tutorialVisible);
-        lblTxtTutorialTres.setVisible(tutorialVisible);
-        lblTxtTutorialCuatro.setVisible(tutorialVisible);
-        lblTxtTutorialCinco.setVisible(tutorialVisible);
+        lblTutorial.setVisible(tutorialVisible);
         lblSeleccionarIdioma.setVisible(ajustesVisible);
         lblBanderaEspana.setVisible(ajustesVisible);
         lblEspanol.setVisible(ajustesVisible);

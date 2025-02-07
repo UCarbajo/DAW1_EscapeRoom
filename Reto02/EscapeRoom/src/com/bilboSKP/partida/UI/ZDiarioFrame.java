@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,7 +30,7 @@ public class ZDiarioFrame extends JFrame {
 	private Font fontNumeros;
 	private Font fontTexto;
 	private final int tamanoNumeroAnchoLargo = 200;
-	private int[][] numerosPorHoja = { { 2, 6, 9, 11, 7, 5 }, { 8, 14, 15, 23, 7, 9 }, { 12, 4, 13, 9, 1, 5 } };
+	private int[][] numerosPorHoja = { { 2, 6, 9, 11, 7, 5 }, { 8, 14, 15, 23, 7, 9 }, { 12, 8, 15, 17, 3, 9 } };
 	private int[][] posicionNumeros = { { 100, 30 }, { 355, 30 }, { 100, 240 }, { 355, 240 }, { 100, 450 },
 			{ 355, 450 } };
 	private JLabel lbltextoPrimeraPagina;
@@ -37,16 +39,18 @@ public class ZDiarioFrame extends JFrame {
 	private ArrayList<JLabel> listaNumerosPrimeraPagina = new ArrayList<>();
 	private ArrayList<JLabel> listaNumerosSegundaPagina = new ArrayList<>();
 	private ArrayList<JLabel> listaNumerosTerceraPagina = new ArrayList<>();
+	private ResourceBundle idioma;
 	private int paginaCuarderno = 0;
 
 	public ZDiarioFrame() {
 		
-
+		cambiarIdioma("en");
+		
 		try {
 			fontNumeros = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Marker_SD_Italic.ttf"));
 			fontNumeros = fontNumeros.deriveFont(170f);
 			fontTexto = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Faraco_Hand.ttf"));
-			fontTexto = fontTexto.deriveFont(33f);
+			fontTexto = fontTexto.deriveFont(30f);
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(fontNumeros);
@@ -93,9 +97,7 @@ public class ZDiarioFrame extends JFrame {
 		lbltextoPrimeraPagina.setVerticalAlignment(SwingConstants.TOP);
 		lbltextoPrimeraPagina.setHorizontalAlignment(SwingConstants.CENTER);
 		lbltextoPrimeraPagina.setBounds(688, 63, 494, 553);
-		lbltextoPrimeraPagina.setText("<html><p>Entrada del Diario:</p><br>"
-				+ "<p>Hoy escuch\u00E9 algunas <strong>palabras</strong> que fing\u00ED no o\u00EDr. Pero se quedaron ah\u00ED, dando vueltas en mi cabeza.</p><br>"
-				+ "<p>Dicen que no <strong>duelen</strong>, que no importan, pero s\u00ED lo hacen. <strong>Crees</strong> que no es nada, pero pesa <strong>m\u00E1s</strong> de lo que parece.</p><html>");
+		lbltextoPrimeraPagina.setText(idioma.getString("label.primeraPagina"));
 		lbltextoPrimeraPagina.setFont(fontTexto);
 		lbltextoPrimeraPagina.setVisible(false);
 		contentPane.add(lbltextoPrimeraPagina);
@@ -104,10 +106,8 @@ public class ZDiarioFrame extends JFrame {
 		lbltextoSegundaPagina.setVerticalAlignment(SwingConstants.TOP);
 		lbltextoSegundaPagina.setHorizontalAlignment(SwingConstants.CENTER);
 		lbltextoSegundaPagina.setBounds(688, 63, 494, 553);
-		lbltextoSegundaPagina.setText("<html><p>Entrada del Diario:</p><br>"
-			    + "<p>Hoy volvieron a romper mis p\u00E1ginas. Mis pensamientos est\u00E1n dispersos, pero no dejar\u00E9 que lo destruyan todo.</p><br>"
-			    + "<p>He creado un <strong>c\u00F3digo secreto:</strong> \"Cuando los pares miren al cielo y los impares al suelo, el centro traer\u00E1 la soluci\u00F3n.\"</p><br>"
-			    + "<p>No importa cu\u00E1ntas veces intenten romper mis palabras, siempre tendr\u00E9 una forma de reconstruirlas. Esta es mi manera de asegurarme de que sigan aqu\u00ED.</p></html>");lbltextoSegundaPagina.setFont(fontTexto);
+		lbltextoSegundaPagina.setText(idioma.getString("label.segundaPagina"));
+		lbltextoSegundaPagina.setFont(fontTexto);
 		lbltextoSegundaPagina.setVisible(false);
 		contentPane.add(lbltextoSegundaPagina);
 
@@ -115,9 +115,7 @@ public class ZDiarioFrame extends JFrame {
 		lbltextoTerceraPagina.setVerticalAlignment(SwingConstants.TOP);
 		lbltextoTerceraPagina.setHorizontalAlignment(SwingConstants.CENTER);
 		lbltextoTerceraPagina.setBounds(688, 63, 494, 553);
-		lbltextoTerceraPagina.setText("<html><p>Entrada del Diario:</p><br>"
-				+ "<p>Hoy escuch\u00E9 algunas <strong>palabras</strong> que fing\u00ED no o\u00EDr. Pero se quedaron ah\u00ED, dando vueltas en mi cabeza.</p><br>"
-				+ "<p>Dicen que no <strong>duelen</strong>, que no importan, pero s\u00ED lo hacen. <strong>Crees</strong> que no es nada, pero pesa <strong>m\u00E1s</strong> de lo que parece.</p><html>");
+		lbltextoTerceraPagina.setText(idioma.getString("label.terceraPagina"));
 		lbltextoTerceraPagina.setFont(fontTexto);
 		lbltextoTerceraPagina.setVisible(false);
 		contentPane.add(lbltextoTerceraPagina);
@@ -175,6 +173,11 @@ public class ZDiarioFrame extends JFrame {
 		contentPane.add(lblImagenFondo);
 
 		mostrarPagina(paginaCuarderno);
+	}
+
+	private void cambiarIdioma(String string) {
+		Locale local = new Locale(string);
+		idioma = ResourceBundle.getBundle("Idioma.menuInicio", local);
 	}
 
 	private ImageIcon crearScaledImage(String rutaImagen, int x, int y) {
