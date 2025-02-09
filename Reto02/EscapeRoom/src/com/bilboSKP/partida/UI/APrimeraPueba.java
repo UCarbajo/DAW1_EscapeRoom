@@ -12,56 +12,52 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
-public class APrimeraPueba extends JFrame {
+public class APrimeraPueba extends JPanel {
 
-    private JPanel contentPane;
+	public APrimeraPueba(AEntradaJuego aEntradaJuego, Locale local) {
+		repaint();
+		revalidate();
+		
+		setBounds(0, 0, 1280, 720);
+		setLayout(null);
 
-    public APrimeraPueba() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(50, 20, 1280, 720);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+		ImageIcon icono = new ImageIcon("imagenes/imgJuego1.jpeg");
+		Image img = icono.getImage();
+		Image imgEscalado = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado = new ImageIcon(imgEscalado);
 
-        ImageIcon icono = new ImageIcon("imagenes/imgJuego1.jpeg");
-        Image img = icono.getImage();
-        Image imgEscalado = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
-        ImageIcon iconoEscalado = new ImageIcon(imgEscalado);
-        
-                JTextPane txtpizarra = new JTextPane();
-                txtpizarra.setText("Las palabras duelen más de lo que crees.");
-                txtpizarra.setEditable(false);
-                txtpizarra.setBounds(176, 306, 207, 20);
-                contentPane.add(txtpizarra);
-               
-                       
-                        txtpizarra.setOpaque(false);
-        
-        JButton btnPizarra = new JButton("");
-        btnPizarra.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 SopaDeLetras ventana = new SopaDeLetras();
-        	        ventana.setVisible(true);
-        	        dispose();        		
-        	}
-        });
-        btnPizarra.setBounds(137, 278, 346, 137);
-        contentPane.add(btnPizarra);
-        btnPizarra.setOpaque(false);
-        btnPizarra.setContentAreaFilled(false);
-        btnPizarra.setBorder(null);
-        btnPizarra.setFocusPainted(false);
-        JLabel lblNewLabel = new JLabel(" ");
-        lblNewLabel.setIcon(iconoEscalado);
-        lblNewLabel.setBounds(0, 0, 1264, 681);
-        contentPane.add(lblNewLabel);
-        
-       
-        
-        
-    }
+		JTextPane txtpizarra = new JTextPane();
+		txtpizarra.setText("Las palabras duelen más de lo que crees.");
+		txtpizarra.setEditable(false);
+		txtpizarra.setBounds(176, 327, 207, 20);
+		add(txtpizarra);
+
+		txtpizarra.setOpaque(false);
+
+		JButton btnPizarra = new JButton("");
+		btnPizarra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SopaDeLetras ventana = new SopaDeLetras();
+				ventana.setVisible(true);
+			}
+		});
+		btnPizarra.setBounds(137, 278, 346, 137);
+		add(btnPizarra);
+		btnPizarra.setOpaque(false);
+		btnPizarra.setContentAreaFilled(false);
+		btnPizarra.setBorder(null);
+		btnPizarra.setFocusPainted(false);
+		
+		JLabel lblNewLabel = new JLabel(" ");
+		lblNewLabel.setIcon(iconoEscalado);
+		lblNewLabel.setBounds(0, 0, 1280, 720);
+		add(lblNewLabel);
+		
+		repaint();
+		revalidate();
+
+	}
 }
-

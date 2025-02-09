@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import herramientas.ImageRescaler;
+
 public class AAPantallaInicioFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -49,14 +51,14 @@ public class AAPantallaInicioFrame extends JFrame {
 	public AAPantallaInicioFrame() {
 		
 		cambiarIdioma("es");
-		
+		setTitle("ESCAPE ROOM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 20, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		ImageIcon imagenNino = tamanoImagen("imagenes/ninoAcosado.png", 405, 325);
+		ImageIcon imagenNino = ImageRescaler.scaleImage("/imagenes/ninoAcosado.png", 405, 325);
 		
 		lblImagenNino = new JLabel();
 		lblImagenNino.setBounds(720, 170, 405, 325);
@@ -162,7 +164,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			lblSeleccionarIdioma.setVisible(false);
 			contentPane.add(lblSeleccionarIdioma);
 			
-			ImageIcon banderaEspana = tamanoImagen("imagenes/banderaEspana.png", 180, 130);
+			ImageIcon banderaEspana = ImageRescaler.scaleImage("/imagenes/banderaEspana.png", 180, 130);
 			
 			lblBanderaEspana = new JLabel();
 			lblBanderaEspana.setBounds(744, 270, 180, 130);
@@ -179,7 +181,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			cambiarFormaIdioma(lblBanderaEspana, lblEspanol, "es");
 			contentPane.add(lblEspanol);
 			
-			ImageIcon banderaInglesa = tamanoImagen("imagenes/banderaInglesa.png", 180, 130);
+			ImageIcon banderaInglesa = ImageRescaler.scaleImage("/imagenes/banderaInglesa.png", 180, 130);
 			
 			lblBanderaInglesa = new JLabel();
 			lblBanderaInglesa.setBounds(954, 270, 180, 130);
@@ -220,7 +222,7 @@ public class AAPantallaInicioFrame extends JFrame {
 		}
 		
 		contentPane.setLayout(null);
-		ImageIcon scaledIcon = tamanoImagen("imagenes/ImagenPortada.png", 1264, 681);
+		ImageIcon scaledIcon = ImageRescaler.scaleImage("/imagenes/ImagenPortada.png", 1264, 681);
 		
 		JLabel lblImagenFondo = new JLabel(scaledIcon);
 		lblImagenFondo.setBounds(0, 0, 1264, 681);
@@ -228,16 +230,8 @@ public class AAPantallaInicioFrame extends JFrame {
 		
 	}
 
-	private ImageIcon tamanoImagen(String rutaImagen, int tamanoX, int tamanoY) {
-		ImageIcon icon = new ImageIcon(rutaImagen);
-		Image img = icon.getImage();
-		Image scaledImg = img.getScaledInstance(tamanoX, tamanoY, Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImg);
-		return scaledIcon;
-	}
-
 	private Font crearFontQuickPencil(float tamanoTexto) throws FontFormatException, IOException {
-		Font fuenteQuickPencil = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/BebasNeue-Regular.ttf"));
+		Font fuenteQuickPencil = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/BebasNeue-Regular.ttf"));
 		fuenteQuickPencil = fuenteQuickPencil.deriveFont(tamanoTexto);
 		return fuenteQuickPencil;
 	}

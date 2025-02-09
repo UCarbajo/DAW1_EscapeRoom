@@ -14,6 +14,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -27,11 +28,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class BSegundaPruebaFrame extends JFrame {
+import herramientas.ImageRescaler;
 
-	private final int tamanoFrameX = 1280;
+public class BSegundaPruebaFrame extends JPanel {
+
+	private final int tamanoFrameX = 1400;
 	private final int tamanoFrameY = 720;
-	private JPanel contentPane;
 	private JPanel enunciadoPane;
 	private JLabel lblEnunciado;
 	private JLabel lblFondoEnunciado;
@@ -47,30 +49,25 @@ public class BSegundaPruebaFrame extends JFrame {
 	private JButton btnSegundaPista;
 	private JButton btnTerceraPista;
 	private JButton btnCerrar;
-	private JButton btnDiario;
 	private JLabel lblErrorMsg;
+	private APasilloFrame pasilloFrame;
 
-	public BSegundaPruebaFrame() {
-		
-		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 20, tamanoFrameX, tamanoFrameY);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+	public BSegundaPruebaFrame(AEntradaJuego aEntradaJuego, Locale local) {
+
+		setBounds(0, 0, tamanoFrameX, tamanoFrameY);
+		setLayout(null);
+
 		ZDiarioFrame ventanaDiario = new ZDiarioFrame();
 
 		ArrayList<JLabel> listaPosicionesCorrectas = new ArrayList<JLabel>();
 		ArrayList<JLabel> listaTrozosPapel = new ArrayList<JLabel>();
 
 		try {
-			fontNumeros = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Marker_SD.ttf"));
+			fontNumeros = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD.ttf"));
 			fontNumeros = fontNumeros.deriveFont(50f);
-			fontTexto = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/AppleGaramond.ttf"));
+			fontTexto = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
 			fontTexto = fontTexto.deriveFont(25f);
-			
+
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(fontNumeros);
 			ge.registerFont(fontTexto);
@@ -80,14 +77,14 @@ public class BSegundaPruebaFrame extends JFrame {
 		}
 
 		// TODO REVISAR ESTA PARTE DEL CODIGO.
-		ImageIcon fondoEnunciado = crearScaledImage("imagenes/fondoEnunciado.png", tamanoFrameX, tamanoFrameY);
+		ImageIcon fondoEnunciado = ImageRescaler.scaleImage("/imagenes/fondoEnunciado.png", tamanoFrameX, tamanoFrameY);
 
 		enunciadoPane = new JPanel();
 		enunciadoPane.setBounds(0, 0, tamanoFrameX, tamanoFrameY);
 		enunciadoPane.setOpaque(false);
 		enunciadoPane.setBorder(BorderFactory.createLineBorder(Color.black, 10));
 		enunciadoPane.setLayout(null);
-		contentPane.add(enunciadoPane);
+		add(enunciadoPane);
 
 		lblEnunciado = new JLabel();
 		lblEnunciado.setBounds(10, 10, tamanoFrameX, tamanoFrameY);
@@ -101,24 +98,27 @@ public class BSegundaPruebaFrame extends JFrame {
 		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
 		enunciadoPane.add(lblEnunciado);
 
-		btnPrimeraPista = new JButton("<html><center><p>DESBLOQUEAR PRIMERA PISTA</p><p>Monedas necesarias</p></center></html>");
+		btnPrimeraPista = new JButton(
+				"<html><center><p>DESBLOQUEAR PRIMERA PISTA</p><p>Monedas necesarias</p></center></html>");
 		btnPrimeraPista.setBounds(265, 180, 740, 100);
 		btnPrimeraPista.setVisible(false);
 		enunciadoPane.add(btnPrimeraPista);
 
-		btnSegundaPista = new JButton("<html><center><p>DESBLOQUEAR SEGUNDA PISTA</p><p>Monedas necesarias</p></center></html>");
+		btnSegundaPista = new JButton(
+				"<html><center><p>DESBLOQUEAR SEGUNDA PISTA</p><p>Monedas necesarias</p></center></html>");
 		btnSegundaPista.setBounds(265, 290, 740, 100);
 		btnSegundaPista.setVisible(false);
 		enunciadoPane.add(btnSegundaPista);
 
-		btnTerceraPista = new JButton("<html></center><p>DESBLOQUEAR TERCERA PISTA</p><p>Monedas necesarias</p></center></html>");
+		btnTerceraPista = new JButton(
+				"<html></center><p>DESBLOQUEAR TERCERA PISTA</p><p>Monedas necesarias</p></center></html>");
 		btnTerceraPista.setBounds(265, 400, 740, 100);
 		btnTerceraPista.setVisible(false);
 		enunciadoPane.add(btnTerceraPista);
 
-		ImageIcon imgCerrar = crearScaledImage("imagenes/simboloCerrar.png", 100, 100);
-		ImageIcon imgCerrarRojo = crearScaledImage("imagenes/simboloCerrarRojo.png", 100, 100);
-	
+		ImageIcon imgCerrar = ImageRescaler.scaleImage("/imagenes/simboloCerrar.png", 100, 100);
+		ImageIcon imgCerrarRojo = ImageRescaler.scaleImage("/imagenes/simboloCerrarRojo.png", 100, 100);
+
 		btnCerrar = new JButton();
 		btnCerrar.setBounds(1120, 30, 100, 100);
 		btnCerrar.setBackground(null);
@@ -129,26 +129,16 @@ public class BSegundaPruebaFrame extends JFrame {
 		enunciadoPane.add(btnCerrar);
 
 		lblFondoEnunciado = new JLabel();
-		lblFondoEnunciado.setBounds(10, 10, 1260, 699);
+		lblFondoEnunciado.setBounds(10, 10, 1280, 700);
 		lblFondoEnunciado.setIcon(fondoEnunciado);
 		enunciadoPane.add(lblFondoEnunciado);
-		
+
 		lblErrorMsg = new JLabel("<html><cente>Algunos trozos no están en el lugar correcto.</cente></html>");
 		lblErrorMsg.setForeground(Color.red);
 		lblErrorMsg.setBounds(1030, 478, 173, 39);
 		lblErrorMsg.setVisible(false);
-		contentPane.add(lblErrorMsg);
-		
-		btnDiario = new JButton("DIARIO");
-		btnDiario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ventanaDiario.setVisible(true);
-			}
-		});
-		btnDiario.setOpaque(false);
-		btnDiario.setBounds(1027, 50, 182, 50);
-		contentPane.add(btnDiario);
-		
+		add(lblErrorMsg);
+
 		btnEnunciado = new JButton("ENUNCIADO");
 		btnEnunciado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -156,8 +146,9 @@ public class BSegundaPruebaFrame extends JFrame {
 			}
 		});
 		btnEnunciado.setOpaque(false);
-		btnEnunciado.setBounds(1027, 120, 182, 50);
-		contentPane.add(btnEnunciado);
+		btnEnunciado.setBounds(1290, 100, 100, 80);
+		;
+		aEntradaJuego.getMenuInteractivoPane().add(btnEnunciado);
 
 		btnPistas = new JButton("PISTAS");
 		btnPistas.addActionListener(new ActionListener() {
@@ -166,59 +157,74 @@ public class BSegundaPruebaFrame extends JFrame {
 			}
 		});
 		btnPistas.setOpaque(false);
-		btnPistas.setBounds(1027, 190, 182, 50);
-		contentPane.add(btnPistas);
+		btnPistas.setBounds(1290, 200, 100, 80);
+		aEntradaJuego.getMenuInteractivoPane().add(btnPistas);
 
 		// Crear los JLabel con la funcionalidad de arrastre
 		crearTrozosPapel(listaPosicionesCorrectas, listaTrozosPapel);
 		// Creamos las zonas correctas
 		crearPosicionCorrecta(listaPosicionesCorrectas, coordenadasCorrectas);
 
-		ImageIcon fondoPantalla = crearScaledImage("imagenes/FondoSegundaPruebaPupitre.png", 1280, 720);
+		ImageIcon fondoPantalla = ImageRescaler.scaleImage("/imagenes/FondoSegundaPruebaPupitre.png", 1280, 720);
 
 		JButton btnListo = new JButton("LISTO");
 		btnListo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean todoCorrecto = true;
-				
+
 				if (!comprobarResultado(listaPosicionesCorrectas, listaTrozosPapel)) {
 					todoCorrecto = false;
 				}
 				if (todoCorrecto) {
 					System.out.println("¡Todo correcto!");
 					JLabel menuCorrectoPane = new JLabel();
-					
-					int tamanoMenuCorrectoX = 400;
+
+					int tamanoMenuCorrectoX = 700;
 					int tamanoMenuCorrectoY = 200;
-					menuCorrectoPane.setBounds((contentPane.getWidth()-tamanoMenuCorrectoX)/2, (contentPane.getHeight()-tamanoMenuCorrectoY)/2, tamanoMenuCorrectoX, tamanoMenuCorrectoY);
+					menuCorrectoPane.setBounds((getWidth() - tamanoMenuCorrectoX) / 2,
+							(getHeight() - tamanoMenuCorrectoY) / 2, tamanoMenuCorrectoX, tamanoMenuCorrectoY);
 					menuCorrectoPane.setBackground(Color.white);
 					menuCorrectoPane.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 					menuCorrectoPane.setOpaque(true);
 					menuCorrectoPane.setVisible(true);
-					
-					JLabel textoMenu = new JLabel("<html><center>Al juntar los trozos de papel has descubierto una pagina del diario</center></html>");
+
+					JLabel textoMenu = new JLabel(
+							"<html><center>Al juntar los trozos de papel has descubierto una pagina del diario</center></html>");
 					int tamanoTextMenuX = 300;
 					int tamanoTextoMenuY = 100;
-					textoMenu.setBounds(50, 10, tamanoTextMenuX, tamanoTextoMenuY);
+					textoMenu.setBounds(0, 10, tamanoMenuCorrectoX, tamanoTextoMenuY);
 					textoMenu.setFont(fontTexto);
+					textoMenu.setHorizontalAlignment(SwingConstants.CENTER);
+					textoMenu.setVerticalAlignment(SwingConstants.CENTER);
 					menuCorrectoPane.add(textoMenu);
-					menuCorrectoPane.repaint();
-					menuCorrectoPane.revalidate();
-					
+
 					JButton btnContinuar = new JButton("<html>Continuar<html>");
 					int tamanoContinuarX = 150;
 					int tamanoContinuarY = 50;
-					btnContinuar.setBounds((menuCorrectoPane.getWidth() - tamanoContinuarX)/2, (tamanoMenuCorrectoY/2), tamanoContinuarX, tamanoContinuarY);
+					btnContinuar.setBounds((menuCorrectoPane.getWidth() - tamanoContinuarX) / 2,
+							(tamanoMenuCorrectoY / 2), tamanoContinuarX, tamanoContinuarY);
+					btnContinuar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							removeAll();
+							aEntradaJuego.getMenuInteractivoPane().remove(btnEnunciado);
+							aEntradaJuego.getMenuInteractivoPane().remove(btnPistas);
+							pasilloFrame = new APasilloFrame(aEntradaJuego, local);
+							aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
+							aEntradaJuego.repaint();
+							aEntradaJuego.revalidate();
+						}
+					});
 					menuCorrectoPane.add(btnContinuar);
-					
-					contentPane.add(menuCorrectoPane, -1);
+
+					removeAll();
+					add(menuCorrectoPane, 0);
 					menuCorrectoPane.repaint();
 					menuCorrectoPane.revalidate();
 				} else {
 					lblErrorMsg.setVisible(true);
-					for(int i = 0; i < listaTrozosPapel.size(); i++) {
+					for (int i = 0; i < listaTrozosPapel.size(); i++) {
 						JLabel label = listaTrozosPapel.get(i);
-						label.setLocation(coordenadasIniciales[i][0],coordenadasIniciales[i][1]);
+						label.setLocation(coordenadasIniciales[i][0], coordenadasIniciales[i][1]);
 					}
 				}
 			}
@@ -227,14 +233,16 @@ public class BSegundaPruebaFrame extends JFrame {
 		btnListo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnListo.setBounds(1028, 531, 182, 100);
 		btnListo.setOpaque(false);
-		contentPane.add(btnListo);
+		add(btnListo);
 
 		btnCerrar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				enunciadoPane.setVisible(false);
-				
+				repaint();
+				revalidate();
+
 			}
 		});
 		btnCerrar.addMouseListener(new MouseAdapter() {
@@ -242,6 +250,7 @@ public class BSegundaPruebaFrame extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnCerrar.setIcon(imgCerrarRojo);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnCerrar.setIcon(imgCerrar);
@@ -251,22 +260,17 @@ public class BSegundaPruebaFrame extends JFrame {
 		JLabel lblImagenFondo = new JLabel("");
 		lblImagenFondo.setBounds(0, 0, 1280, 720);
 		lblImagenFondo.setIcon(fondoPantalla);
-		contentPane.add(lblImagenFondo);
-	}
+		add(lblImagenFondo);
 
-	private ImageIcon crearScaledImage(String rutaImagen, int x, int y) {
-		ImageIcon icono = new ImageIcon(rutaImagen);
-		Image img = icono.getImage();
-		Image img2 = img.getScaledInstance(x, y, Image.SCALE_SMOOTH);
-		ImageIcon scaledImg = new ImageIcon(img2);
-		return scaledImg;
+		aEntradaJuego.repaint();
+		aEntradaJuego.revalidate();
 	}
 
 	private void crearPosicionCorrecta(ArrayList<JLabel> listaPosicionesCorrectas, int[][] posicionesCorrectas) {
 		for (int i = 0; i < posicionesCorrectas.length; i++) {
 			JLabel posicionCorrecta = crearPosicionCorrecta(posicionesCorrectas[i][0], posicionesCorrectas[i][1]);
 			listaPosicionesCorrectas.add(posicionCorrecta);
-			contentPane.add(posicionCorrecta);
+			add(posicionCorrecta);
 		}
 	}
 
@@ -274,7 +278,7 @@ public class BSegundaPruebaFrame extends JFrame {
 		for (int i = 0; i < coordenadasIniciales.length; i++) {
 			JLabel trozoPapel = crearLabel(coordenadasIniciales[i][0], coordenadasIniciales[i][1], i);
 			listaTrozosPapel.add(trozoPapel);
-			contentPane.add(trozoPapel);
+			add(trozoPapel);
 
 			trozoPapel.addMouseListener(trozoPapelMouseRelease(listaPosicionesCorrectas, trozoPapel, i));
 			trozoPapel.addMouseMotionListener(trozoPapelMouseDragged(trozoPapel));
@@ -293,7 +297,7 @@ public class BSegundaPruebaFrame extends JFrame {
 						return; // Salir del bucle, ya que hemos encontrado la zona
 					}
 				}
-				//Reiniciamos la posicion del trozo de papel al lugar de origen
+				// Reiniciamos la posicion del trozo de papel al lugar de origen
 				trozoPapel.setLocation(coordenadasIniciales[i][0], coordenadasIniciales[i][1]);
 			}
 		};
@@ -304,19 +308,15 @@ public class BSegundaPruebaFrame extends JFrame {
 		MouseMotionListener moverRaton = new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent raton) {
-				lblErrorMsg.setVisible(false); 
+				lblErrorMsg.setVisible(false);
 				// Actualizar la posición mientras se arrastra
 				trozoPapel.setLocation(
 						Math.max(0,
-								Math.min(
-										raton.getXOnScreen() - contentPane.getLocationOnScreen().x
-												- trozoPapel.getWidth() / 2,
-										contentPane.getWidth() - trozoPapel.getWidth())),
+								Math.min(raton.getXOnScreen() - getLocationOnScreen().x - trozoPapel.getWidth() / 2,
+										getWidth() - trozoPapel.getWidth())),
 						Math.max(0,
-								Math.min(
-										raton.getYOnScreen() - contentPane.getLocationOnScreen().y
-												- trozoPapel.getHeight() / 2,
-										contentPane.getHeight() - trozoPapel.getHeight())));
+								Math.min(raton.getYOnScreen() - getLocationOnScreen().y - trozoPapel.getHeight() / 2,
+										getHeight() - trozoPapel.getHeight())));
 			}
 		};
 		return moverRaton;
@@ -328,20 +328,19 @@ public class BSegundaPruebaFrame extends JFrame {
 		btnPrimeraPista.setVisible(visibilidadPista);
 		btnSegundaPista.setVisible(visibilidadPista);
 		btnTerceraPista.setVisible(visibilidadPista);
+		repaint();
+		revalidate();
 	}
 
 	// METODO Creacion label
 	private JLabel crearLabel(int x, int y, int i) {
-		ImageIcon icon = new ImageIcon(obtenerPosicionImagen(i));
-		Image img = icon.getImage();
-		Image scaledImg = img.getScaledInstance(175, 175, Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImg);
+		ImageIcon icon = ImageRescaler.scaleImage(obtenerPosicionImagen(i), 175, 175);
 
 		JLabel etiqueta = new JLabel("Trozo");
 		etiqueta.setForeground(Color.RED);
 		etiqueta.setBackground(Color.RED);
 		etiqueta.setOpaque(true);
-		etiqueta.setIcon(scaledIcon);
+		etiqueta.setIcon(icon);
 		etiqueta.setBounds(x, y, 175, 175);
 		etiqueta.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -350,9 +349,9 @@ public class BSegundaPruebaFrame extends JFrame {
 
 	// METODO Obtener una imagen
 	private String obtenerPosicionImagen(int num) {
-		String[] posicion = { "imagenes/SegundaPrueba/Numero3.png", "imagenes/SegundaPrueba/Numero8.png",
-				"imagenes/SegundaPrueba/Numero9.png", "imagenes/SegundaPrueba/Numero12.png",
-				"imagenes/SegundaPrueba/Numero15.png", "imagenes/SegundaPrueba/Numero17.png" };
+		String[] posicion = { "/imagenes/SegundaPrueba/Numero3.png", "/imagenes/SegundaPrueba/Numero8.png",
+				"/imagenes/SegundaPrueba/Numero9.png", "/imagenes/SegundaPrueba/Numero12.png",
+				"/imagenes/SegundaPrueba/Numero15.png", "/imagenes/SegundaPrueba/Numero17.png" };
 		return posicion[num];
 	}
 
@@ -376,10 +375,10 @@ public class BSegundaPruebaFrame extends JFrame {
 				&& listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(5).getBounds())
 				&& listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(2).getBounds()))
 				|| (listaPosicionesCorrectas.get(0).getBounds().contains(listaTrozosPapel.get(1).getBounds())
-				&& listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(5).getBounds())
-				&& listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(2).getBounds())
-				&& listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(3).getBounds())
-				&& listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(4).getBounds())
-				&& listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(0).getBounds()));
+						&& listaPosicionesCorrectas.get(1).getBounds().contains(listaTrozosPapel.get(5).getBounds())
+						&& listaPosicionesCorrectas.get(2).getBounds().contains(listaTrozosPapel.get(2).getBounds())
+						&& listaPosicionesCorrectas.get(3).getBounds().contains(listaTrozosPapel.get(3).getBounds())
+						&& listaPosicionesCorrectas.get(4).getBounds().contains(listaTrozosPapel.get(4).getBounds())
+						&& listaPosicionesCorrectas.get(5).getBounds().contains(listaTrozosPapel.get(0).getBounds()));
 	}
 }
