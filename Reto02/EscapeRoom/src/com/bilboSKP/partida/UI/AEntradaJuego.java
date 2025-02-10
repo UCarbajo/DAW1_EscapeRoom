@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -53,16 +51,10 @@ public class AEntradaJuego extends JFrame {
 		contentPane.setBackground(Color.black);
 
 		menuInteractivoPane = new JPanel();
-		menuInteractivoPane.setBounds(0, 0, 1280, 720);
+		menuInteractivoPane.setBounds(0, 0, 1400, 720);
 		menuInteractivoPane.setLayout(null);
 		menuInteractivoPane.setVisible(false);
-		contentPane.add(menuInteractivoPane);
-
-		diario = new ZDiarioFrame();
-		diario.setBounds(0, 0, 1280, 720);
-		diario.setVisible(true);
-		diario.setOpaque(true);
-		menuInteractivoPane.add(diario, 0);
+		menuInteractivoPane.setOpaque(false);
 
 		btnDiario = new JButton("DIARIO");
 		btnDiario.addActionListener(new ActionListener() {
@@ -85,6 +77,13 @@ public class AEntradaJuego extends JFrame {
 		btnDiario.setVisible(false);
 		btnDiario.setBounds(1290, 10, 100, 80);
 		contentPane.add(btnDiario);
+		contentPane.add(menuInteractivoPane);
+
+		diario = new ZDiarioFrame();
+		diario.setBounds(0, 0, 1280, 720);
+		diario.setVisible(true);
+		diario.setOpaque(true);
+		menuInteractivoPane.add(diario, 0);
 
 		navegacionPane = new JPanel();
 		navegacionPane.setLayout(null);
@@ -104,7 +103,8 @@ public class AEntradaJuego extends JFrame {
 		navegacionPane.add(inicioPane);
 
 		try {
-			fontPersonal = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
+			fontPersonal = Font.createFont(Font.TRUETYPE_FONT,
+					getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
 			fontPersonal = fontPersonal.deriveFont(30f);
 
 			// TODO USAR EN ESTA PARTE DE CODIGO EN CASO DE QUE NO CARGUE EL FONT
@@ -138,7 +138,7 @@ public class AEntradaJuego extends JFrame {
 		txtpnenEstaEscuela.setOpaque(true);
 		inicioPane.add(txtpnenEstaEscuela);
 
-		ImageIcon imgFlechaArriba = ImageRescaler.scaleImage("/imagenes/FlechaArriba.png", 100, 100);
+		ImageIcon imgFlechaArriba = ImageRescaler.scaleImage("/imagenes/FlechaArriba.png", 23, 50);
 		btnFlechaArriba = new JButton("");
 		btnFlechaArriba.setIcon(imgFlechaArriba);
 		btnFlechaArriba.setOpaque(false);
@@ -199,6 +199,9 @@ public class AEntradaJuego extends JFrame {
 	public void setMenuInteractivoPane(JPanel menuInteractivoPane) {
 		this.menuInteractivoPane = menuInteractivoPane;
 	}
-	
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
 	
 }

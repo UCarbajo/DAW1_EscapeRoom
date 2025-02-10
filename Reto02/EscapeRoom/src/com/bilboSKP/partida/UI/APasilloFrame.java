@@ -21,6 +21,8 @@ public class APasilloFrame extends JPanel {
 
 	private APrimeraPueba primeraPrueba;
 	private BSalaDeImpresoraFrame salaImpresora;
+	private CAula7 aula7;
+	private JButton btnFlechaArriba;
 
 	public APasilloFrame(AEntradaJuego aEntradaJuego, Locale local) {
 
@@ -28,9 +30,26 @@ public class APasilloFrame extends JPanel {
 		setLayout(null);
 
 		ImageIcon imgFondo = ImageRescaler.scaleImage("/imagenes/PasilloA.jpeg", 1280, 720);
+		
+		btnFlechaArriba = new JButton("");
+		btnFlechaArriba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				aula7 = new CAula7();
+				aEntradaJuego.getNavegacionPane().add(aula7, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
+			}
+		});
+		btnFlechaArriba.setFocusPainted(false);
+		btnFlechaArriba.setContentAreaFilled(false);
+		btnFlechaArriba.setBorderPainted(false);
+		btnFlechaArriba.setBorder(null);
+		btnFlechaArriba.setBounds(527, 259, 89, 199);
+		add(btnFlechaArriba);
 
 		JButton btnFlechaDerecha = new JButton("");
-		btnFlechaDerecha.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaDerecha.png", 89, 199));
+		btnFlechaDerecha.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaDerecha.png", 50, 23));
 		btnFlechaDerecha.setBounds(1051, 259, 89, 199);
 		btnFlechaDerecha.setBorderPainted(false);
 		btnFlechaDerecha.setBorder(null);
@@ -48,7 +67,7 @@ public class APasilloFrame extends JPanel {
 				aEntradaJuego.revalidate();
 			}
 		});
-		btnFlechaIzquierda.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaIzquierda.png", 89, 199));
+		btnFlechaIzquierda.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaIzquierda.png", 50, 23));
 		btnFlechaIzquierda.setBounds(245, 210, 89, 199);
 		btnFlechaIzquierda.setBorderPainted(false);
 		btnFlechaIzquierda.setBorder(null);

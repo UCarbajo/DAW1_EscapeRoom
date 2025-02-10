@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 
 public class APrimeraPueba extends JPanel {
 
+	private ASopaDeLetras sopaLetras;
+	
 	public APrimeraPueba(AEntradaJuego aEntradaJuego, Locale local) {
 		repaint();
 		revalidate();
@@ -40,8 +42,11 @@ public class APrimeraPueba extends JPanel {
 		JButton btnPizarra = new JButton("");
 		btnPizarra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SopaDeLetras ventana = new SopaDeLetras();
-				ventana.setVisible(true);
+				setVisible(false);
+				sopaLetras = new ASopaDeLetras(aEntradaJuego, local);
+				aEntradaJuego.getNavegacionPane().add(sopaLetras, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
 			}
 		});
 		btnPizarra.setBounds(137, 278, 346, 137);

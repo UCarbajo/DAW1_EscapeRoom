@@ -20,8 +20,6 @@ public class BSalaDeImpresoraFrame extends JPanel {
 	private final int tamanoFrameX = 1280;
 	private final int tamanoFrameY = 720;
 	private BSegundaPruebaFrame segundaPrueba;
-	private APasilloFrame pasilloFrame;
-	private JButton btnFlechaAbajo;
 	private JButton btnAccesoPrueba;
 	
 	public BSalaDeImpresoraFrame(AEntradaJuego aEntradaJuego, Locale local) {
@@ -48,23 +46,6 @@ public class BSalaDeImpresoraFrame extends JPanel {
 		btnAccesoPrueba.setContentAreaFilled(false);
 		btnAccesoPrueba.setBorder(null);
 		add(btnAccesoPrueba);
-		
-		btnFlechaAbajo = new JButton("");
-		btnFlechaAbajo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				pasilloFrame = new APasilloFrame(aEntradaJuego, local);
-				aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
-				aEntradaJuego.repaint();
-				aEntradaJuego.revalidate();
-			}
-		});
-		btnFlechaAbajo.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaAbajo.png", 183, 98));
-		btnFlechaAbajo.setBounds(551, 609, 183, 98);
-		btnFlechaAbajo.setContentAreaFilled(false);
-		btnFlechaAbajo.setFocusPainted(false);
-		btnFlechaAbajo.setBorder(null);
-		add(btnFlechaAbajo);
 		
 		JLabel lblImagenFondon = new JLabel(imgFondo);
 		lblImagenFondon.setBounds(0, 0, tamanoFrameX, tamanoFrameY);

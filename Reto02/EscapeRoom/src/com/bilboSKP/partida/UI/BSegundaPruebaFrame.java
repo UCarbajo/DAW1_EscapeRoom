@@ -79,6 +79,26 @@ public class BSegundaPruebaFrame extends JPanel {
 		// TODO REVISAR ESTA PARTE DEL CODIGO.
 		ImageIcon fondoEnunciado = ImageRescaler.scaleImage("/imagenes/fondoEnunciado.png", tamanoFrameX, tamanoFrameY);
 
+		btnEnunciado = new JButton("ENUNCIADO");
+		btnEnunciado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				visibilidadEnunciadoPane(true, false);
+			}
+		});
+		btnEnunciado.setOpaque(true);
+		btnEnunciado.setBounds(1290, 100, 100, 80);
+		aEntradaJuego.getContentPane().add(btnEnunciado, 0);
+
+		btnPistas = new JButton("PISTAS");
+		btnPistas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				visibilidadEnunciadoPane(false, true);
+			}
+		});
+		btnPistas.setOpaque(true);
+		btnPistas.setBounds(1290, 200, 100, 80);
+		aEntradaJuego.getContentPane().add(btnPistas, 0);
+		
 		enunciadoPane = new JPanel();
 		enunciadoPane.setBounds(0, 0, tamanoFrameX, tamanoFrameY);
 		enunciadoPane.setOpaque(false);
@@ -139,27 +159,6 @@ public class BSegundaPruebaFrame extends JPanel {
 		lblErrorMsg.setVisible(false);
 		add(lblErrorMsg);
 
-		btnEnunciado = new JButton("ENUNCIADO");
-		btnEnunciado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				visibilidadEnunciadoPane(true, false);
-			}
-		});
-		btnEnunciado.setOpaque(false);
-		btnEnunciado.setBounds(1290, 100, 100, 80);
-		;
-		aEntradaJuego.getMenuInteractivoPane().add(btnEnunciado);
-
-		btnPistas = new JButton("PISTAS");
-		btnPistas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				visibilidadEnunciadoPane(false, true);
-			}
-		});
-		btnPistas.setOpaque(false);
-		btnPistas.setBounds(1290, 200, 100, 80);
-		aEntradaJuego.getMenuInteractivoPane().add(btnPistas);
-
 		// Crear los JLabel con la funcionalidad de arrastre
 		crearTrozosPapel(listaPosicionesCorrectas, listaTrozosPapel);
 		// Creamos las zonas correctas
@@ -206,8 +205,8 @@ public class BSegundaPruebaFrame extends JPanel {
 					btnContinuar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							removeAll();
-							aEntradaJuego.getMenuInteractivoPane().remove(btnEnunciado);
-							aEntradaJuego.getMenuInteractivoPane().remove(btnPistas);
+							aEntradaJuego.getContentPane().remove(btnEnunciado);
+							aEntradaJuego.getContentPane().remove(btnPistas);
 							pasilloFrame = new APasilloFrame(aEntradaJuego, local);
 							aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
 							aEntradaJuego.repaint();
