@@ -2,6 +2,8 @@ package com.bilboSKP.partida.UI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -12,11 +14,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class APrimeraPueba extends JFrame {
 
     private JPanel contentPane;
+    private Font fontPersonal;
 
     public APrimeraPueba() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,22 +36,34 @@ public class APrimeraPueba extends JFrame {
         Image imgEscalado = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
         ImageIcon iconoEscalado = new ImageIcon(imgEscalado);
         
-                JTextPane txtpizarra = new JTextPane();
-                txtpizarra.setText("Las palabras duelen más de lo que crees.");
-                txtpizarra.setEditable(false);
-                txtpizarra.setBounds(176, 306, 207, 20);
-                contentPane.add(txtpizarra);
-               
-                       
-                        txtpizarra.setOpaque(false);
+        JTextPane txtpizarra = new JTextPane();
+        txtpizarra.setBackground(Color.WHITE);
+        txtpizarra.setText("Las ____ ____ ___ de lo que ____.");
+        txtpizarra.setEditable(false);
+        txtpizarra.setBounds(206, 337, 207, 20);
+        txtpizarra.setForeground(Color.WHITE); 
+        contentPane.add(txtpizarra);
         
+        txtpizarra.setOpaque(false);
+        try {
+			fontPersonal = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD.ttf") );
+			fontPersonal = fontPersonal.deriveFont(50f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(fontPersonal);
+
+		} catch (FontFormatException | IOException e1) {
+			System.out.println("Error, font no cargado.");
+			e1.printStackTrace();
+		}
+
+
         JButton btnPizarra = new JButton("");
         btnPizarra.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 SopaDeLetras ventana = new SopaDeLetras();
-        	        ventana.setVisible(true);
-        	        dispose();        		
-        	}
+            public void actionPerformed(ActionEvent e) {
+                SopaDeLetras ventana = new SopaDeLetras();
+                ventana.setVisible(true);
+                dispose();                
+            }
         });
         btnPizarra.setBounds(137, 278, 346, 137);
         contentPane.add(btnPizarra);
@@ -54,14 +71,11 @@ public class APrimeraPueba extends JFrame {
         btnPizarra.setContentAreaFilled(false);
         btnPizarra.setBorder(null);
         btnPizarra.setFocusPainted(false);
+
         JLabel lblNewLabel = new JLabel(" ");
         lblNewLabel.setIcon(iconoEscalado);
         lblNewLabel.setBounds(0, 0, 1264, 681);
         contentPane.add(lblNewLabel);
-        
-       
-        
-        
     }
 }
 
