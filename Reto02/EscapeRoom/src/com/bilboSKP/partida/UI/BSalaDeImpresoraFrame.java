@@ -1,5 +1,6 @@
 package com.bilboSKP.partida.UI;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,30 +13,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class BSalaDeImpresoraFrame extends JFrame {
+import herramientas.ImageRescaler;
 
-	private JPanel contentPane;
-	public BSalaDeImpresoraFrame(Locale local) {
+public class BSalaDeImpresoraFrame extends JPanel {
+
+	private final int tamanoFrameX = 1280;
+	private final int tamanoFrameY = 720;
+	private BSegundaPruebaFrame segundaPrueba;
+	private JButton btnAccesoPrueba;
+	
+	public BSalaDeImpresoraFrame(AEntradaJuego aEntradaJuego, Locale local) {
+		
+		setBounds(0, 0, tamanoFrameX, tamanoFrameY);
+		setLayout(null);
+		
+		ImageIcon imgFondo = ImageRescaler.scaleImage("/imagenes/SalaImpresora.jpeg", tamanoFrameX, tamanoFrameY);
 		
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 20, 1280, 720);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
-		ImageIcon icon = new ImageIcon("imagenes/SalaImpresora.jpeg");
-		Image img = icon.getImage();
-		Image scaledImg = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImg);
-		contentPane.setLayout(null);
-		
-		JButton btnAccesoPrueba = new JButton("");
+		btnAccesoPrueba = new JButton("");
 		btnAccesoPrueba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BSegundaPruebaFrame ventana = new BSegundaPruebaFrame();
-				ventana.setVisible(true);
-				dispose();
+				setVisible(false);
+				segundaPrueba = new BSegundaPruebaFrame(aEntradaJuego, local);
+				aEntradaJuego.getNavegacionPane().add(segundaPrueba, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
 			}
 		});
 		btnAccesoPrueba.setBounds(896, 434, 116, 138);
@@ -43,26 +45,11 @@ public class BSalaDeImpresoraFrame extends JFrame {
 		btnAccesoPrueba.setFocusPainted(false);
 		btnAccesoPrueba.setContentAreaFilled(false);
 		btnAccesoPrueba.setBorder(null);
-		contentPane.add(btnAccesoPrueba);
+		add(btnAccesoPrueba);
 		
-		JButton btnFlechaAbajo = new JButton("");
-		btnFlechaAbajo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BPasilloFrame ventana = new BPasilloFrame(local);
-				ventana.setVisible(true);
-				dispose();
-			}
-		});
-		btnFlechaAbajo.setIcon(new ImageIcon("imagenes/FlechaAbajo.png"));
-		btnFlechaAbajo.setBounds(551, 609, 183, 98);
-		btnFlechaAbajo.setContentAreaFilled(false);
-		btnFlechaAbajo.setFocusPainted(false);
-		btnFlechaAbajo.setBorder(null);
-		contentPane.add(btnFlechaAbajo);
-		
-		JLabel lblImagenFondon = new JLabel(scaledIcon);
-		lblImagenFondon.setBounds(0, 0, 1264, 681);
-		contentPane.add(lblImagenFondon);
+		JLabel lblImagenFondon = new JLabel(imgFondo);
+		lblImagenFondon.setBounds(0, 0, tamanoFrameX, tamanoFrameY);
+		add(lblImagenFondon);
 		
 	}
 }
