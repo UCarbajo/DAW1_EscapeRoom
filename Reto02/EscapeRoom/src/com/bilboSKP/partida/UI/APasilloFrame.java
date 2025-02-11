@@ -35,12 +35,13 @@ public class APasilloFrame extends JPanel {
 		btnFlechaArriba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				aula7 = new CAula7();
+				aula7 = new CAula7(aEntradaJuego, local);
 				aEntradaJuego.getNavegacionPane().add(aula7, 0);
 				aEntradaJuego.repaint();
 				aEntradaJuego.revalidate();
 			}
 		});
+		btnFlechaArriba.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaArriba.png", 23, 50));
 		btnFlechaArriba.setFocusPainted(false);
 		btnFlechaArriba.setContentAreaFilled(false);
 		btnFlechaArriba.setBorderPainted(false);

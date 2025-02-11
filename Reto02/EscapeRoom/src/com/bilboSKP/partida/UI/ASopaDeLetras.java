@@ -71,27 +71,35 @@ public class ASopaDeLetras extends JPanel {
         
         ImageIcon fondoEnunciado = ImageRescaler.scaleImage("/imagenes/fondoEnunciado.png", 1400, 720);
 
-		btnEnunciado = new JButton("ENUNCIADO");
+        btnEnunciado = new JButton();
 		btnEnunciado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				visibilidadEnunciadoPane(true, false);
-				lblFondo.setVisible(false);
 			}
 		});
 		btnEnunciado.setOpaque(true);
-		btnEnunciado.setBounds(1290, 100, 100, 80);
-		aEntradaJuego.getContentPane().add(btnEnunciado, 0);
+		btnEnunciado.setBackground(null);
+		btnEnunciado.setContentAreaFilled(false);
+		btnEnunciado.setFocusable(false);
+		btnEnunciado.setBorder(null);
+		btnEnunciado.setIcon(ImageRescaler.scaleImage("/imagenes/iconoEnunciado.png", 100, 80));
+		btnEnunciado.setBounds((aEntradaJuego.getIconoPanel().getWidth()-100)/2, 150, 100, 80);
+		aEntradaJuego.getIconoPanel().add(btnEnunciado);
 
-		btnPistas = new JButton("PISTAS");
+		btnPistas = new JButton();
 		btnPistas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				visibilidadEnunciadoPane(false, true);
-				lblFondo.setVisible(false);
 			}
 		});
 		btnPistas.setOpaque(true);
-		btnPistas.setBounds(1290, 200, 100, 80);
-		aEntradaJuego.getContentPane().add(btnPistas, 0);
+		btnPistas.setIcon(ImageRescaler.scaleImage("/imagenes/iconoPista.png", 100, 80));
+		btnPistas.setBackground(null);
+		btnPistas.setContentAreaFilled(false);
+		btnPistas.setFocusable(false);
+		btnPistas.setBorder(null);
+		btnPistas.setBounds((aEntradaJuego.getIconoPanel().getWidth()-100)/2, 250, 100, 80);
+		aEntradaJuego.getIconoPanel().add(btnPistas);
 		
 		enunciadoPane = new JPanel();
 		enunciadoPane.setBounds(0, 0, 1400, 720);

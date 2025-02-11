@@ -42,11 +42,13 @@ public class ZDiarioFrame extends JPanel{
 	private ArrayList<JLabel> listaNumerosSegundaPagina = new ArrayList<>();
 	private ArrayList<JLabel> listaNumerosTerceraPagina = new ArrayList<>();
 	private ResourceBundle idioma;
+	private Locale locale;
 	private int paginaCuarderno = 0;
+	private Font fontTextoNumeros;
 
-	public ZDiarioFrame() {
+	public ZDiarioFrame(Locale local) {
 		
-		cambiarIdioma("es");
+		cambiarIdioma(local);
 		setBounds(0, 0,1280, 720);
 		setLayout(null);
 		
@@ -55,10 +57,13 @@ public class ZDiarioFrame extends JPanel{
 			fontNumeros = fontNumeros.deriveFont(170f);
 			fontTexto = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Faraco_Hand.ttf"));
 			fontTexto = fontTexto.deriveFont(30f);
+			fontTextoNumeros = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Faraco_Hand.ttf"));
+			fontTextoNumeros = fontTextoNumeros.deriveFont(53f);
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(fontNumeros);
 			ge.registerFont(fontTexto);
+			ge.registerFont(fontTextoNumeros);
 
 		} catch (FontFormatException | IOException e1) {
 			System.out.println("Error, font no cargado.");
@@ -70,7 +75,7 @@ public class ZDiarioFrame extends JPanel{
 		ImageIcon imgAnterior = ImageRescaler.scaleImage("/imagenes/paginaIzquierda.png", 50, 50);
 		ImageIcon imgSiguiente = ImageRescaler.scaleImage("/imagenes/paginaDerecha.png", 50, 50);
 		
-		JButton btnPaginaSiguiente = new JButton("P\u00C1GINA SIGUIENTE");
+		JButton btnPaginaSiguiente = new JButton(idioma.getString("label.siguientePagina"));
 		btnPaginaSiguiente.setBounds(981, 626, 210, 44);
 		btnPaginaSiguiente.setBorderPainted(false);
 		btnPaginaSiguiente.setContentAreaFilled(false);
@@ -80,7 +85,7 @@ public class ZDiarioFrame extends JPanel{
 		btnPaginaSiguiente.setHorizontalTextPosition(SwingConstants.LEFT);
 		add(btnPaginaSiguiente);
 
-		JButton btnPaginaAnterior = new JButton("P\u00C1GINA ANTERIOR");
+		JButton btnPaginaAnterior = new JButton(idioma.getString("label.anteriorPagina"));
 		btnPaginaAnterior.setBounds(60, 626, 210, 44);
 		btnPaginaAnterior.setBorderPainted(false);
 		btnPaginaAnterior.setContentAreaFilled(false);
@@ -113,7 +118,7 @@ public class ZDiarioFrame extends JPanel{
 		lbltextoTerceraPagina.setHorizontalAlignment(SwingConstants.CENTER);
 		lbltextoTerceraPagina.setBounds(688, 63, 494, 553);
 		lbltextoTerceraPagina.setText(idioma.getString("label.terceraPagina"));
-		lbltextoTerceraPagina.setFont(fontTexto);
+		lbltextoTerceraPagina.setFont(fontTextoNumeros);
 		lbltextoTerceraPagina.setVisible(false);
 		add(lbltextoTerceraPagina);
 
@@ -145,9 +150,9 @@ public class ZDiarioFrame extends JPanel{
 		mostrarPagina(paginaCuarderno);
 	}
 
-	private void cambiarIdioma(String string) {
-		Locale local = new Locale(string);
-		idioma = ResourceBundle.getBundle("Idioma.menuInicio", local);
+	private void cambiarIdioma(Locale local) {
+		locale = local;
+		idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
 	}
 
 	private void crearNumeros() {

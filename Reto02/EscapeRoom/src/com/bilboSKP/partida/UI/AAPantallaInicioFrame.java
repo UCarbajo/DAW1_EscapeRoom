@@ -50,10 +50,12 @@ public class AAPantallaInicioFrame extends JFrame {
 	
 	public AAPantallaInicioFrame() {
 		
+		setUndecorated(true);
 		cambiarIdioma("es");
+		
 		setTitle("ESCAPE ROOM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 20, 1280, 720);
+		setBounds(200, 100, 1400, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -61,7 +63,7 @@ public class AAPantallaInicioFrame extends JFrame {
 		ImageIcon imagenNino = ImageRescaler.scaleImage("/imagenes/ninoAcosado.png", 405, 325);
 		
 		lblImagenNino = new JLabel();
-		lblImagenNino.setBounds(720, 170, 405, 325);
+		lblImagenNino.setBounds(821, 171, 405, 325);
 		lblImagenNino.setIcon(imagenNino);
 		contentPane.add(lblImagenNino);
 		
@@ -82,7 +84,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			ge.registerFont(fuenteQuickPencilPequena);
 			
 			btnJugar = new JButton(idioma.getString("label.jugar"));
-			btnJugar.setBounds(163, 159, 335, 100);
+			btnJugar.setBounds(197, 159, 335, 100);
 			btnJugar.setForeground(Color.black);
 			btnJugar.setFont(fuenteQuickPencilGrande);
 			btnJugar.setContentAreaFilled(false);
@@ -92,7 +94,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			contentPane.add(btnJugar);
 			
 			btnTutorial = new JButton(idioma.getString("label.tutorial"));
-			btnTutorial.setBounds(163, 286, 335, 100);
+			btnTutorial.setBounds(197, 286, 335, 100);
 			btnTutorial.setForeground(Color.black);
 			btnTutorial.setFont(fuenteQuickPencilGrande);
 			btnTutorial.setContentAreaFilled(false);
@@ -102,7 +104,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			contentPane.add(btnTutorial);
 			
 			btnAjustes = new JButton(idioma.getString("label.ajustes"));
-			btnAjustes.setBounds(163, 432, 335, 100);
+			btnAjustes.setBounds(197, 432, 335, 100);
 			btnAjustes.setForeground(Color.black);
 			btnAjustes.setFont(fuenteQuickPencilGrande);
 			btnAjustes.setContentAreaFilled(false);
@@ -115,7 +117,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			lblIntroduceCodigo = new JLabel(idioma.getString("label.introducir_codigo"));
 			lblIntroduceCodigo.setForeground(Color.black);
 			lblIntroduceCodigo.setHorizontalAlignment(SwingConstants.CENTER);
-			lblIntroduceCodigo.setBounds(701, 159, 480, 100);
+			lblIntroduceCodigo.setBounds(790, 159, 480, 100);
 			lblIntroduceCodigo.setFont(fuenteQuickPencilMediana);
 			lblIntroduceCodigo.setVisible(false);
 			contentPane.add(lblIntroduceCodigo);
@@ -123,14 +125,14 @@ public class AAPantallaInicioFrame extends JFrame {
 			textCodigo = new JTextField();
 			textCodigo.setColumns(5);
 			textCodigo.setHorizontalAlignment(SwingConstants.CENTER);
-			textCodigo.setBounds(802, 291, 259, 92);
+			textCodigo.setBounds(900, 291, 259, 92);
 			textCodigo.setFont(fuenteQuickPencilGrande);
 			textCodigo.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
 			textCodigo.setVisible(false);
 			contentPane.add(textCodigo);
 			
 			btnEmpezar = new JButton(idioma.getString("label.empezar"));
-			btnEmpezar.setBounds(802, 471, 259, 61);
+			btnEmpezar.setBounds(900, 471, 259, 61);
 			btnEmpezar.setForeground(Color.black);
 			btnEmpezar.setFont(fuenteQuickPencilMedianaGrande);
 			btnEmpezar.setContentAreaFilled(false);
@@ -151,7 +153,7 @@ public class AAPantallaInicioFrame extends JFrame {
 			
 			//Lo que se muestra al pulsar el boton Tutorial
 			lblTutorial = new JLabel(idioma.getString("label.instruccionesTutorial"));
-			lblTutorial.setBounds(679, 138, 480, 404);
+			lblTutorial.setBounds(790, 134, 480, 463);
 			lblTutorial.setFont(fuenteQuickPencilMedianaPequena);
 			lblTutorial.setVisible(false);
 			contentPane.add(lblTutorial);
@@ -160,21 +162,21 @@ public class AAPantallaInicioFrame extends JFrame {
 			lblSeleccionarIdioma = new JLabel(idioma.getString("label.seleccionar_idioma"));
 			lblSeleccionarIdioma.setHorizontalAlignment(SwingConstants.CENTER);
 			lblSeleccionarIdioma.setFont(fuenteQuickPencilMediana);
-			lblSeleccionarIdioma.setBounds(701, 118, 480, 42);
+			lblSeleccionarIdioma.setBounds(790, 118, 480, 42);
 			lblSeleccionarIdioma.setVisible(false);
 			contentPane.add(lblSeleccionarIdioma);
 			
 			ImageIcon banderaEspana = ImageRescaler.scaleImage("/imagenes/banderaEspana.png", 180, 130);
 			
 			lblBanderaEspana = new JLabel();
-			lblBanderaEspana.setBounds(744, 270, 180, 130);
+			lblBanderaEspana.setBounds(839, 270, 180, 130);
 			lblBanderaEspana.setIcon(banderaEspana);
 			lblBanderaEspana.setVisible(false);
 			contentPane.add(lblBanderaEspana);
 			
 			lblEspanol = new JLabel(idioma.getString("label.espanol"));
 			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
-			lblEspanol.setBounds(705, 410, 255, 51);
+			lblEspanol.setBounds(800, 410, 255, 51);
 			lblEspanol.setForeground(Color.black);
 			lblEspanol.setFont(fuenteQuickPencilMediana);
 			lblEspanol.setVisible(false);
@@ -184,14 +186,14 @@ public class AAPantallaInicioFrame extends JFrame {
 			ImageIcon banderaInglesa = ImageRescaler.scaleImage("/imagenes/banderaInglesa.png", 180, 130);
 			
 			lblBanderaInglesa = new JLabel();
-			lblBanderaInglesa.setBounds(954, 270, 180, 130);
+			lblBanderaInglesa.setBounds(1049, 270, 180, 130);
 			lblBanderaInglesa.setIcon(banderaInglesa);
 			lblBanderaInglesa.setVisible(false);
 			contentPane.add(lblBanderaInglesa);
 			
 			lblIngles = new JLabel(idioma.getString("label.ingles"));
 			lblIngles.setHorizontalAlignment(SwingConstants.CENTER);
-			lblIngles.setBounds(954, 410, 180, 51);
+			lblIngles.setBounds(1049, 410, 180, 51);
 			lblIngles.setForeground(Color.black);
 			lblIngles.setFont(fuenteQuickPencilMediana);
 			lblIngles.setVisible(false);
@@ -222,10 +224,10 @@ public class AAPantallaInicioFrame extends JFrame {
 		}
 		
 		contentPane.setLayout(null);
-		ImageIcon scaledIcon = ImageRescaler.scaleImage("/imagenes/ImagenPortada.png", 1264, 681);
+		ImageIcon scaledIcon = ImageRescaler.scaleImage("/imagenes/ImagenPortada.png", 1400, 720);
 		
 		JLabel lblImagenFondo = new JLabel(scaledIcon);
-		lblImagenFondo.setBounds(0, 0, 1264, 681);
+		lblImagenFondo.setBounds(0, 0, 1400, 720);
 		contentPane.add(lblImagenFondo);
 		
 	}
@@ -239,7 +241,7 @@ public class AAPantallaInicioFrame extends JFrame {
 	private void cambiarIdioma(String tipoIdioma) {
         // Cargar el archivo de propiedades en base al idioma
 		// idioma es una cadena como "es" o "en"
-        locale = new Locale(tipoIdioma);  
+        this.locale = new Locale(tipoIdioma);  
         idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
     }
 	
@@ -311,4 +313,5 @@ public class AAPantallaInicioFrame extends JFrame {
 		lblBandera.addMouseListener(mouseListener);
 		lblIdioma.addMouseListener(mouseListener);
 	}
+	
 }

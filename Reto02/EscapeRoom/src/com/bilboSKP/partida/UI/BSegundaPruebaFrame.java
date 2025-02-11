@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -51,13 +52,13 @@ public class BSegundaPruebaFrame extends JPanel {
 	private JButton btnCerrar;
 	private JLabel lblErrorMsg;
 	private APasilloFrame pasilloFrame;
+	private ResourceBundle idioma;
 
 	public BSegundaPruebaFrame(AEntradaJuego aEntradaJuego, Locale local) {
 
+		cambiarIdioma(local);
 		setBounds(0, 0, tamanoFrameX, tamanoFrameY);
 		setLayout(null);
-
-		ZDiarioFrame ventanaDiario = new ZDiarioFrame();
 
 		ArrayList<JLabel> listaPosicionesCorrectas = new ArrayList<JLabel>();
 		ArrayList<JLabel> listaTrozosPapel = new ArrayList<JLabel>();
@@ -79,25 +80,35 @@ public class BSegundaPruebaFrame extends JPanel {
 		// TODO REVISAR ESTA PARTE DEL CODIGO.
 		ImageIcon fondoEnunciado = ImageRescaler.scaleImage("/imagenes/fondoEnunciado.png", tamanoFrameX, tamanoFrameY);
 
-		btnEnunciado = new JButton("ENUNCIADO");
+		btnEnunciado = new JButton();
 		btnEnunciado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				visibilidadEnunciadoPane(true, false);
 			}
 		});
 		btnEnunciado.setOpaque(true);
-		btnEnunciado.setBounds(1290, 100, 100, 80);
-		aEntradaJuego.getContentPane().add(btnEnunciado, 0);
+		btnEnunciado.setBackground(null);
+		btnEnunciado.setContentAreaFilled(false);
+		btnEnunciado.setFocusable(false);
+		btnEnunciado.setBorder(null);
+		btnEnunciado.setIcon(ImageRescaler.scaleImage("/imagenes/iconoEnunciado.png", 100, 80));
+		btnEnunciado.setBounds((aEntradaJuego.getIconoPanel().getWidth()-100)/2, 150, 100, 80);
+		aEntradaJuego.getIconoPanel().add(btnEnunciado);
 
-		btnPistas = new JButton("PISTAS");
+		btnPistas = new JButton();
 		btnPistas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				visibilidadEnunciadoPane(false, true);
 			}
 		});
 		btnPistas.setOpaque(true);
-		btnPistas.setBounds(1290, 200, 100, 80);
-		aEntradaJuego.getContentPane().add(btnPistas, 0);
+		btnPistas.setIcon(ImageRescaler.scaleImage("/imagenes/iconoPista.png", 100, 80));
+		btnPistas.setBackground(null);
+		btnPistas.setContentAreaFilled(false);
+		btnPistas.setFocusable(false);
+		btnPistas.setBorder(null);
+		btnPistas.setBounds((aEntradaJuego.getIconoPanel().getWidth()-100)/2, 250, 100, 80);
+		aEntradaJuego.getIconoPanel().add(btnPistas);
 		
 		enunciadoPane = new JPanel();
 		enunciadoPane.setBounds(0, 0, tamanoFrameX, tamanoFrameY);
@@ -107,31 +118,27 @@ public class BSegundaPruebaFrame extends JPanel {
 		add(enunciadoPane);
 
 		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(10, 10, tamanoFrameX, tamanoFrameY);
+		lblEnunciado.setBounds(10, 10, 1280, 699);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
 		lblEnunciado.setFont(fontNumeros);
-		lblEnunciado.setText(
-				"<html><center><p>PRUEBA 02</p><br><p>Mientras examinas el lugar, notas varios trozos de papel rotos esparcidos por el suelo. Intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, descubres que cada fragmento tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo deben estar ordenados.</p></center></html>");
+		lblEnunciado.setText(idioma.getString("label.descripcionEnunciadoSegundaPrueba"));
 		lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
 		lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
 		enunciadoPane.add(lblEnunciado);
 
-		btnPrimeraPista = new JButton(
-				"<html><center><p>DESBLOQUEAR PRIMERA PISTA</p><p>Monedas necesarias</p></center></html>");
+		btnPrimeraPista = new JButton(idioma.getString("label.primeraPista"));
 		btnPrimeraPista.setBounds(265, 180, 740, 100);
 		btnPrimeraPista.setVisible(false);
 		enunciadoPane.add(btnPrimeraPista);
 
-		btnSegundaPista = new JButton(
-				"<html><center><p>DESBLOQUEAR SEGUNDA PISTA</p><p>Monedas necesarias</p></center></html>");
+		btnSegundaPista = new JButton(idioma.getString("label.segundaPista"));
 		btnSegundaPista.setBounds(265, 290, 740, 100);
 		btnSegundaPista.setVisible(false);
 		enunciadoPane.add(btnSegundaPista);
 
-		btnTerceraPista = new JButton(
-				"<html></center><p>DESBLOQUEAR TERCERA PISTA</p><p>Monedas necesarias</p></center></html>");
+		btnTerceraPista = new JButton(idioma.getString("label.terceraPista"));
 		btnTerceraPista.setBounds(265, 400, 740, 100);
 		btnTerceraPista.setVisible(false);
 		enunciadoPane.add(btnTerceraPista);
@@ -153,7 +160,7 @@ public class BSegundaPruebaFrame extends JPanel {
 		lblFondoEnunciado.setIcon(fondoEnunciado);
 		enunciadoPane.add(lblFondoEnunciado);
 
-		lblErrorMsg = new JLabel("<html><cente>Algunos trozos no están en el lugar correcto.</cente></html>");
+		lblErrorMsg = new JLabel(idioma.getString("label.mensajeErrorSegundaPrueba"));
 		lblErrorMsg.setForeground(Color.red);
 		lblErrorMsg.setBounds(1030, 478, 173, 39);
 		lblErrorMsg.setVisible(false);
@@ -175,7 +182,6 @@ public class BSegundaPruebaFrame extends JPanel {
 					todoCorrecto = false;
 				}
 				if (todoCorrecto) {
-					System.out.println("¡Todo correcto!");
 					JLabel menuCorrectoPane = new JLabel();
 
 					int tamanoMenuCorrectoX = 700;
@@ -187,8 +193,7 @@ public class BSegundaPruebaFrame extends JPanel {
 					menuCorrectoPane.setOpaque(true);
 					menuCorrectoPane.setVisible(true);
 
-					JLabel textoMenu = new JLabel(
-							"<html><center>Al juntar los trozos de papel has descubierto una pagina del diario</center></html>");
+					JLabel textoMenu = new JLabel(idioma.getString("label.mensajeCorrectoDescripcion"));			
 					int tamanoTextMenuX = 300;
 					int tamanoTextoMenuY = 100;
 					textoMenu.setBounds(0, 10, tamanoMenuCorrectoX, tamanoTextoMenuY);
@@ -197,7 +202,7 @@ public class BSegundaPruebaFrame extends JPanel {
 					textoMenu.setVerticalAlignment(SwingConstants.CENTER);
 					menuCorrectoPane.add(textoMenu);
 
-					JButton btnContinuar = new JButton("<html>Continuar<html>");
+					JButton btnContinuar = new JButton(idioma.getString("label.mensajeCorrectoContinuar"));
 					int tamanoContinuarX = 150;
 					int tamanoContinuarY = 50;
 					btnContinuar.setBounds((menuCorrectoPane.getWidth() - tamanoContinuarX) / 2,
@@ -205,8 +210,8 @@ public class BSegundaPruebaFrame extends JPanel {
 					btnContinuar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							removeAll();
-							aEntradaJuego.getContentPane().remove(btnEnunciado);
-							aEntradaJuego.getContentPane().remove(btnPistas);
+							aEntradaJuego.getIconoPanel().remove(btnEnunciado);
+							aEntradaJuego.getIconoPanel().remove(btnPistas);
 							pasilloFrame = new APasilloFrame(aEntradaJuego, local);
 							aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
 							aEntradaJuego.repaint();
@@ -263,6 +268,11 @@ public class BSegundaPruebaFrame extends JPanel {
 
 		aEntradaJuego.repaint();
 		aEntradaJuego.revalidate();
+	}
+
+	private void cambiarIdioma(Locale locale) {
+		idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
+		
 	}
 
 	private void crearPosicionCorrecta(ArrayList<JLabel> listaPosicionesCorrectas, int[][] posicionesCorrectas) {

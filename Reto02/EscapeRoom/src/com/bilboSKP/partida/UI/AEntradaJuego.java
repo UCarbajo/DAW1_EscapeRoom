@@ -18,8 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import herramientas.ImageRescaler;
+import herramientas.TimerManager;
 
 public class AEntradaJuego extends JFrame {
 
@@ -36,11 +38,15 @@ public class AEntradaJuego extends JFrame {
 	private JButton btnDiario;
 	private JPanel inicioPane;
 	private JPanel navegacionPane;
+	private JLabel lblTiempo;
+	private TimerManager timeManager;
+	private JPanel iconoPanel;
 
 	public AEntradaJuego(Locale local) {
 
 		cambiarIdioma(local);
-
+		timeManager = TimerManager.getInstance();
+		
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 100, 1400, 720);
@@ -51,12 +57,17 @@ public class AEntradaJuego extends JFrame {
 		contentPane.setBackground(Color.black);
 
 		menuInteractivoPane = new JPanel();
-		menuInteractivoPane.setBounds(0, 0, 1400, 720);
+		menuInteractivoPane.setBounds(0, 0, 1280, 720);
 		menuInteractivoPane.setLayout(null);
 		menuInteractivoPane.setVisible(false);
 		menuInteractivoPane.setOpaque(false);
 
-		btnDiario = new JButton("DIARIO");
+		iconoPanel = new JPanel();
+		iconoPanel.setBounds(1290, 11, 100, 698);
+		iconoPanel.setLayout(null);
+		contentPane.add(iconoPanel);
+		
+		btnDiario = new JButton();
 		btnDiario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (menuInteractivoPane.isVisible()) {
@@ -73,13 +84,27 @@ public class AEntradaJuego extends JFrame {
 				}
 			}
 		});
-		btnDiario.setOpaque(false);
+		btnDiario.setBackground(null);
+		btnDiario.setContentAreaFilled(false);
+		btnDiario.setFocusable(false);
+		btnDiario.setBorder(null);
+		btnDiario.setIcon(ImageRescaler.scaleImage("/imagenes/iconoDiario.png", 100, 80));
+		btnDiario.setOpaque(true);
 		btnDiario.setVisible(false);
-		btnDiario.setBounds(1290, 10, 100, 80);
-		contentPane.add(btnDiario);
+		btnDiario.setBounds(0, 53, 100, 80);
+		iconoPanel.add(btnDiario);
 		contentPane.add(menuInteractivoPane);
 
-		diario = new ZDiarioFrame();
+		lblTiempo = new JLabel("60:00");
+		lblTiempo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTiempo.setForeground(Color.BLACK);
+		lblTiempo.setBorder(new LineBorder(Color.black, 2));
+		lblTiempo.setBounds(0, 0, 100, 42);
+		iconoPanel.add(lblTiempo);
+		timeManager.setLblTiempo(lblTiempo);
+		lblTiempo.setFont(new Font("Arial", Font.PLAIN, 30));
+
+		diario = new ZDiarioFrame(local);
 		diario.setBounds(0, 0, 1280, 720);
 		diario.setVisible(true);
 		diario.setOpaque(true);
@@ -116,7 +141,7 @@ public class AEntradaJuego extends JFrame {
 			e.printStackTrace();
 		}
 
-		JButton btnAdelante = new JButton("Adelante");
+		JButton btnAdelante = new JButton(idioma.getString("label.adelante"));
 		btnAdelante.setBounds(560, 589, 150, 50);
 		inicioPane.add(btnAdelante);
 
@@ -202,6 +227,10 @@ public class AEntradaJuego extends JFrame {
 
 	public JPanel getContentPane() {
 		return contentPane;
+	}
+
+	public JPanel getIconoPanel() {
+		return iconoPanel;
 	}
 	
 }
