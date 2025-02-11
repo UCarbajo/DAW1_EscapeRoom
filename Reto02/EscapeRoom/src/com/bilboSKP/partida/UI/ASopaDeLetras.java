@@ -50,6 +50,7 @@ public class ASopaDeLetras extends JPanel {
     private JLabel lblFondo;
     private JPanel panelFrase;
     private Container panelInferior;
+    private APasilloFrame pasilloFrame;
     
     // NUEVO: Panel final que se mostrará cuando se complete la sopa de letras
     private JPanel finalMessagePanel;
@@ -72,7 +73,6 @@ public class ASopaDeLetras extends JPanel {
         
         ImageIcon fondoEnunciado = ImageRescaler.scaleImage("/imagenes/fondoEnunciado.png", 1400, 720);
 
-<<<<<<< HEAD
         btnEnunciado = new JButton();
 		btnEnunciado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,29 +102,6 @@ public class ASopaDeLetras extends JPanel {
 		btnPistas.setBorder(null);
 		btnPistas.setBounds((aEntradaJuego.getIconoPanel().getWidth()-100)/2, 250, 100, 80);
 		aEntradaJuego.getIconoPanel().add(btnPistas);
-=======
-        btnEnunciado = new JButton("ENUNCIADO");
-        btnEnunciado.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                visibilidadEnunciadoPane(true, false);
-                lblFondo.setVisible(false);
-            }
-        });
-        btnEnunciado.setOpaque(true);
-        btnEnunciado.setBounds(1290, 100, 100, 80);
-        aEntradaJuego.getContentPane().add(btnEnunciado, 0);
-
-        btnPistas = new JButton("PISTAS");
-        btnPistas.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                visibilidadEnunciadoPane(false, true);
-                lblFondo.setVisible(false);
-            }
-        });
-        btnPistas.setOpaque(true);
-        btnPistas.setBounds(1290, 200, 100, 80);
-        aEntradaJuego.getContentPane().add(btnPistas, 0);
->>>>>>> 06cb7ccde670f92056cccbea0f2e0ed30e78bf9f
 		
         enunciadoPane = new JPanel();
         enunciadoPane.setBounds(0, 0, 1400, 720);
@@ -300,7 +277,7 @@ public class ASopaDeLetras extends JPanel {
         finalMessagePanel.setBounds(300, 300, 800, 200);
         finalMessagePanel.setBackground(new Color(255, 255, 255, 220)); // Fondo blanco semitransparente
         finalMessagePanel.setVisible(false);
-        lblFondo.add(finalMessagePanel);
+        add(finalMessagePanel, 0);
 
         finalMessageText = new JTextArea("Los insultos pueden parecer inofensivos, pero dejan marcas profundas en quien los recibe.\nAvanza a la siguiente aula.");
         finalMessageText.setFont(fontPersonal);
@@ -314,8 +291,13 @@ public class ASopaDeLetras extends JPanel {
         btnAvanzar.setBounds(300, 130, 200, 40);
         finalMessagePanel.add(btnAvanzar);
         btnAvanzar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Redirige a APasilloFrame (tu clase ya creada
+
+			public void actionPerformed(ActionEvent e) {
+				removeAll();
+				pasilloFrame = new APasilloFrame(aEntradaJuego, local);
+				aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
             }
         });
         // ==========================================================
@@ -350,6 +332,7 @@ public class ASopaDeLetras extends JPanel {
 
                 // Si se han completado todos los huecos de la frase, mostramos el panel final
                 if (todasLasPalabrasCompletadas()) {
+                	lblFondo.setEnabled(false);
                     showFinalPanel();
                 }
             } else {
