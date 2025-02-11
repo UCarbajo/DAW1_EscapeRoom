@@ -2,15 +2,12 @@ package com.bilboSKP.partida.UI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import herramientas.ImageRescaler;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,32 +24,37 @@ public class ASopaDeLetras extends JPanel {
     private ArrayList<JButton> botonesSeleccionados = new ArrayList<>();
     private ArrayList<Point> posicionesSeleccionadas = new ArrayList<>();
     private String[][] sopa = {
-        	{"P", "A", "L", "A", "B", "R", "A", "S"},
-        	{"D", "A", "D", "X", "E", "N", "Á", "U"},
-        	{"M", "C", "U", "X", "X", "Á", "M", "E"},
-        	{"C", "R", "E", "A", "S", "Á", "X", "L"},
-        	{"X", "R", "L", "E", "S", "X", "X", "E"},
-        	{"C", "X", "E", "X", "S", "R", "X", "N"},
-        	{"X", "X", "N", "X", "S", "X", "A", "X"},
-        	{"C", "R", "E", "E", "S", "X", "X", "S"}
-	};
+        {"P", "A", "L", "A", "B", "R", "A", "S"},
+        {"D", "A", "D", "X", "E", "N", "Á", "U"},
+        {"M", "C", "U", "X", "X", "Á", "M", "E"},
+        {"C", "R", "E", "A", "S", "Á", "X", "L"},
+        {"X", "R", "L", "E", "S", "X", "X", "E"},
+        {"C", "X", "E", "X", "S", "R", "X", "N"},
+        {"X", "X", "N", "X", "S", "X", "A", "X"},
+        {"C", "R", "E", "E", "S", "X", "X", "S"}
+    };
 
     private JLabel[] fraseHuecos;
     private JButton[][] botones;
     private Map<String, ArrayList<Point>> palabrasYPosiciones = new HashMap<>();
     private JPanel enunciadoPane;
-	private JLabel lblEnunciado;
-	private JLabel lblFondoEnunciado;
-	private JButton btnEnunciado;
-	private JButton btnPistas;
-	private JButton btnPrimeraPista;
-	private JButton btnSegundaPista;
-	private JButton btnTerceraPista;
-	private JButton btnCerrar;
-	private JPanel panelCentral;
-	private JLabel lblFondo;
-	private JPanel panelFrase;
-	private Container panelInferior;
+    private JLabel lblEnunciado;
+    private JLabel lblFondoEnunciado;
+    private JButton btnEnunciado;
+    private JButton btnPistas;
+    private JButton btnPrimeraPista;
+    private JButton btnSegundaPista;
+    private JButton btnTerceraPista;
+    private JButton btnCerrar;
+    private JPanel panelCentral;
+    private JLabel lblFondo;
+    private JPanel panelFrase;
+    private Container panelInferior;
+    
+    // NUEVO: Panel final que se mostrará cuando se complete la sopa de letras
+    private JPanel finalMessagePanel;
+    private JTextArea finalMessageText;
+    private JButton btnAvanzar;
 
     public ASopaDeLetras(AEntradaJuego aEntradaJuego, Locale local) {
         try {
@@ -60,7 +62,6 @@ public class ASopaDeLetras extends JPanel {
             fontPersonal = fontPersonal.deriveFont(17f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(fontPersonal);
-
         } catch (FontFormatException | IOException e1) {
             System.out.println("Error, font no cargado.");
             e1.printStackTrace();
@@ -71,6 +72,7 @@ public class ASopaDeLetras extends JPanel {
         
         ImageIcon fondoEnunciado = ImageRescaler.scaleImage("/imagenes/fondoEnunciado.png", 1400, 720);
 
+<<<<<<< HEAD
         btnEnunciado = new JButton();
 		btnEnunciado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,60 +102,83 @@ public class ASopaDeLetras extends JPanel {
 		btnPistas.setBorder(null);
 		btnPistas.setBounds((aEntradaJuego.getIconoPanel().getWidth()-100)/2, 250, 100, 80);
 		aEntradaJuego.getIconoPanel().add(btnPistas);
+=======
+        btnEnunciado = new JButton("ENUNCIADO");
+        btnEnunciado.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                visibilidadEnunciadoPane(true, false);
+                lblFondo.setVisible(false);
+            }
+        });
+        btnEnunciado.setOpaque(true);
+        btnEnunciado.setBounds(1290, 100, 100, 80);
+        aEntradaJuego.getContentPane().add(btnEnunciado, 0);
+
+        btnPistas = new JButton("PISTAS");
+        btnPistas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                visibilidadEnunciadoPane(false, true);
+                lblFondo.setVisible(false);
+            }
+        });
+        btnPistas.setOpaque(true);
+        btnPistas.setBounds(1290, 200, 100, 80);
+        aEntradaJuego.getContentPane().add(btnPistas, 0);
+>>>>>>> 06cb7ccde670f92056cccbea0f2e0ed30e78bf9f
 		
-		enunciadoPane = new JPanel();
-		enunciadoPane.setBounds(0, 0, 1400, 720);
-		enunciadoPane.setOpaque(false);
-		enunciadoPane.setBorder(BorderFactory.createLineBorder(Color.black, 10));
-		enunciadoPane.setLayout(null);
-		add(enunciadoPane);
+        enunciadoPane = new JPanel();
+        enunciadoPane.setBounds(0, 0, 1400, 720);
+        enunciadoPane.setOpaque(false);
+        enunciadoPane.setBorder(BorderFactory.createLineBorder(Color.black, 10));
+        enunciadoPane.setLayout(null);
+        add(enunciadoPane);
 
-		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(10, 10, 1280, 720);
-		lblEnunciado.setOpaque(false);
-		lblEnunciado.setForeground(Color.black);
-		lblEnunciado.setFont(fontPersonal);
-		lblEnunciado.setText(
-				"<html><center><p>PRUEBA 02</p><br><p>Mientras examinas el lugar, notas varios trozos de papel rotos esparcidos por el suelo. Intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, descubres que cada fragmento tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo deben estar ordenados.</p></center></html>");
-		lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
-		lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
-		enunciadoPane.add(lblEnunciado);
+        lblEnunciado = new JLabel();
+        lblEnunciado.setBounds(10, 10, 1280, 720);
+        lblEnunciado.setOpaque(false);
+        lblEnunciado.setForeground(Color.black);
+        lblEnunciado.setFont(fontPersonal);
+        lblEnunciado.setText(
+            "<html><center><p>PRUEBA 02</p><br><p>Mientras examinas el lugar, notas varios trozos de papel rotos esparcidos por el suelo. Intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, descubres que cada fragmento tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo deben estar ordenados.</p></center></html>");
+        lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
+        lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
+        lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
+        enunciadoPane.add(lblEnunciado);
 
-		btnPrimeraPista = new JButton(
-				"<html><center><p>DESBLOQUEAR PRIMERA PISTA</p><p>Monedas necesarias</p></center></html>");
-		btnPrimeraPista.setBounds(265, 180, 740, 100);
-		btnPrimeraPista.setVisible(false);
-		enunciadoPane.add(btnPrimeraPista);
+        btnPrimeraPista = new JButton(
+            "<html><center><p>DESBLOQUEAR PRIMERA PISTA</p><p>Monedas necesarias</p></center></html>");
+        btnPrimeraPista.setBounds(265, 180, 740, 100);
+        btnPrimeraPista.setVisible(false);
+        enunciadoPane.add(btnPrimeraPista);
 
-		btnSegundaPista = new JButton(
-				"<html><center><p>DESBLOQUEAR SEGUNDA PISTA</p><p>Monedas necesarias</p></center></html>");
-		btnSegundaPista.setBounds(265, 290, 740, 100);
-		btnSegundaPista.setVisible(false);
-		enunciadoPane.add(btnSegundaPista);
+        btnSegundaPista = new JButton(
+            "<html><center><p>DESBLOQUEAR SEGUNDA PISTA</p><p>Monedas necesarias</p></center></html>");
+        btnSegundaPista.setBounds(265, 290, 740, 100);
+        btnSegundaPista.setVisible(false);
+        enunciadoPane.add(btnSegundaPista);
 
-		btnTerceraPista = new JButton(
-				"<html></center><p>DESBLOQUEAR TERCERA PISTA</p><p>Monedas necesarias</p></center></html>");
-		btnTerceraPista.setBounds(265, 400, 740, 100);
-		btnTerceraPista.setVisible(false);
-		enunciadoPane.add(btnTerceraPista);
+        btnTerceraPista = new JButton(
+            "<html></center><p>DESBLOQUEAR TERCERA PISTA</p><p>Monedas necesarias</p></center></html>");
+        btnTerceraPista.setBounds(265, 400, 740, 100);
+        btnTerceraPista.setVisible(false);
+        enunciadoPane.add(btnTerceraPista);
 
-		ImageIcon imgCerrar = ImageRescaler.scaleImage("/imagenes/simboloCerrar.png", 100, 100);
-		ImageIcon imgCerrarRojo = ImageRescaler.scaleImage("/imagenes/simboloCerrarRojo.png", 100, 100);
+        ImageIcon imgCerrar = ImageRescaler.scaleImage("/imagenes/simboloCerrar.png", 100, 100);
+        ImageIcon imgCerrarRojo = ImageRescaler.scaleImage("/imagenes/simboloCerrarRojo.png", 100, 100);
 
-		btnCerrar = new JButton();
-		btnCerrar.setBounds(1120, 30, 100, 100);
-		btnCerrar.setBackground(null);
-		btnCerrar.setBorderPainted(false);
-		btnCerrar.setOpaque(false);
-		btnCerrar.setContentAreaFilled(false);
-		btnCerrar.setIcon(imgCerrar);
-		enunciadoPane.add(btnCerrar);
+        btnCerrar = new JButton();
+        btnCerrar.setBounds(1120, 30, 100, 100);
+        btnCerrar.setBackground(null);
+        btnCerrar.setBorderPainted(false);
+        btnCerrar.setOpaque(false);
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setIcon(imgCerrar);
+        enunciadoPane.add(btnCerrar);
 
-		lblFondoEnunciado = new JLabel();
-		lblFondoEnunciado.setBounds(10, 10, 1280, 700);
-		lblFondoEnunciado.setIcon(fondoEnunciado);
-		enunciadoPane.add(lblFondoEnunciado);
+        lblFondoEnunciado = new JLabel();
+        lblFondoEnunciado.setBounds(10, 10, 1280, 700);
+        lblFondoEnunciado.setIcon(fondoEnunciado);
+        enunciadoPane.add(lblFondoEnunciado);
 
         lblFondo = new JLabel();
         lblFondo.setIcon(ImageRescaler.scaleImage("/imagenes/PzrrA.jpeg", 1400, 720));
@@ -165,6 +190,7 @@ public class ASopaDeLetras extends JPanel {
         panelFrase.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panelFrase.setBounds(200, 150, 800, 50);
         panelFrase.setFont(fontPersonal);
+        panelFrase.setVisible(true);
         lblFondo.add(panelFrase);
 
         String[] frasePartes = {"Las", "_____", "_____", "_____", "de lo que", "_____"}; 
@@ -182,6 +208,7 @@ public class ASopaDeLetras extends JPanel {
                 lblParte.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 lblParte.setPreferredSize(new Dimension(150, 30));
                 lblParte.setHorizontalAlignment(SwingConstants.CENTER);
+                // Solo se asigna a la posición si es "_____"
                 fraseHuecos[i] = lblParte;
             }
             panelFrase.add(lblParte);
@@ -243,31 +270,56 @@ public class ASopaDeLetras extends JPanel {
         });
         
         btnCerrar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				enunciadoPane.setVisible(false);
-				lblFondo.setVisible(true);
-				repaint();
-				revalidate();
-
-			}
-		});
-		btnCerrar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnCerrar.setIcon(imgCerrarRojo);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnCerrar.setIcon(imgCerrar);
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enunciadoPane.setVisible(false);
+                lblFondo.setVisible(true);
+                repaint();
+                revalidate();
+            }
+        });
+        btnCerrar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnCerrar.setIcon(imgCerrarRojo);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnCerrar.setIcon(imgCerrar);
+            }
+        });
 
         inicializarPalabras();
-    }
 
+        // ==========================================================
+        // NUEVA PARTE: CREAR UN PANEL DENTRO DE lblFondo
+        // Este panel mostrará la frase y un botón para redirigir a APasilloFrame,
+        // y se mostrará cuando el jugador termine de hacer toda la sopa de letras.
+        finalMessagePanel = new JPanel();
+        finalMessagePanel.setLayout(null);
+        finalMessagePanel.setBounds(300, 300, 800, 200);
+        finalMessagePanel.setBackground(new Color(255, 255, 255, 220)); // Fondo blanco semitransparente
+        finalMessagePanel.setVisible(false);
+        lblFondo.add(finalMessagePanel);
+
+        finalMessageText = new JTextArea("Los insultos pueden parecer inofensivos, pero dejan marcas profundas en quien los recibe.\nAvanza a la siguiente aula.");
+        finalMessageText.setFont(fontPersonal);
+        finalMessageText.setEditable(false);
+        finalMessageText.setOpaque(false);
+        finalMessageText.setBounds(50, 20, 700, 80);
+        finalMessagePanel.add(finalMessageText);
+
+        btnAvanzar = new JButton("Avanzar a la siguiente aula");
+        btnAvanzar.setFont(new Font("Arial", Font.BOLD, 16));
+        btnAvanzar.setBounds(300, 130, 200, 40);
+        finalMessagePanel.add(btnAvanzar);
+        btnAvanzar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Redirige a APasilloFrame (tu clase ya creada
+            }
+        });
+        // ==========================================================
+    }
 
     private void actualizarPalabraSeleccionada() {
         StringBuilder sb = new StringBuilder();
@@ -295,6 +347,11 @@ public class ASopaDeLetras extends JPanel {
                 botonesSeleccionados.clear();
                 posicionesSeleccionadas.clear();
                 palabraSeleccionada.setText("");
+
+                // Si se han completado todos los huecos de la frase, mostramos el panel final
+                if (todasLasPalabrasCompletadas()) {
+                    showFinalPanel();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Las letras seleccionadas no corresponden a la ubicación correcta de la palabra.", "Posiciones incorrectas", JOptionPane.ERROR_MESSAGE);
                 restablecerSeleccion();
@@ -359,7 +416,6 @@ public class ASopaDeLetras extends JPanel {
         }
         palabrasYPosiciones.put("PALABRAS", posicionesPalabras);
 
-
         ArrayList<Point> posicionesDuelen = new ArrayList<>();
         posicionesDuelen.add(new Point(1, 2)); 
         posicionesDuelen.add(new Point(2, 2)); 
@@ -368,7 +424,6 @@ public class ASopaDeLetras extends JPanel {
         posicionesDuelen.add(new Point(5, 2)); 
         posicionesDuelen.add(new Point(6, 2)); 
         palabrasYPosiciones.put("DUELEN", posicionesDuelen);
-
 
         ArrayList<Point> posicionesMas = new ArrayList<>();
         posicionesMas.add(new Point(2, 6)); 
@@ -382,14 +437,30 @@ public class ASopaDeLetras extends JPanel {
         }
         palabrasYPosiciones.put("CREES", posicionesCrees);
     }
+
+    // Verifica si todos los huecos de la frase están completados (es decir, que ya no muestran "_____")
+    private boolean todasLasPalabrasCompletadas() {
+        for (JLabel hueco : fraseHuecos) {
+            if (hueco != null && hueco.getText().equals("_____")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Muestra el panel final con el mensaje y el botón para redirigir a APasilloFrame
+    private void showFinalPanel() {
+        finalMessagePanel.setVisible(true);
+    }
+
     private void visibilidadEnunciadoPane(boolean visibilidadEnunciado, boolean visibilidadPista) {
-		enunciadoPane.setVisible(true);
-		lblEnunciado.setVisible(visibilidadEnunciado);
-		btnPrimeraPista.setVisible(visibilidadPista);
-		btnSegundaPista.setVisible(visibilidadPista);
-		btnTerceraPista.setVisible(visibilidadPista);
-		repaint();
-		revalidate();
-	}
+        enunciadoPane.setVisible(true);
+        lblEnunciado.setVisible(visibilidadEnunciado);
+        btnPrimeraPista.setVisible(visibilidadPista);
+        btnSegundaPista.setVisible(visibilidadPista);
+        btnTerceraPista.setVisible(visibilidadPista);
+        repaint();
+        revalidate();
+    }
 }
 
