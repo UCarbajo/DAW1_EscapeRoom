@@ -62,7 +62,7 @@ public class CAula7 extends JPanel {
 	private ResourceBundle idioma;
 
 	public CAula7(AEntradaJuego aEntradaJuego, Locale local) {
-		setBounds(0, 0, TAMANO_FRAME_X, TAMANO_FRAME_Y);
+		setBounds(0, 0, 1400, 720);
 		setLayout(null);
 
 		cambiarIdioma(local);
@@ -167,29 +167,28 @@ public class CAula7 extends JPanel {
 		});
 		
 		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(174, 11, 899, 663);
+		lblEnunciado.setBounds(10, 10, 1280, 699);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
 		lblEnunciado.setFont(font);
-		lblEnunciado.setText(
-				"<html><center><p>PRUEBA 07</p><br><br><br><p>Este aula está en silencio pero guarda más voces de lo que parece, las palabras que no pudieron decirse aún permanecen, fijas en un lugar donde nadie las borra, donde el tiempo las convierte en un susurro silencioso.</p><br><p>Abre los ojos y busca con atención lo que otros han ignorado.</p></center></html>");
+		lblEnunciado.setText(idioma.getString("label.descripcionEnunciadoTerceraPrueba"));
 		lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
-		lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
+		lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
 		enunciadoPane.add(lblEnunciado);
 
 		// Botones de pistas (inicialmente ocultos)
-		btnPrimeraPista = new JButton("DESBLOQUEAR PRIMERA PISTA");
+		btnPrimeraPista = new JButton(idioma.getString("label.primeraPista"));
 		btnPrimeraPista.setBounds(265, 180, 740, 100);
 		btnPrimeraPista.setVisible(false);
 		enunciadoPane.add(btnPrimeraPista);
 
-		btnSegundaPista = new JButton("DESBLOQUEAR SEGUNDA PISTA");
+		btnSegundaPista = new JButton(idioma.getString("label.segundaPista"));
 		btnSegundaPista.setBounds(265, 290, 740, 100);
 		btnSegundaPista.setVisible(false);
 		enunciadoPane.add(btnSegundaPista);
 
-		btnTerceraPista = new JButton("DESBLOQUEAR TERCERA PISTA");
+		btnTerceraPista = new JButton(idioma.getString("label.terceraPista"));
 		btnTerceraPista.setBounds(265, 400, 740, 100);
 		btnTerceraPista.setVisible(false);
 		enunciadoPane.add(btnTerceraPista);
@@ -231,8 +230,7 @@ public class CAula7 extends JPanel {
 
 		// Etiqueta con la frase clicable
 
-		JLabel frase = new JLabel(
-				"<html><p>Hoy me sentí [20-18-9-19-20-5].<p/><br><p>Nadie me [8-1-2-12-1].<p/><html/>");
+		JLabel frase = new JLabel(idioma.getString("label.textoSala"));
 		frase.setBounds(1030, 454, 128, 50);
 		frase.setHorizontalTextPosition(SwingConstants.CENTER);
 		frase.setHorizontalAlignment(SwingConstants.CENTER);
@@ -260,17 +258,17 @@ public class CAula7 extends JPanel {
 	    panelPrueba.setLayout(null);
 	    contentPane.add(panelPrueba);
 
-	    JLabel lblTriste = new JLabel("Hoy me sentí 21-19-9-20-21-5");
+	    JLabel lblTriste = new JLabel(idioma.getString("label.textoTriste"));
 	    lblTriste.setBounds(200, 150, 700, 152);
 	    lblTriste.setFont(fontTextoPrueba);
 	    panelPrueba.add(lblTriste);
 
-	    JLabel lblHabla = new JLabel("Nadie me 8-1-2-12-1");
+	    JLabel lblHabla = new JLabel(idioma.getString("label.textoHabla"));
 	    lblHabla.setBounds(200, 300, 700, 152);
 	    lblHabla.setFont(fontTextoPrueba);
 	    panelPrueba.add(lblHabla);
 
-	    JLabel label1 = new JLabel("Palabra 1:");
+	    JLabel label1 = new JLabel(idioma.getString("label.textoPalabraUno"));
 	    label1.setBounds(200, 500, 200, 30);
 	    label1.setFont(new Font("Arial", Font.BOLD, 40));
 	    panelPrueba.add(label1);
@@ -280,7 +278,7 @@ public class CAula7 extends JPanel {
 	    entrada1.setFont(new Font("Arial", Font.BOLD, 40));
 	    panelPrueba.add(entrada1);
 
-	    JLabel label2 = new JLabel("Palabra 2:");
+	    JLabel label2 = new JLabel(idioma.getString("label.textoPalabraDos"));
 	    label2.setBounds(800, 500, 200, 30);
 	    label2.setFont(new Font("Arial", Font.BOLD, 40));
 	    panelPrueba.add(label2);
@@ -290,7 +288,7 @@ public class CAula7 extends JPanel {
 	    entrada2.setFont(new Font("Arial", Font.BOLD, 40));
 	    panelPrueba.add(entrada2);
 
-	    JButton verificar = new JButton("Verificar");
+	    JButton verificar = new JButton(idioma.getString("label.textoVerificar"));
 	    verificar.setBounds((enunciadoPane.getWidth()-200)/2, 600, 200, 50);
 	    verificar.setFont(new Font("Arial", Font.BOLD, 30));
 	    panelPrueba.add(verificar);
@@ -301,8 +299,8 @@ public class CAula7 extends JPanel {
 	            String palabra1 = entrada1.getText().trim().toLowerCase();
 	            String palabra2 = entrada2.getText().trim().toLowerCase();
 
-	            if (palabra1.equals("triste") && palabra2.equals("habla")) {
-	                JOptionPane.showMessageDialog(null, "¡Correcto! Has descifrado el mensaje.");
+	            if ((palabra1.equals("triste") && palabra2.equals("habla")) || (palabra1.equals("sad") && palabra2.equals("talks"))) {
+	                JOptionPane.showMessageDialog(null, idioma.getString("label.textoMenuCorrecto"));
 	                panelPrueba.setVisible(false);
 	                lblLeccion.setVisible(true);
 	                darkOverlay.setVisible(true);
@@ -310,20 +308,19 @@ public class CAula7 extends JPanel {
 	                btnEnunciado.setVisible(false);
 	                btnPistas.setVisible(false);
 	            } else {
-	                JOptionPane.showMessageDialog(null, "Incorrecto");
+	                JOptionPane.showMessageDialog(null, idioma.getString("label.textoMenuIncorrecto"));
 	            }
 	        }
 	    });
 
-	    lblLeccion = new JLabel(
-	            "<html><center><p>Muchas víctimas no expresan lo que sienten directamente.</p><br><p>Aprende a escuchar más allá de las palabras.</p></center></html>");
+	    lblLeccion = new JLabel(idioma.getString("label.textoLeccion"));
 	    lblLeccion.setBounds(310, 237, 653, 300);
 	    lblLeccion.setForeground(Color.WHITE);
 	    lblLeccion.setFont(fontLeccion);
 	    lblLeccion.setVisible(false);
 	    contentPane.add(lblLeccion);
 
-	    lblContinuar = new JLabel("Continuar");
+	    lblContinuar = new JLabel(idioma.getString("label.continuar"));
 	    lblContinuar.setBounds((enunciadoPane.getWidth()-200)/2, 542, 200, 29);
 	    lblContinuar.setForeground(Color.WHITE);
 	    lblContinuar.setFont(font);
