@@ -17,14 +17,18 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 
 public class APrimeraPueba extends JPanel {
 
     private Font fontTexto;
     private ASopaDeLetras sopaLetras;
+    private ResourceBundle idioma;
 
     public APrimeraPueba(AEntradaJuego aEntradaJuego, Locale local) {
+    	cambiarIdioma(local);
+    	
         repaint();
         revalidate();
 
@@ -43,7 +47,7 @@ public class APrimeraPueba extends JPanel {
             fontTexto = new Font("Serif", Font.PLAIN, 13); 
         }
 
-        JButton btnPizarra = new JButton("Las _____ ____ ___ de lo que _____.");
+        JButton btnPizarra = new JButton(idioma.getString("label.botonPizarra"));
         btnPizarra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -75,5 +79,10 @@ public class APrimeraPueba extends JPanel {
         repaint();
         revalidate();
     }
+
+	private void cambiarIdioma(Locale local) {
+		idioma = ResourceBundle.getBundle("Idioma.menuInicio", local);
+		
+	}
 }
 

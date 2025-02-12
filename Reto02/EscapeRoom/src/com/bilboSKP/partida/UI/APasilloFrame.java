@@ -23,6 +23,8 @@ public class APasilloFrame extends JPanel {
 	private BSalaDeImpresoraFrame salaImpresora;
 	private CAula7 aula7;
 	private JButton btnFlechaArriba;
+	private JButton btnFlechaDerecha;
+	private JButton btnFlechaIzquierda;
 
 	public APasilloFrame(AEntradaJuego aEntradaJuego, Locale local) {
 
@@ -31,6 +33,7 @@ public class APasilloFrame extends JPanel {
 
 		ImageIcon imgFondo = ImageRescaler.scaleImage("/imagenes/PasilloA.jpeg", 1280, 720);
 		
+		if(aEntradaJuego.getJuegosCompletados()[2]==false) {
 		btnFlechaArriba = new JButton("");
 		btnFlechaArriba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -48,17 +51,31 @@ public class APasilloFrame extends JPanel {
 		btnFlechaArriba.setBorder(null);
 		btnFlechaArriba.setBounds(527, 259, 89, 199);
 		add(btnFlechaArriba);
+		}
 
-		JButton btnFlechaDerecha = new JButton("");
+		if(aEntradaJuego.getJuegosCompletados()[0]==false) {
+		btnFlechaDerecha = new JButton("");
 		btnFlechaDerecha.setIcon(ImageRescaler.scaleImage("/imagenes/FlechaDerecha.png", 50, 23));
 		btnFlechaDerecha.setBounds(1051, 259, 89, 199);
 		btnFlechaDerecha.setBorderPainted(false);
 		btnFlechaDerecha.setBorder(null);
 		btnFlechaDerecha.setFocusPainted(false);
 		btnFlechaDerecha.setContentAreaFilled(false);
+		btnFlechaDerecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);	
+				primeraPrueba = new APrimeraPueba(aEntradaJuego, local);
+				aEntradaJuego.getNavegacionPane().add(primeraPrueba, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
+			}
+		});
 		add(btnFlechaDerecha);
 
-		JButton btnFlechaIzquierda = new JButton("");
+		}
+		
+		if(aEntradaJuego.getJuegosCompletados()[1]==false) {
+		btnFlechaIzquierda = new JButton("");
 		btnFlechaIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -75,19 +92,11 @@ public class APasilloFrame extends JPanel {
 		btnFlechaIzquierda.setFocusPainted(false);
 		btnFlechaIzquierda.setContentAreaFilled(false);
 		add(btnFlechaIzquierda);
-
+		}
 		JLabel lblImagenFondon = new JLabel(imgFondo);
 		lblImagenFondon.setBounds(0, 0, 1280, 720);
 		add(lblImagenFondon);
 
-		btnFlechaDerecha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);	
-				primeraPrueba = new APrimeraPueba(aEntradaJuego, local);
-				aEntradaJuego.getNavegacionPane().add(primeraPrueba, 0);
-				aEntradaJuego.repaint();
-				aEntradaJuego.revalidate();
-			}
-		});
+		
 	}
 }

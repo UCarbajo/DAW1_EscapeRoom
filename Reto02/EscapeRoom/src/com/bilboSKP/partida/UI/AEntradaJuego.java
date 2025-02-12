@@ -41,6 +41,11 @@ public class AEntradaJuego extends JFrame {
 	private JLabel lblTiempo;
 	private TimerManager timeManager;
 	private JPanel iconoPanel;
+	private boolean[] juegosCompletados = new boolean[3];
+	private JPanel panelFinal;
+	private JLabel lblMensajeFinal;
+	private JButton btnFinalizar;
+	private Font fontFinal;
 
 	public AEntradaJuego(Locale local) {
 
@@ -209,6 +214,55 @@ public class AEntradaJuego extends JFrame {
 		idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
 	}
 
+	boolean comprobarPruebasCompletadas() {
+		boolean resultado = true;
+		for(boolean result:juegosCompletados) {
+			if(!result) {
+				resultado = false;
+				break;
+			}
+		}
+		
+		return resultado;
+		
+	}
+	void mostrarPantallaFinal(){
+		
+		try {
+			fontFinal = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
+			fontFinal = fontFinal.deriveFont(50f);
+		} catch (FontFormatException | IOException e1) {
+			
+			e1.printStackTrace();
+		}
+		
+		
+		contentPane.removeAll();
+		panelFinal = new JPanel();
+		panelFinal.setBounds(0,0, 1400, 720);
+		panelFinal.setLayout(null);
+		panelFinal.setBackground(Color.BLACK);	
+		getContentPane().add(panelFinal, 0);
+		
+		btnFinalizar = new JButton("<html><center>FINALIZAR</html></center>");
+		btnFinalizar.setBounds(617, 558, 174, 70);
+		btnFinalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panelFinal.add(btnFinalizar);
+		
+		lblMensajeFinal = new JLabel("<html><center><p>FIN DEL JUEGO</p><br><p>GRACIAS POR JUGAR</p></html></center>", SwingConstants.CENTER);
+		lblMensajeFinal.setForeground(Color.white);
+		lblMensajeFinal.setBounds(0, 0, 1400, 500);
+		lblMensajeFinal.setFont(fontFinal);
+		panelFinal.add(lblMensajeFinal);
+		
+		contentPane.repaint();
+		contentPane.revalidate();
+	}
+	
 	public JPanel getNavegacionPane() {
 		return navegacionPane;
 	}
@@ -232,5 +286,15 @@ public class AEntradaJuego extends JFrame {
 	public JPanel getIconoPanel() {
 		return iconoPanel;
 	}
+
+	public boolean[] getJuegosCompletados() {
+		return juegosCompletados;
+	}
+
+	public void setJuegosCompletados(boolean[] juegosCompletados) {
+		this.juegosCompletados = juegosCompletados;
+	}
+	
+	
 	
 }

@@ -49,6 +49,7 @@ public class CAula7 extends JPanel {
 	private JButton btnSegundaPista;
 	private JButton btnTerceraPista;
 	private JButton btnPistas;
+	private APasilloFrame pasilloFrame;
 
 	// Fuentes
 	private Font font;
@@ -69,7 +70,7 @@ public class CAula7 extends JPanel {
 		cambiarIdioma(local);
 		cargarFuentes();
 		inicializarComponentes(aEntradaJuego, local);
-		configurarEventos();
+		configurarEventos(aEntradaJuego, local);
 	}
 
 	private void cambiarIdioma(Locale local) {
@@ -350,7 +351,7 @@ public class CAula7 extends JPanel {
 	    contentPane.add(darkOverlay);
 	}
 
-	private void configurarEventos() {
+	private void configurarEventos(AEntradaJuego aEntradaJuego, Locale local) {
 
 		// Evento para el botón "Enunciado"
 		btnEnunciado.addActionListener(new ActionListener() {
@@ -371,11 +372,16 @@ public class CAula7 extends JPanel {
 		lblContinuar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Navegar a la siguiente pantalla o acción
-				// Por ejemplo:
-				// CFinal v5 = new CFinal();
-				// v5.setVisible(true);
-				// Aquí deberías implementar la lógica para avanzar en tu aplicación
+				aEntradaJuego.getJuegosCompletados()[2] = true;
+				if(!aEntradaJuego.comprobarPruebasCompletadas()) {
+				pasilloFrame = new APasilloFrame(aEntradaJuego, local);
+				aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
+				}else {
+					aEntradaJuego.mostrarPantallaFinal();
+				}
+				
 			}
 		});
 

@@ -209,6 +209,8 @@ public class BSegundaPruebaFrame extends JPanel {
 							(tamanoMenuCorrectoY / 2), tamanoContinuarX, tamanoContinuarY);
 					btnContinuar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
+							aEntradaJuego.getJuegosCompletados()[1]=true;
+							if(!aEntradaJuego.comprobarPruebasCompletadas()) {
 							removeAll();
 							aEntradaJuego.getIconoPanel().remove(btnEnunciado);
 							aEntradaJuego.getIconoPanel().remove(btnPistas);
@@ -216,6 +218,9 @@ public class BSegundaPruebaFrame extends JPanel {
 							aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
 							aEntradaJuego.repaint();
 							aEntradaJuego.revalidate();
+							}else {
+								aEntradaJuego.mostrarPantallaFinal();
+							}
 						}
 					});
 					menuCorrectoPane.add(btnContinuar);
