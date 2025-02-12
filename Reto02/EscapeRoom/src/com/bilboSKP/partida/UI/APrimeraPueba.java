@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
+
+import herramientas.ImageRescaler;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -40,11 +43,6 @@ public class APrimeraPueba extends JPanel {
             fontTexto = new Font("Serif", Font.PLAIN, 13); 
         }
 
-        ImageIcon icono = new ImageIcon("imagenes/imgJuego1.jpeg");
-        Image img = icono.getImage();
-        Image imgEscalado = img.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
-        ImageIcon iconoEscalado = new ImageIcon(imgEscalado);
-
         JButton btnPizarra = new JButton("Las _____ ____ ___ de lo que _____.");
         btnPizarra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +68,7 @@ public class APrimeraPueba extends JPanel {
         btnPizarra.setFocusPainted(false);
 
         JLabel lblNewLabel = new JLabel(" ");
-        lblNewLabel.setIcon(iconoEscalado);
+        lblNewLabel.setIcon(ImageRescaler.scaleImage("/imagenes/imgJuego1.jpeg", 1280, 720));
         lblNewLabel.setBounds(0, 0, 1280, 720);
         add(lblNewLabel);
 

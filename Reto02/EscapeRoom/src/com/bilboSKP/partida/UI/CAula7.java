@@ -60,6 +60,7 @@ public class CAula7 extends JPanel {
 	private JButton btnCerrar;
 	private Font fontTextoPrueba;
 	private ResourceBundle idioma;
+	private Font fontEnunciado;
 
 	public CAula7(AEntradaJuego aEntradaJuego, Locale local) {
 		setBounds(0, 0, 1400, 720);
@@ -85,9 +86,13 @@ public class CAula7 extends JPanel {
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/DK Crayon Crumble.ttf"))
 					.deriveFont(Font.PLAIN, 40);
+			fontEnunciado = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD.ttf"));
+			fontEnunciado = fontEnunciado.deriveFont(45f);
+			
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(font);
-
+			ge.registerFont(fontEnunciado);
+			
 			fontLeccion = font.deriveFont(Font.PLAIN, 40);
 			ge.registerFont(fontLeccion);
 
@@ -167,14 +172,14 @@ public class CAula7 extends JPanel {
 		});
 		
 		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(10, 10, 1280, 699);
+		lblEnunciado.setBounds(10, 60, 1280, 699);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
-		lblEnunciado.setFont(font);
+		lblEnunciado.setFont(fontEnunciado);
 		lblEnunciado.setText(idioma.getString("label.descripcionEnunciadoTerceraPrueba"));
 		lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
-		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
 		lblEnunciado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnunciado.setVerticalAlignment(SwingConstants.CENTER);
 		enunciadoPane.add(lblEnunciado);
 
 		// Botones de pistas (inicialmente ocultos)

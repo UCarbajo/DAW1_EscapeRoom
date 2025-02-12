@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ASopaDeLetras extends JPanel {
 
@@ -51,18 +52,31 @@ public class ASopaDeLetras extends JPanel {
     private JPanel panelFrase;
     private Container panelInferior;
     private APasilloFrame pasilloFrame;
+    private ResourceBundle idioma;
     
     // NUEVO: Panel final que se mostrará cuando se complete la sopa de letras
     private JPanel finalMessagePanel;
     private JTextArea finalMessageText;
     private JButton btnAvanzar;
+	private Font fontEnunciado;
+	private Font fontTiza;
 
     public ASopaDeLetras(AEntradaJuego aEntradaJuego, Locale local) {
+    	
+    	cambiarIdiome(local);
+    	
         try {
+        	fontEnunciado = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD.ttf"));
+			fontEnunciado = fontEnunciado.deriveFont(50f);
             fontPersonal = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Chalk Brush.ttf"));
             fontPersonal = fontPersonal.deriveFont(17f);
+            fontTiza = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Tizza.otf"));
+			fontTiza = fontTiza.deriveFont(50f);
+            
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(fontPersonal);
+            ge.registerFont(fontEnunciado);
+            ge.registerFont(fontTiza);
         } catch (FontFormatException | IOException e1) {
             System.out.println("Error, font no cargado.");
             e1.printStackTrace();
@@ -114,7 +128,7 @@ public class ASopaDeLetras extends JPanel {
         lblEnunciado.setBounds(10, 10, 1280, 720);
         lblEnunciado.setOpaque(false);
         lblEnunciado.setForeground(Color.black);
-        lblEnunciado.setFont(fontPersonal);
+        lblEnunciado.setFont(fontEnunciado);
         lblEnunciado.setText(
             "<html><center><p>PRUEBA 02</p><br><p>Mientras examinas el lugar, notas varios trozos de papel rotos esparcidos por el suelo. Intentas leerlos, pero no les encuentras sentido.</p><br><p>Al darles la vuelta, descubres que cada fragmento tiene un n\u00FAmero escrito.</p><br><p>Descubre c\u00F3mo deben estar ordenados.</p></center></html>");
         lblEnunciado.setBorder(BorderFactory.createEmptyBorder(0, 100, 100, 100));
@@ -158,19 +172,20 @@ public class ASopaDeLetras extends JPanel {
         enunciadoPane.add(lblFondoEnunciado);
 
         lblFondo = new JLabel();
-        lblFondo.setIcon(ImageRescaler.scaleImage("/imagenes/PzrrA.jpeg", 1400, 720));
-        lblFondo.setBounds(0, 0, 1400, 720);
+        lblFondo.setIcon(ImageRescaler.scaleImage("/imagenes/PzrrA.jpeg", 1280, 720));
+        lblFondo.setBounds(0, 0, 1280, 720);
         lblFondo.setVisible(false);
         add(lblFondo);
 
         panelFrase = new JPanel();
-        panelFrase.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        panelFrase.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         panelFrase.setBounds(200, 150, 800, 50);
+        panelFrase.setOpaque(false);
         panelFrase.setFont(fontPersonal);
         panelFrase.setVisible(true);
         lblFondo.add(panelFrase);
 
-        String[] frasePartes = {"Las", "_____", "_____", "_____", "de lo que", "_____"}; 
+        String[] frasePartes = {"LAS", "________", "______", "___", "DE LO QUE", "_____"}; 
         fraseHuecos = new JLabel[frasePartes.length];
 
         palabrasCorrectas.put("PALABRAS", 1);
@@ -181,8 +196,8 @@ public class ASopaDeLetras extends JPanel {
         for (int i = 0; i < frasePartes.length; i++) {
             JLabel lblParte = new JLabel(frasePartes[i]);
             lblParte.setFont(fontPersonal);
+            lblParte.setForeground(Color.white);
             if (frasePartes[i].equals("_____")) {
-                lblParte.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 lblParte.setPreferredSize(new Dimension(150, 30));
                 lblParte.setHorizontalAlignment(SwingConstants.CENTER);
                 // Solo se asigna a la posición si es "_____"
@@ -242,7 +257,7 @@ public class ASopaDeLetras extends JPanel {
 
         btnComprobar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                verificarPalabra();
+                verificarPalabra(aEntradaJuego, local);
             }
         });
         
@@ -267,43 +282,20 @@ public class ASopaDeLetras extends JPanel {
         });
 
         inicializarPalabras();
-
-        // ==========================================================
-        // NUEVA PARTE: CREAR UN PANEL DENTRO DE lblFondo
-        // Este panel mostrará la frase y un botón para redirigir a APasilloFrame,
-        // y se mostrará cuando el jugador termine de hacer toda la sopa de letras.
-        finalMessagePanel = new JPanel();
-        finalMessagePanel.setLayout(null);
-        finalMessagePanel.setBounds(300, 300, 800, 200);
-        finalMessagePanel.setBackground(new Color(255, 255, 255, 220)); // Fondo blanco semitransparente
-        finalMessagePanel.setVisible(false);
-        add(finalMessagePanel, 0);
-
-        finalMessageText = new JTextArea("Los insultos pueden parecer inofensivos, pero dejan marcas profundas en quien los recibe.\nAvanza a la siguiente aula.");
-        finalMessageText.setFont(fontPersonal);
-        finalMessageText.setEditable(false);
-        finalMessageText.setOpaque(false);
-        finalMessageText.setBounds(50, 20, 700, 80);
-        finalMessagePanel.add(finalMessageText);
-
-        btnAvanzar = new JButton("Avanzar a la siguiente aula");
-        btnAvanzar.setFont(new Font("Arial", Font.BOLD, 16));
-        btnAvanzar.setBounds(300, 130, 200, 40);
-        finalMessagePanel.add(btnAvanzar);
-        btnAvanzar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				removeAll();
-				pasilloFrame = new APasilloFrame(aEntradaJuego, local);
-				aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
-				aEntradaJuego.repaint();
-				aEntradaJuego.revalidate();
-            }
-        });
-        // ==========================================================
     }
 
-    private void actualizarPalabraSeleccionada() {
+    private void cambiarIdiome(Locale local) {
+    	try {
+    		Locale locale = local;
+    		idioma = ResourceBundle.getBundle("Idioma.menuInicio", locale);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	private void actualizarPalabraSeleccionada() {
         StringBuilder sb = new StringBuilder();
         for (JButton boton : botonesSeleccionados) {
             sb.append(boton.getText());
@@ -315,7 +307,7 @@ public class ASopaDeLetras extends JPanel {
         posicionesSeleccionadas.removeIf(p -> p.x == row && p.y == col);
     }
 
-    private void verificarPalabra() {
+    private void verificarPalabra(AEntradaJuego aEntradaJuego, Locale local) {
         String palabra = palabraSeleccionada.getText().toUpperCase();
 
         if (palabrasYPosiciones.containsKey(palabra)) {
@@ -333,7 +325,12 @@ public class ASopaDeLetras extends JPanel {
                 // Si se han completado todos los huecos de la frase, mostramos el panel final
                 if (todasLasPalabrasCompletadas()) {
                 	lblFondo.setEnabled(false);
-                    showFinalPanel();
+                	remove(enunciadoPane);
+                	aEntradaJuego.getIconoPanel().remove(btnEnunciado);
+                	aEntradaJuego.getIconoPanel().remove(btnPistas);
+                	aEntradaJuego.repaint();
+                	aEntradaJuego.revalidate();
+                    showFinalPanel(aEntradaJuego, local);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Las letras seleccionadas no corresponden a la ubicación correcta de la palabra.", "Posiciones incorrectas", JOptionPane.ERROR_MESSAGE);
@@ -379,7 +376,7 @@ public class ASopaDeLetras extends JPanel {
 
         if (hueco != null && hueco.getText().equals("_____")) {
             hueco.setText(palabra);
-            hueco.setForeground(Color.black);
+            hueco.setForeground(Color.white);
         }
     }
 
@@ -432,8 +429,41 @@ public class ASopaDeLetras extends JPanel {
     }
 
     // Muestra el panel final con el mensaje y el botón para redirigir a APasilloFrame
-    private void showFinalPanel() {
+    private void showFinalPanel(AEntradaJuego aEntradaJuego, Locale local) {
+    	lblFondo.remove(panelCentral);
+    	lblFondo.remove(panelInferior);
+    	
+    	finalMessagePanel = new JPanel();
+        finalMessagePanel.setLayout(null);
+        finalMessagePanel.setBounds(300, 300, 800, 200);
+        finalMessagePanel.setOpaque(true);
         finalMessagePanel.setVisible(true);
+        add(finalMessagePanel, 0);
+
+        finalMessageText = new JTextArea("Los insultos pueden parecer inofensivos, pero dejan marcas profundas en quien los recibe.\nAvanza a la siguiente aula.");
+        finalMessageText.setFont(fontPersonal);
+        finalMessageText.setEditable(false);
+        finalMessageText.setOpaque(false);
+        finalMessageText.setBounds(50, 20, 700, 80);
+        finalMessagePanel.add(finalMessageText);
+
+        btnAvanzar = new JButton("Avanzar a la siguiente aula");
+        btnAvanzar.setFont(new Font("Arial", Font.BOLD, 16));
+        btnAvanzar.setBounds(300, 130, 200, 40);
+        finalMessagePanel.add(btnAvanzar);
+        btnAvanzar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				removeAll();
+				pasilloFrame = new APasilloFrame(aEntradaJuego, local);
+				aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
+				aEntradaJuego.repaint();
+				aEntradaJuego.revalidate();
+            }
+        });
+        
+        repaint();
+        revalidate();
     }
 
     private void visibilidadEnunciadoPane(boolean visibilidadEnunciado, boolean visibilidadPista) {
