@@ -62,6 +62,11 @@ public class CAula7 extends JPanel {
 	private Font fontTextoPrueba;
 	private ResourceBundle idioma;
 	private Font fontEnunciado;
+	private boolean[] estadoPista = new boolean[3];
+	private JLabel lblPrimeraPista;
+	private JLabel lblSegundaPista;
+	private JLabel lblTerceraPista;
+	private Font fontPista;
 
 	public CAula7(AEntradaJuego aEntradaJuego, Locale local) {
 		setBounds(0, 0, 1400, 720);
@@ -89,7 +94,7 @@ public class CAula7 extends JPanel {
 					.deriveFont(Font.PLAIN, 40);
 			fontEnunciado = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD.ttf"));
 			fontEnunciado = fontEnunciado.deriveFont(45f);
-			
+			fontPista = fontEnunciado.deriveFont(40f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(font);
 			ge.registerFont(fontEnunciado);
@@ -115,7 +120,7 @@ public class CAula7 extends JPanel {
 		add(contentPane);
 
 		// Panel del enunciado
-		inicializarEnunciadoPane();
+		inicializarEnunciadoPane(aEntradaJuego);
 
 		// Botones y etiquetas
 		inicializarBotones(aEntradaJuego, local);
@@ -128,7 +133,7 @@ public class CAula7 extends JPanel {
 		inicializarDarkOverlay();
 	}
 
-	private void inicializarEnunciadoPane() {
+	private void inicializarEnunciadoPane(AEntradaJuego aEntradaJuego) {
 		enunciadoPane = new PanelImagen("/imagenes/fondoEnunciado.png"); // Cambiado img/fondoEnunciado.png por imagenes/fondoEnunciado.png
 		enunciadoPane.setBounds(0, 0, 1400, 720);
 		enunciadoPane.setOpaque(false);
@@ -185,18 +190,64 @@ public class CAula7 extends JPanel {
 
 		// Botones de pistas (inicialmente ocultos)
 		btnPrimeraPista = new JButton(idioma.getString("label.primeraPista"));
-		btnPrimeraPista.setBounds(265, 180, 740, 100);
+		btnPrimeraPista.setBounds(200, 40, 877, 200);
+		btnPrimeraPista.setFont(aEntradaJuego.getFontPista());
 		btnPrimeraPista.setVisible(false);
+		btnPrimeraPista.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				btnPrimeraPista.setVisible(false);
+				estadoPista[0] = true;
+				lblPrimeraPista = new JLabel(idioma.getString("label.sopaPrimeraPista"));
+				lblPrimeraPista.setBounds(btnPrimeraPista.getLocation().x ,btnPrimeraPista.getLocation().y, btnPrimeraPista.getWidth(), btnPrimeraPista.getHeight());
+				lblPrimeraPista.setHorizontalAlignment(SwingConstants.CENTER);
+				lblPrimeraPista.setVerticalAlignment(SwingConstants.CENTER);
+				lblPrimeraPista.setFont(fontPista);
+				enunciadoPane.add(lblPrimeraPista, 0);
+				enunciadoPane.repaint();
+				enunciadoPane.revalidate();
+			}
+		});
 		enunciadoPane.add(btnPrimeraPista);
 
 		btnSegundaPista = new JButton(idioma.getString("label.segundaPista"));
-		btnSegundaPista.setBounds(265, 290, 740, 100);
+		btnSegundaPista.setBounds(200, 260, 877, 200);
+		btnSegundaPista.setFont(aEntradaJuego.getFontPista());
 		btnSegundaPista.setVisible(false);
+		btnSegundaPista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnSegundaPista.setVisible(false);
+				estadoPista[1] = true;
+				lblSegundaPista = new JLabel(idioma.getString("label.sopaSegundaPista"));
+				lblSegundaPista.setBounds(btnSegundaPista.getLocation().x ,btnSegundaPista.getLocation().y, btnSegundaPista.getWidth(), btnSegundaPista.getHeight());
+				lblSegundaPista.setHorizontalAlignment(SwingConstants.CENTER);
+				lblSegundaPista.setVerticalAlignment(SwingConstants.CENTER);
+				lblSegundaPista.setFont(fontPista);
+				enunciadoPane.add(lblSegundaPista, 0);
+				enunciadoPane.repaint();
+				enunciadoPane.revalidate();
+			}
+		});
 		enunciadoPane.add(btnSegundaPista);
 
 		btnTerceraPista = new JButton(idioma.getString("label.terceraPista"));
-		btnTerceraPista.setBounds(265, 400, 740, 100);
+		btnTerceraPista.setBounds(200, 485, 877, 200);
+		btnTerceraPista.setFont(aEntradaJuego.getFontPista());
 		btnTerceraPista.setVisible(false);
+		btnTerceraPista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnTerceraPista.setVisible(false);
+				estadoPista[2] = true;
+				lblTerceraPista = new JLabel(idioma.getString("label.sopaTerceraPista"));
+				lblTerceraPista.setBounds(btnTerceraPista.getLocation().x ,btnTerceraPista.getLocation().y, btnTerceraPista.getWidth(), btnTerceraPista.getHeight());
+				lblTerceraPista.setHorizontalAlignment(SwingConstants.CENTER);
+				lblTerceraPista.setVerticalAlignment(SwingConstants.CENTER);
+				lblTerceraPista.setFont(fontPista);
+				enunciadoPane.add(lblTerceraPista, 0);
+				enunciadoPane.repaint();
+				enunciadoPane.revalidate();
+			}
+		});
 		enunciadoPane.add(btnTerceraPista);
 	}
 
@@ -398,9 +449,23 @@ public class CAula7 extends JPanel {
 	private void visibilidadEnunciadoPane(boolean visibilidadEnunciado, boolean visibilidadPista) {
 		enunciadoPane.setVisible(true);
 		lblEnunciado.setVisible(visibilidadEnunciado);
-		btnPrimeraPista.setVisible(visibilidadPista);
-		btnSegundaPista.setVisible(visibilidadPista);
-		btnTerceraPista.setVisible(visibilidadPista);
+		if (estadoPista[0]==false) {
+			btnPrimeraPista.setVisible(visibilidadPista);
+		}else {
+			lblPrimeraPista.setVisible(visibilidadPista);
+		}
+		if (estadoPista[1]==false) {
+			btnSegundaPista.setVisible(visibilidadPista);
+		}else {
+			lblSegundaPista.setVisible(visibilidadPista);
+		}
+		if (estadoPista[2]==false) {
+			btnTerceraPista.setVisible(visibilidadPista);
+		}else {
+			lblTerceraPista.setVisible(visibilidadPista);
+		}
+		repaint();
+		revalidate();
 	}
 
 	// Clase interna para cargar imágenes de fondo en paneles

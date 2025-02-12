@@ -46,12 +46,14 @@ public class AEntradaJuego extends JFrame {
 	private JLabel lblMensajeFinal;
 	private JButton btnFinalizar;
 	private Font fontFinal;
+	private JLabel lblImgFondoFinal;
+	private Font fontPista;
 
 	public AEntradaJuego(Locale local) {
 
 		cambiarIdioma(local);
 		timeManager = TimerManager.getInstance();
-		
+
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 100, 1400, 720);
@@ -71,7 +73,7 @@ public class AEntradaJuego extends JFrame {
 		iconoPanel.setBounds(1290, 11, 100, 698);
 		iconoPanel.setLayout(null);
 		contentPane.add(iconoPanel);
-		
+
 		btnDiario = new JButton();
 		btnDiario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -136,11 +138,16 @@ public class AEntradaJuego extends JFrame {
 			fontPersonal = Font.createFont(Font.TRUETYPE_FONT,
 					getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
 			fontPersonal = fontPersonal.deriveFont(30f);
-
+			fontFinal = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
+			fontFinal = fontFinal.deriveFont(70f);
+			fontPista = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
+			fontPista = fontPista.deriveFont(45f);
 			// TODO USAR EN ESTA PARTE DE CODIGO EN CASO DE QUE NO CARGUE EL FONT
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(fontPersonal);
-
+			ge.registerFont(fontFinal);
+			ge.registerFont(fontPista);
+			
 		} catch (FontFormatException | IOException e) {
 			System.out.println("No ha cargado el font correctamente");
 			e.printStackTrace();
@@ -216,53 +223,50 @@ public class AEntradaJuego extends JFrame {
 
 	boolean comprobarPruebasCompletadas() {
 		boolean resultado = true;
-		for(boolean result:juegosCompletados) {
-			if(!result) {
+		for (boolean result : juegosCompletados) {
+			if (!result) {
 				resultado = false;
 				break;
 			}
 		}
-		
+
 		return resultado;
-		
+
 	}
-	void mostrarPantallaFinal(){
-		
-		try {
-			fontFinal = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/AppleGaramond.ttf"));
-			fontFinal = fontFinal.deriveFont(50f);
-		} catch (FontFormatException | IOException e1) {
-			
-			e1.printStackTrace();
-		}
-		
-		
+
+	void mostrarPantallaFinal() {
+
 		contentPane.removeAll();
 		panelFinal = new JPanel();
-		panelFinal.setBounds(0,0, 1400, 720);
+		panelFinal.setBounds(0, 0, 1400, 720);
 		panelFinal.setLayout(null);
-		panelFinal.setBackground(Color.BLACK);	
+		panelFinal.setBackground(null);
 		getContentPane().add(panelFinal, 0);
-		
-		btnFinalizar = new JButton("<html><center>FINALIZAR</html></center>");
-		btnFinalizar.setBounds(617, 558, 174, 70);
+
+		btnFinalizar = new JButton(idioma.getString("label.finalizar"));
+		btnFinalizar.setBounds(618, 639, 174, 70);
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
 		panelFinal.add(btnFinalizar);
-		
-		lblMensajeFinal = new JLabel("<html><center><p>FIN DEL JUEGO</p><br><p>GRACIAS POR JUGAR</p></html></center>", SwingConstants.CENTER);
+
+		lblMensajeFinal = new JLabel(idioma.getString("label.finalJuego"));
 		lblMensajeFinal.setForeground(Color.white);
-		lblMensajeFinal.setBounds(0, 0, 1400, 500);
+		lblMensajeFinal.setBounds(0, 0, 1400, 273);
 		lblMensajeFinal.setFont(fontFinal);
 		panelFinal.add(lblMensajeFinal);
-		
+
+		lblImgFondoFinal = new JLabel();
+		lblImgFondoFinal.setBounds(0, 0, 1400, 720);
+		lblImgFondoFinal.setIcon(ImageRescaler.scaleImage("/imagenes/fondoFinal.png", 1400, 720));
+		panelFinal.add(lblImgFondoFinal);
+
 		contentPane.repaint();
 		contentPane.revalidate();
 	}
-	
+
 	public JPanel getNavegacionPane() {
 		return navegacionPane;
 	}
@@ -294,7 +298,13 @@ public class AEntradaJuego extends JFrame {
 	public void setJuegosCompletados(boolean[] juegosCompletados) {
 		this.juegosCompletados = juegosCompletados;
 	}
-	
-	
-	
+
+	public Font getFontPista() {
+		return fontPista;
+	}
+
+	public void setFontPista(Font fontPista) {
+		this.fontPista = fontPista;
+	}
+
 }

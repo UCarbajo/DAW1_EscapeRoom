@@ -85,9 +85,6 @@ public class CFinal extends JFrame {
 		lblTiempo.setForeground(Color.WHITE);
 		contentPane.add(lblTiempo);
 		
-		TimerManager.getInstance().setLblTiempo(lblTiempo);
-		
-		
         setTitle("Aula: La revelación");
        
 

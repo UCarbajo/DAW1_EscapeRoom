@@ -55,6 +55,11 @@ public class ASopaDeLetras extends JPanel {
 	private Font fontEnunciado;
 	private Font fontTiza;
 	private JLabel lblImgFondo;
+	private boolean[] estadoPista = new boolean[3];
+	private JLabel lblPrimeraPista;
+	private JLabel lblSegundaPista;
+	private JLabel lblTerceraPista;
+	private Font fontPista;
 
 	public ASopaDeLetras(AEntradaJuego aEntradaJuego, Locale local) {
 
@@ -63,6 +68,7 @@ public class ASopaDeLetras extends JPanel {
 		try {
 			fontEnunciado = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD.ttf"));
 			fontEnunciado = fontEnunciado.deriveFont(50f);
+			fontPista = fontEnunciado.deriveFont(40f);
 			fontPersonal = Font.createFont(Font.TRUETYPE_FONT,
 					getClass().getResourceAsStream("/fonts/Chalk Brush.ttf"));
 			fontPersonal = fontPersonal.deriveFont(17f);
@@ -121,7 +127,7 @@ public class ASopaDeLetras extends JPanel {
 		add(enunciadoPane);
 
 		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(10, 10, 1280, 720);
+		lblEnunciado.setBounds(10, 10, 1280, 699);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
 		lblEnunciado.setFont(fontEnunciado);
@@ -132,18 +138,64 @@ public class ASopaDeLetras extends JPanel {
 		enunciadoPane.add(lblEnunciado);
 
 		btnPrimeraPista = new JButton(idioma.getString("label.primeraPista"));
-		btnPrimeraPista.setBounds(265, 180, 740, 100);
+		btnPrimeraPista.setBounds(200, 40, 877, 200);
+		btnPrimeraPista.setFont(aEntradaJuego.getFontPista());
 		btnPrimeraPista.setVisible(false);
+		btnPrimeraPista.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				btnPrimeraPista.setVisible(false);
+				estadoPista[0] = true;
+				lblPrimeraPista = new JLabel(idioma.getString("label.sopaPrimeraPista"));
+				lblPrimeraPista.setBounds(btnPrimeraPista.getLocation().x ,btnPrimeraPista.getLocation().y, btnPrimeraPista.getWidth(), btnPrimeraPista.getHeight());
+				lblPrimeraPista.setHorizontalAlignment(SwingConstants.CENTER);
+				lblPrimeraPista.setVerticalAlignment(SwingConstants.CENTER);
+				lblPrimeraPista.setFont(fontPista);
+				enunciadoPane.add(lblPrimeraPista, 0);
+				enunciadoPane.repaint();
+				enunciadoPane.revalidate();
+			}
+		});
 		enunciadoPane.add(btnPrimeraPista);
 
 		btnSegundaPista = new JButton(idioma.getString("label.segundaPista"));
-		btnSegundaPista.setBounds(265, 290, 740, 100);
+		btnSegundaPista.setBounds(200, 260, 877, 200);
+		btnSegundaPista.setFont(aEntradaJuego.getFontPista());
 		btnSegundaPista.setVisible(false);
+		btnSegundaPista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnSegundaPista.setVisible(false);
+				estadoPista[1] = true;
+				lblSegundaPista = new JLabel(idioma.getString("label.sopaSegundaPista"));
+				lblSegundaPista.setBounds(btnSegundaPista.getLocation().x ,btnSegundaPista.getLocation().y, btnSegundaPista.getWidth(), btnSegundaPista.getHeight());
+				lblSegundaPista.setHorizontalAlignment(SwingConstants.CENTER);
+				lblSegundaPista.setVerticalAlignment(SwingConstants.CENTER);
+				lblSegundaPista.setFont(fontPista);
+				enunciadoPane.add(lblSegundaPista, 0);
+				enunciadoPane.repaint();
+				enunciadoPane.revalidate();
+			}
+		});
 		enunciadoPane.add(btnSegundaPista);
 
 		btnTerceraPista = new JButton(idioma.getString("label.terceraPista"));
-		btnTerceraPista.setBounds(265, 400, 740, 100);
+		btnTerceraPista.setBounds(200, 485, 877, 200);
+		btnTerceraPista.setFont(aEntradaJuego.getFontPista());
 		btnTerceraPista.setVisible(false);
+		btnTerceraPista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnTerceraPista.setVisible(false);
+				estadoPista[2] = true;
+				lblTerceraPista = new JLabel(idioma.getString("label.sopaTerceraPista"));
+				lblTerceraPista.setBounds(btnTerceraPista.getLocation().x ,btnTerceraPista.getLocation().y, btnTerceraPista.getWidth(), btnTerceraPista.getHeight());
+				lblTerceraPista.setHorizontalAlignment(SwingConstants.CENTER);
+				lblTerceraPista.setVerticalAlignment(SwingConstants.CENTER);
+				lblTerceraPista.setFont(fontPista);
+				enunciadoPane.add(lblTerceraPista, 0);
+				enunciadoPane.repaint();
+				enunciadoPane.revalidate();
+			}
+		});
 		enunciadoPane.add(btnTerceraPista);
 
 		ImageIcon imgCerrar = ImageRescaler.scaleImage("/imagenes/simboloCerrar.png", 100, 100);
@@ -319,7 +371,7 @@ public class ASopaDeLetras extends JPanel {
 
 				// Si se han completado todos los huecos de la frase, mostramos el panel final
 				if (todasLasPalabrasCompletadas()) {
-					aEntradaJuego.getJuegosCompletados()[0]=true;
+					aEntradaJuego.getJuegosCompletados()[0] = true;
 					lblFondo.setEnabled(false);
 					remove(enunciadoPane);
 					remove(lblFondo);
@@ -332,12 +384,13 @@ public class ASopaDeLetras extends JPanel {
 					showFinalPanel(aEntradaJuego, local);
 				}
 			} else {
-				JOptionPane.showMessageDialog(this,
-						idioma.getString("label.letrasIncorrectas"), idioma.getString("label.posicionIncorrecta"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, idioma.getString("label.letrasIncorrectas"),
+						idioma.getString("label.posicionIncorrecta"), JOptionPane.ERROR_MESSAGE);
 				restablecerSeleccion();
 			}
 		} else {
-			JOptionPane.showMessageDialog(this, idioma.getString("label.palabraIncorrecta"), idioma.getString("label.error"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, idioma.getString("label.palabraIncorrecta"),
+					idioma.getString("label.error"), JOptionPane.ERROR_MESSAGE);
 			restablecerSeleccion();
 		}
 	}
@@ -441,7 +494,7 @@ public class ASopaDeLetras extends JPanel {
 		add(finalMessagePanel, 0);
 
 		finalMessageText = new JLabel(idioma.getString("label.mensajeFinal"));
-		finalMessageText.setFont(new Font("Arial", Font.BOLD, 16));
+		finalMessageText.setFont(new Font("Arial", Font.BOLD, 25));
 		finalMessageText.setOpaque(false);
 		finalMessageText.setHorizontalAlignment(SwingConstants.CENTER);
 		finalMessageText.setBounds(0, 0, 800, 100);
@@ -454,13 +507,13 @@ public class ASopaDeLetras extends JPanel {
 		btnAvanzar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(!aEntradaJuego.comprobarPruebasCompletadas()) {
-				removeAll();
-				pasilloFrame = new APasilloFrame(aEntradaJuego, local);
-				aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
-				aEntradaJuego.repaint();
-				aEntradaJuego.revalidate();
-				}else {
+				if (!aEntradaJuego.comprobarPruebasCompletadas()) {
+					removeAll();
+					pasilloFrame = new APasilloFrame(aEntradaJuego, local);
+					aEntradaJuego.getNavegacionPane().add(pasilloFrame, 0);
+					aEntradaJuego.repaint();
+					aEntradaJuego.revalidate();
+				} else {
 					aEntradaJuego.mostrarPantallaFinal();
 				}
 			}
@@ -473,9 +526,21 @@ public class ASopaDeLetras extends JPanel {
 	private void visibilidadEnunciadoPane(boolean visibilidadEnunciado, boolean visibilidadPista) {
 		enunciadoPane.setVisible(true);
 		lblEnunciado.setVisible(visibilidadEnunciado);
-		btnPrimeraPista.setVisible(visibilidadPista);
-		btnSegundaPista.setVisible(visibilidadPista);
-		btnTerceraPista.setVisible(visibilidadPista);
+		if (estadoPista[0]==false) {
+			btnPrimeraPista.setVisible(visibilidadPista);
+		}else {
+			lblPrimeraPista.setVisible(visibilidadPista);
+		}
+		if (estadoPista[1]==false) {
+			btnSegundaPista.setVisible(visibilidadPista);
+		}else {
+			lblSegundaPista.setVisible(visibilidadPista);
+		}
+		if (estadoPista[2]==false) {
+			btnTerceraPista.setVisible(visibilidadPista);
+		}else {
+			lblTerceraPista.setVisible(visibilidadPista);
+		}
 		repaint();
 		revalidate();
 	}

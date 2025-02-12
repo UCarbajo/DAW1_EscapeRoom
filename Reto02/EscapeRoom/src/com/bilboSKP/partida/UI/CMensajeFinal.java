@@ -64,9 +64,6 @@ public class CMensajeFinal extends JFrame {
 		contentPane.setVisible(true);
 		contentPane.setLayout(null);
 		contentP.add(contentPane);
-        	
-		
-		TimerManager.getInstance().setLblTiempo(lblTiempo);
 
         fraseFinal = new JTextArea("El bullying deja cicatrices profundas. Escucha, apoya y act\u00FAa. T\u00FA puedes ser el cambio.");
         fraseFinal.setForeground(Color.WHITE);
@@ -108,10 +105,9 @@ public class CMensajeFinal extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TimerManager.getInstance().stopTimer();
-				String tiempoFinal = TimerManager.getInstance().getTime();
+			
 				dispose();
-				System.out.println(tiempoFinal);
+		
 			}
         });
         contentPane.add(finalizarButton);

@@ -102,8 +102,6 @@ public class CFinalZoom extends JFrame {
 		lblTiempo.setForeground(Color.WHITE);
 		contentPane.add(lblTiempo);
 		
-		TimerManager.getInstance().setLblTiempo(lblTiempo);
-
         frase1 = new JTextArea("\tGracias por seguir mi historia. \r\n\r\nOjal\u00E1 alguien lo hubiera hecho cuando yo a\u00FAn estaba aqu\u00ED.");
         frase1.setForeground(Color.WHITE);
         frase1.setDisabledTextColor(Color.GRAY);
