@@ -127,7 +127,7 @@ public class ASopaDeLetras extends JPanel {
 		add(enunciadoPane);
 
 		lblEnunciado = new JLabel();
-		lblEnunciado.setBounds(10, 10, 1280, 699);
+		lblEnunciado.setBounds(10, 40, 1280, 720);
 		lblEnunciado.setOpaque(false);
 		lblEnunciado.setForeground(Color.black);
 		lblEnunciado.setFont(fontEnunciado);
@@ -330,6 +330,8 @@ public class ASopaDeLetras extends JPanel {
 		add(lblImgFondo);
 
 		inicializarPalabras();
+		repaint();
+		revalidate();
 	}
 
 	private void cambiarIdiome(Locale local) {

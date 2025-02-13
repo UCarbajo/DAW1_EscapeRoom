@@ -1,5 +1,6 @@
 package com.bilboSKP.partida.UI;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +27,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
-public class ZDiarioFrame extends JPanel{
+public class ZDiarioFrame extends JPanel {
 
 	private JLabel lblImagenFondo;
 	private JButton btnCerrar;
@@ -45,19 +47,23 @@ public class ZDiarioFrame extends JPanel{
 	private Locale locale;
 	private int paginaCuarderno = 0;
 	private Font fontTextoNumeros;
+	private JButton btnPaginaSiguiente;
+	private JButton btnPaginaAnterior;
 
 	public ZDiarioFrame(Locale local) {
-		
+
 		cambiarIdioma(local);
-		setBounds(0, 0,1280, 720);
+		setBounds(0, 0, 1280, 720);
 		setLayout(null);
-		
+
 		try {
-			fontNumeros = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Marker_SD_Italic.ttf"));
+			fontNumeros = Font.createFont(Font.TRUETYPE_FONT,
+					getClass().getResourceAsStream("/fonts/Marker_SD_Italic.ttf"));
 			fontNumeros = fontNumeros.deriveFont(170f);
 			fontTexto = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Faraco_Hand.ttf"));
 			fontTexto = fontTexto.deriveFont(30f);
-			fontTextoNumeros = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/fonts/Faraco_Hand.ttf"));
+			fontTextoNumeros = Font.createFont(Font.TRUETYPE_FONT,
+					getClass().getResourceAsStream("/fonts/Faraco_Hand.ttf"));
 			fontTextoNumeros = fontTextoNumeros.deriveFont(53f);
 
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -69,13 +75,13 @@ public class ZDiarioFrame extends JPanel{
 			System.out.println("Error, font no cargado.");
 			e1.printStackTrace();
 		}
-		
+
 		crearNumeros();
-		
+
 		ImageIcon imgAnterior = ImageRescaler.scaleImage("/imagenes/paginaIzquierda.png", 50, 50);
 		ImageIcon imgSiguiente = ImageRescaler.scaleImage("/imagenes/paginaDerecha.png", 50, 50);
-		
-		JButton btnPaginaSiguiente = new JButton(idioma.getString("label.siguientePagina"));
+
+		btnPaginaSiguiente = new JButton(idioma.getString("label.siguientePagina"));
 		btnPaginaSiguiente.setBounds(981, 626, 210, 44);
 		btnPaginaSiguiente.setBorderPainted(false);
 		btnPaginaSiguiente.setContentAreaFilled(false);
@@ -85,13 +91,14 @@ public class ZDiarioFrame extends JPanel{
 		btnPaginaSiguiente.setHorizontalTextPosition(SwingConstants.LEFT);
 		add(btnPaginaSiguiente);
 
-		JButton btnPaginaAnterior = new JButton(idioma.getString("label.anteriorPagina"));
+		btnPaginaAnterior = new JButton(idioma.getString("label.anteriorPagina"));
 		btnPaginaAnterior.setBounds(60, 626, 210, 44);
 		btnPaginaAnterior.setBorderPainted(false);
 		btnPaginaAnterior.setContentAreaFilled(false);
 		btnPaginaAnterior.setOpaque(false);
 		btnPaginaAnterior.setFocusPainted(false);
 		btnPaginaAnterior.setIcon(imgAnterior);
+		btnPaginaAnterior.setVisible(false);
 		btnPaginaAnterior.setHorizontalTextPosition(SwingConstants.RIGHT);
 		add(btnPaginaAnterior);
 
@@ -127,6 +134,10 @@ public class ZDiarioFrame extends JPanel{
 				if (paginaCuarderno < 2) {
 					paginaCuarderno = paginaCuarderno + 1;
 					mostrarPagina(paginaCuarderno);
+					btnPaginaAnterior.setVisible(true);
+				}
+				if (paginaCuarderno == 2) {
+					btnPaginaSiguiente.setVisible(false);
 				}
 			}
 		});
@@ -136,6 +147,11 @@ public class ZDiarioFrame extends JPanel{
 				if (paginaCuarderno > 0) {
 					paginaCuarderno = paginaCuarderno - 1;
 					mostrarPagina(paginaCuarderno);
+					btnPaginaSiguiente.setVisible(true);
+
+				}
+				if (paginaCuarderno == 0) {
+					btnPaginaAnterior.setVisible(false);
 				}
 			}
 		});

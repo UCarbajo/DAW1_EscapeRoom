@@ -44,9 +44,10 @@ public class AAPantallaInicioFrame extends JFrame {
 	private JButton btnJugar;
 	private JButton btnTutorial;
 	private JButton btnAjustes;
-	private JLabel lblImagenNino;
+	private JLabel lblTitulo;
 	private JLabel lblTutorial;
 	private Locale locale;
+	private JPanel tituloPane;
 	
 	public AAPantallaInicioFrame() {
 		
@@ -60,15 +61,6 @@ public class AAPantallaInicioFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		ImageIcon imagenNino = ImageRescaler.scaleImage("/imagenes/ninoAcosado.png", 405, 325);
-		
-		lblImagenNino = new JLabel();
-		lblImagenNino.setBounds(821, 171, 405, 325);
-		lblImagenNino.setIcon(imagenNino);
-		contentPane.add(lblImagenNino);
-		
-		contentPane.addMouseListener(null);
-
 		try {
 			// Cargar la fuente desde el archivo
 			Font fuenteQuickPencilGrande = crearFontQuickPencil(80f);
@@ -82,6 +74,18 @@ public class AAPantallaInicioFrame extends JFrame {
 			ge.registerFont(fuenteQuickPencilMedianaGrande);
 			ge.registerFont(fuenteQuickPencilMediana);
 			ge.registerFont(fuenteQuickPencilPequena);
+			
+			tituloPane = new JPanel();
+			tituloPane.setBounds(786,114, 484,499);
+			tituloPane.setLayout(null);
+			tituloPane.setOpaque(false);
+			contentPane.add(tituloPane);
+			
+			lblTitulo = new JLabel(idioma.getString("label.tituloEscapeRoom"));
+			lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+			lblTitulo.setFont(fuenteQuickPencilGrande);
+			lblTitulo.setBounds(0, 0, tituloPane.getWidth(), tituloPane.getHeight());
+			tituloPane.add(lblTitulo);
 			
 			btnJugar = new JButton(idioma.getString("label.jugar"));
 			btnJugar.setBounds(197, 159, 335, 100);
@@ -272,7 +276,7 @@ public class AAPantallaInicioFrame extends JFrame {
         lblEspanol.setVisible(ajustesVisible);
         lblBanderaInglesa.setVisible(ajustesVisible);
         lblIngles.setVisible(ajustesVisible);
-        lblImagenNino.setVisible(false);
+        lblTitulo.setVisible(false);
     }
 	
 	private MouseListener cambiarColorBoton(JButton boton) {

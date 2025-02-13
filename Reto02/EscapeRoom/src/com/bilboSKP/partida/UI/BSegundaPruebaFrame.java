@@ -143,7 +143,7 @@ public class BSegundaPruebaFrame extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				btnPrimeraPista.setVisible(false);
 				estadoPista[0] = true;
-				lblPrimeraPista = new JLabel(idioma.getString("label.sopaPrimeraPista"));
+				lblPrimeraPista = new JLabel(idioma.getString("label.segundaPruebaPrimeraPista"));
 				lblPrimeraPista.setBounds(btnPrimeraPista.getLocation().x ,btnPrimeraPista.getLocation().y, btnPrimeraPista.getWidth(), btnPrimeraPista.getHeight());
 				lblPrimeraPista.setHorizontalAlignment(SwingConstants.CENTER);
 				lblPrimeraPista.setVerticalAlignment(SwingConstants.CENTER);
@@ -163,7 +163,7 @@ public class BSegundaPruebaFrame extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				btnSegundaPista.setVisible(false);
 				estadoPista[1] = true;
-				lblSegundaPista = new JLabel(idioma.getString("label.sopaSegundaPista"));
+				lblSegundaPista = new JLabel(idioma.getString("label.segundaPruebaSegundaPista"));
 				lblSegundaPista.setBounds(btnSegundaPista.getLocation().x ,btnSegundaPista.getLocation().y, btnSegundaPista.getWidth(), btnSegundaPista.getHeight());
 				lblSegundaPista.setHorizontalAlignment(SwingConstants.CENTER);
 				lblSegundaPista.setVerticalAlignment(SwingConstants.CENTER);
@@ -183,7 +183,7 @@ public class BSegundaPruebaFrame extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				btnTerceraPista.setVisible(false);
 				estadoPista[2] = true;
-				lblTerceraPista = new JLabel(idioma.getString("label.sopaTerceraPista"));
+				lblTerceraPista = new JLabel(idioma.getString("label.segundaPruebaTerceraPista"));
 				lblTerceraPista.setBounds(btnTerceraPista.getLocation().x ,btnTerceraPista.getLocation().y, btnTerceraPista.getWidth(), btnTerceraPista.getHeight());
 				lblTerceraPista.setHorizontalAlignment(SwingConstants.CENTER);
 				lblTerceraPista.setVerticalAlignment(SwingConstants.CENTER);

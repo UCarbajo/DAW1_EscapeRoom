@@ -256,6 +256,7 @@ public class AEntradaJuego extends JFrame {
 		lblMensajeFinal.setForeground(Color.white);
 		lblMensajeFinal.setBounds(0, 0, 1400, 273);
 		lblMensajeFinal.setFont(fontFinal);
+		lblMensajeFinal.setHorizontalAlignment(SwingConstants.CENTER);
 		panelFinal.add(lblMensajeFinal);
 
 		lblImgFondoFinal = new JLabel();
